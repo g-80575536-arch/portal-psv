@@ -1216,6 +1216,7 @@
                 const badge = document.getElementById('role-badge');
                 const toggleBtn = document.getElementById('toggle-mode-btn');
                 const rphNavBtn = document.getElementById('nav-rph');
+                const btnModRPH = document.getElementById('btn-mod-rph');
                 
                 const heroTitle = document.getElementById('dashboard-hero-title');
                 const heroDesc = document.getElementById('dashboard-hero-desc');
@@ -1229,6 +1230,7 @@
                     toggleBtn.classList.replace('hover:bg-rose-600', 'hover:bg-indigo-700');
                     
                     if (rphNavBtn) rphNavBtn.classList.add('hidden');
+                    if (btnModRPH) btnModRPH.classList.add('hidden');
                     
                     document.getElementById('nav-dashboard').querySelector('.nav-text').innerText = "Istana Kita";
                     document.getElementById('nav-imbas').querySelector('.nav-text').innerText = "Kad Seni Magic 🃏";
@@ -1249,6 +1251,7 @@
                     toggleBtn.classList.replace('hover:bg-indigo-700', 'hover:bg-rose-600');
                     
                     if (rphNavBtn) rphNavBtn.classList.remove('hidden');
+                    if (btnModRPH) btnModRPH.classList.remove('hidden');
                     
                     document.getElementById('nav-dashboard').querySelector('.nav-text').innerText = "Papan Pemuka";
                     document.getElementById('nav-imbas').querySelector('.nav-text').innerText = "Bahasa Seni (Kad)";
@@ -1340,12 +1343,7 @@
 
             let youtubeId = "ieKFne8zQt0"; 
             const tek = unit.teknik.toLowerCase();
-            const taj = unit.tajuk.toLowerCase();
-
-            // Memasukkan pautan video khusus bagi Unit 8 Uli-uli Tembikar
-            if (taj.includes("uli-uli tembikar")) {
-                youtubeId = "Ht_7b6Cox58";
-            } else if (tek.includes("capan")) {
+            if (tek.includes("capan")) {
                 youtubeId = "ieKFne8zQt0"; 
             } else if (tek.includes("resis") || tek.includes("gosokan") || tek.includes("lukisan")) {
                 youtubeId = "YjdXU5v-Fr4"; 
@@ -1858,11 +1856,18 @@
         }
 
         // --- STREAMING_CHUNK: Menguruskan lakaran kanvas digital interaktif... ---
+        // Simpan lakaran dalam memori sementara apabila kanvas diubah saiz
+        let savedCanvasData = null;
+
         function initCanvas() {
             try {
                 const canvas = document.getElementById('paintCanvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
+
+                // Set warna latar belakang lalai untuk kali pertama
+                ctx.fillStyle = "#fafaf9";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 resizeCanvasToContainer();
 
@@ -1876,8 +1881,15 @@
                     drawOnCanvas(e, ctx, canvas);
                 });
 
-                canvas.addEventListener('mouseup', () => isDrawing = false);
-                canvas.addEventListener('mouseout', () => isDrawing = false);
+                canvas.addEventListener('mouseup', () => {
+                    isDrawing = false;
+                    saveCanvasState(canvas); // Simpan keadaan setiap kali selesai melukis
+                });
+                
+                canvas.addEventListener('mouseout', () => {
+                    if (isDrawing) saveCanvasState(canvas);
+                    isDrawing = false;
+                });
 
                 canvas.addEventListener('touchstart', (e) => {
                     isDrawing = true;
@@ -1893,7 +1905,10 @@
                     e.preventDefault();
                 }, { passive: false });
 
-                canvas.addEventListener('touchend', () => isDrawing = false);
+                canvas.addEventListener('touchend', () => {
+                    isDrawing = false;
+                    saveCanvasState(canvas);
+                });
 
                 const slider = document.getElementById('brush-size-slider');
                 const display = document.getElementById('brush-size-display');
@@ -1914,26 +1929,43 @@
             }
         }
 
+        // Fungsi baru untuk menyimpan keadaan kanvas
+        function saveCanvasState(canvas) {
+            if (canvas.width > 0 && canvas.height > 0) {
+                savedCanvasData = canvas.toDataURL();
+            }
+        }
+
         function resizeCanvasToContainer() {
             try {
                 const canvas = document.getElementById('paintCanvas');
                 if (!canvas) return;
+                
                 const rect = canvas.parentElement.getBoundingClientRect();
                 
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = canvas.width;
-                tempCanvas.height = canvas.height;
-                const tempCtx = tempCanvas.getContext('2d');
-                tempCtx.drawImage(canvas, 0, 0);
+                // Halang perubahan saiz jika tab tersembunyi (width 0)
+                if (rect.width === 0 || rect.height === 0) return;
 
+                // Set dimensi baharu
                 canvas.width = rect.width;
                 canvas.height = rect.height;
 
                 const ctx = canvas.getContext('2d');
+                
+                // Set warna latar belakang
                 ctx.fillStyle = "#fafaf9"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+
+                // Lukis semula data yang disimpan (jika ada)
+                if (savedCanvasData) {
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = savedCanvasData;
+                }
                 
+                // Tetapkan semula ciri-ciri berus selepas resize
                 ctx.lineCap = 'round';
                 ctx.lineJoin = 'round';
             } catch (e) {
@@ -1946,13 +1978,11 @@
             const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
             const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
             
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
+            // Pengiraan koordinat yang tepat untuk pelbagai saiz skrin
+            const x = (clientX - rect.left) * (canvas.width / rect.width);
+            const y = (clientY - rect.top) * (canvas.height / rect.height);
 
-            return [
-                (clientX - rect.left) * scaleX,
-                (clientY - rect.top) * scaleY
-            ];
+            return [x, y];
         }
 
         function drawOnCanvas(e, ctx, canvas) {
@@ -1988,6 +2018,7 @@
                 const ctx = canvas.getContext('2d');
                 ctx.fillStyle = "#fafaf9";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+                savedCanvasData = null; // Padam data yang disimpan
                 playSynthSound('splat');
             } catch (e) {
                 console.log(e);
@@ -2263,7 +2294,7 @@
             { id: "YjdXU5v-Fr4", title: "Resis Krayon & Cat Air (KSSR T1-T4)" },
             { id: "vN5OuoMQteA", title: "Kombinasi Kolaj, Montaj & Poster (Tahun 5)" },
             { id: "qS0zZpiEhyk", title: "Diorama Kedalaman Ruang 3D (Tahun 5-6)" },
-            { id: "Ht_7b6Cox58", title: "Uli-uli Tembikar KSSR (Tahun 1 & Tahun 2)" },
+            { id: "P2K5mGAVGkg", title: "Kraf Tradisional Tembikar Gelung (Tahun 4-5)" },
             { id: "7o1H2mGBzEc", title: "Pualaman Kreatif Corak Terancang (Tahun 4-6)" }
         ];
 
