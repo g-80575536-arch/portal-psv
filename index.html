@@ -144,6 +144,11 @@
                         <i class="fa-solid fa-images text-base text-cyan-500"></i>
                         <span class="nav-text comic-font">Galeri Seni Maya</span>
                     </button>
+
+                    <button onclick="showTab('pbd')" id="nav-pbd" class="nav-btn w-full py-3 px-4 rounded-xl border-2 border-slate-950 bg-white hover:bg-yellow-200 font-extrabold text-sm flex items-center space-x-3 shadow-brutal-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                        <i class="fa-solid fa-clipboard-check text-base text-teal-500"></i>
+                        <span class="nav-text comic-font">Rekod Pentaksiran</span>
+                    </button>
                 </nav>
             </div>
 
@@ -658,8 +663,30 @@
                             </div>
                         </div>
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-black text-slate-700 mb-1 comic-font">Standard Kandungan (SK) <span class="text-[9px] text-slate-500 font-normal">(Boleh pilih lebih dari satu)</span></label>
+                                <div class="h-28 overflow-y-auto p-3 border-2 border-slate-950 text-xs rounded-xl bg-white shadow-inner space-y-2">
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sk-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="1.1 Bahasa Seni Visual"> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">1.1 Bahasa Seni Visual</span></label>
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sk-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="2.1 Kemahiran Seni Visual"> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">2.1 Kemahiran Seni Visual</span></label>
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sk-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="3.1 Penghasilan Karya Kreatif" checked> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">3.1 Penghasilan Karya Kreatif</span></label>
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sk-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="4.1 Penghayatan Karya Seni"> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">4.1 Penghayatan Karya Seni</span></label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black text-slate-700 mb-1 comic-font">Standard Pembelajaran (SP) <span class="text-[9px] text-slate-500 font-normal">(Boleh pilih lebih dari satu)</span></label>
+                                <div class="h-28 overflow-y-auto p-3 border-2 border-slate-950 text-xs rounded-xl bg-white shadow-inner space-y-2">
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sp-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="1.1.1 Menginterpretasi bahasa seni visual"> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">1.1.1 Menginterpretasi bahasa seni visual</span></label>
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sp-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="2.1.1 Mengaplikasi bahasa seni visual pelbagai media"> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">2.1.1 Mengaplikasi bahasa seni visual pelbagai media</span></label>
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sp-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="3.1.1 Menghasilkan karya kreatif secara terancang" checked> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">3.1.1 Menghasilkan karya kreatif secara terancang</span></label>
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sp-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="4.1.1 Mempamerkan karya seni visual yang dihasilkan"> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">4.1.1 Mempamerkan karya seni visual yang dihasilkan</span></label>
+                                    <label class="flex items-start space-x-2 cursor-pointer group"><input type="checkbox" class="sp-checkbox mt-0.5 accent-indigo-600 w-3.5 h-3.5" value="4.1.2 Membuat apresiarsi terhadap karya"> <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">4.1.2 Membuat apresiarsi terhadap karya</span></label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="space-y-1">
-                            <label class="block text-xs font-black text-slate-700 mb-1 comic-font">Standard Pembelajaran & Objektif</label>
+                            <label class="block text-xs font-black text-slate-700 mb-1 comic-font">Objektif Pembelajaran</label>
                             <textarea id="rph-objektif" rows="3" class="w-full p-2.5 border-2 border-slate-950 text-xs rounded-xl focus:ring-0">Pada akhir pembelajaran, murid dapat melukis lakaran asas motif motif hiasan tradisional bunga kemboja dan mengenali teknik lusi pakan anyaman ringkas.</textarea>
                         </div>
 
@@ -709,6 +736,14 @@
                                     <tr class="border-b border-slate-300">
                                         <td class="p-2 bg-slate-50 font-bold border-r border-slate-300">TEMA & PROJEK</td>
                                         <td class="p-2 font-medium" id="preview-rph-projek">Bunga Kemboja Emas</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-300 bg-indigo-50">
+                                        <td class="p-2 font-bold border-r border-slate-300 text-indigo-800">STANDARD KANDUNGAN</td>
+                                        <td class="p-2 font-black text-indigo-800" id="preview-rph-sk">3.1 Penghasilan Karya Kreatif</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-300 bg-indigo-50">
+                                        <td class="p-2 font-bold border-r border-slate-300 text-indigo-800">STANDARD PEMB. (SP)</td>
+                                        <td class="p-2 font-black text-indigo-800" id="preview-rph-sp">3.1.1 Menghasilkan karya kreatif secara terancang</td>
                                     </tr>
                                     <tr class="border-b border-slate-300">
                                         <td class="p-2 bg-slate-50 font-bold border-r border-slate-300">ALAT & BAHAN</td>
@@ -763,7 +798,66 @@
 
             </section>
 
+            <!-- TAB 7: REKOD PENTAKSIRAN PBD (GURU ONLY) -->
+            <section id="tab-pbd" class="tab-content hidden space-y-6">
+                <div class="bg-teal-400 p-6 rounded-2xl border-4 border-slate-950 shadow-brutal">
+                    <h2 class="text-2xl font-black comic-font text-slate-950">📊 Rekod Pentaksiran Bilik Darjah (PBD)</h2>
+                    <p class="text-xs text-slate-900 font-medium">Pantau tahap penguasaan murid berdasarkan keputusan Kuiz Pengukuhan Minda yang diselesaikan dalam sesi pembelajaran ini.</p>
+                </div>
+                <div class="bg-white rounded-3xl p-6 border-4 border-slate-950 shadow-brutal overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
+                            <thead>
+                                <tr class="bg-slate-100 border-b-4 border-slate-950 text-xs font-black uppercase text-slate-700 comic-font">
+                                    <th class="p-4">Tarikh</th>
+                                    <th class="p-4">Nama Murid</th>
+                                    <th class="p-4">Kelas</th>
+                                    <th class="p-4">Modul / Unit</th>
+                                    <th class="p-4 text-center">Skor Kuiz</th>
+                                    <th class="p-4 text-center">Tahap (TP)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pbd-table-body">
+                                <tr>
+                                    <td colspan="6" class="p-6 text-center text-slate-500 font-medium text-sm">Belum ada rekod kuiz untuk sesi ini. Murid perlu mendaftar masuk dan melengkapkan kuiz terlebih dahulu.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
         </main>
+    </div>
+
+    <!-- MODAL LOGIN MURID -->
+    <div id="student-login-modal" class="hidden fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md border-4 border-slate-950 rounded-3xl shadow-brutal-lg overflow-hidden flex flex-col">
+            <div class="p-5 bg-rose-500 text-white border-b-4 border-slate-950 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <span class="text-3xl">🧑‍🎨</span>
+                    <div>
+                        <h4 class="font-black text-lg comic-font">Daftar Masuk Murid</h4>
+                        <p class="text-[10px] text-rose-100">Sila masukkan nama untuk merekod markah kuiz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-black text-slate-700 mb-1 comic-font">Nama Penuh</label>
+                    <input type="text" id="login-student-name" placeholder="Contoh: Danial Hakimi" class="w-full p-3 border-2 border-slate-950 text-sm rounded-xl focus:ring-0 shadow-brutal-sm font-bold outline-none">
+                    <p id="login-error" class="hidden text-rose-600 text-[10px] font-bold mt-1.5"><i class="fa-solid fa-circle-exclamation"></i> Sila masukkan nama anda sebelum bermula!</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-slate-700 mb-1 comic-font">Tahun / Kelas</label>
+                    <input type="text" id="login-student-class" placeholder="Contoh: 5 Pintar" class="w-full p-3 border-2 border-slate-950 text-sm rounded-xl focus:ring-0 shadow-brutal-sm font-bold outline-none">
+                </div>
+            </div>
+            <div class="p-5 bg-slate-50 border-t-4 border-slate-950 flex justify-end space-x-3">
+                <button onclick="closeStudentLogin()" class="py-2.5 px-5 bg-white hover:bg-slate-200 text-slate-950 text-xs font-black rounded-xl border-2 border-slate-950 shadow-brutal-sm active:translate-y-0.5">Batal</button>
+                <button onclick="submitStudentLogin()" class="py-2.5 px-5 bg-emerald-400 hover:bg-emerald-500 text-slate-950 text-xs font-black rounded-xl border-2 border-slate-950 shadow-brutal-sm active:translate-y-0.5">Mula Belajar 🚀</button>
+            </div>
+        </div>
     </div>
 
     <!-- PETI GANJARAN & PANDUAN BINTANG MODAL (NEO-BRUTALIST OVERLAY) -->
@@ -853,6 +947,10 @@
         let isDrawing = false;
         let lastX = 0;
         let lastY = 0;
+        
+        let currentStudentName = "Artis Cilik";
+        let currentStudentClass = "";
+        let pentaksiranRecords = [];
 
         // Simulated Virtual Gallery Mock Database
         let galleryMockDatabase = [
@@ -1209,64 +1307,114 @@
             }
         }
 
-        // --- STREAMING_CHUNK: Menguruskan peralihan dwi-mod (Mod Guru & Mod Murid)... ---
+        // --- STREAMING_CHUNK: Menguruskan peralihan dwi-mod dan Daftar Masuk Murid... ---
+        function promptStudentLogin() {
+            playSynthSound('pop');
+            document.getElementById('student-login-modal').classList.remove('hidden');
+        }
+
+        function closeStudentLogin() {
+            playSynthSound('pop');
+            document.getElementById('student-login-modal').classList.add('hidden');
+        }
+
+        function submitStudentLogin() {
+            const nameInput = document.getElementById('login-student-name').value.trim();
+            const classInput = document.getElementById('login-student-class').value.trim();
+            
+            if (!nameInput) {
+                document.getElementById('login-error').classList.remove('hidden');
+                playSynthSound('splat');
+                return;
+            }
+            
+            document.getElementById('login-error').classList.add('hidden');
+            currentStudentName = nameInput;
+            currentStudentClass = classInput || "Kelas Seni";
+            
+            closeStudentLogin();
+            executeSwitchToStudentMode();
+        }
+
         function togglePortalMode() {
             try {
-                playSynthSound('idea');
-                const badge = document.getElementById('role-badge');
-                const toggleBtn = document.getElementById('toggle-mode-btn');
-                const rphNavBtn = document.getElementById('nav-rph');
-                const btnModRPH = document.getElementById('btn-mod-rph');
-                
-                const heroTitle = document.getElementById('dashboard-hero-title');
-                const heroDesc = document.getElementById('dashboard-hero-desc');
-
                 if (currentRoleMode === "guru") {
-                    currentRoleMode = "murid";
-                    badge.innerText = "Mod Murid 🧑‍🎨";
-                    badge.className = "bg-rose-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider";
-                    toggleBtn.innerHTML = `<i class="fa-solid fa-chalkboard-user"></i> <span>Aktifkan Mod Guru</span>`;
-                    toggleBtn.classList.replace('bg-rose-500', 'bg-indigo-600');
-                    toggleBtn.classList.replace('hover:bg-rose-600', 'hover:bg-indigo-700');
-                    
-                    if (rphNavBtn) rphNavBtn.classList.add('hidden');
-                    if (btnModRPH) btnModRPH.classList.add('hidden');
-                    
-                    document.getElementById('nav-dashboard').querySelector('.nav-text').innerText = "Istana Kita";
-                    document.getElementById('nav-imbas').querySelector('.nav-text').innerText = "Kad Seni Magic 🃏";
-                    document.getElementById('nav-silibus').querySelector('.nav-text').innerText = "Silibus & Buku Teks 📚";
-                    document.getElementById('nav-canvas').querySelector('.nav-text').innerText = "Studio Lukis Kita 🎨";
-                    document.getElementById('nav-galeri').querySelector('.nav-text').innerText = "Galeri Lukisan Murid 🖼️";
-
-                    if (heroTitle) heroTitle.innerText = "Hai Kawan-Kawan! Mari Mewarna & Belajar Seni!";
-                    if (heroDesc) heroDesc.innerText = "Selamat datang ke studio mewarna SeniKreatif bersama maskot Cikgu Aimuni. Jom kita teroka kad-kad seni magic yang berwarna-warni, jawab kuiz seronok untuk kumpul bintang ganjaran, dan hantar hasil lukisan comel kita terus ke galeri maya!";
-                    
-                    speakText("Hai kawan-kawan! Jom belajar seni visual bersama Cikgu Aimuni!");
+                    promptStudentLogin();
                 } else {
-                    currentRoleMode = "guru";
-                    badge.innerText = "Mod Guru 👨‍🏫";
-                    badge.className = "bg-indigo-600 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider";
-                    toggleBtn.innerHTML = `<i class="fa-solid fa-graduation-cap"></i> <span>Aktifkan Mod Murid</span>`;
-                    toggleBtn.classList.replace('bg-indigo-600', 'bg-rose-500');
-                    toggleBtn.classList.replace('hover:bg-indigo-700', 'hover:bg-rose-600');
-                    
-                    if (rphNavBtn) rphNavBtn.classList.remove('hidden');
-                    if (btnModRPH) btnModRPH.classList.remove('hidden');
-                    
-                    document.getElementById('nav-dashboard').querySelector('.nav-text').innerText = "Papan Pemuka";
-                    document.getElementById('nav-imbas').querySelector('.nav-text').innerText = "Bahasa Seni (Kad)";
-                    document.getElementById('nav-silibus').querySelector('.nav-text').innerText = "Silibus & Modul";
-                    document.getElementById('nav-canvas').querySelector('.nav-text').innerText = "Studio Video & Lakaran";
-                    document.getElementById('nav-galeri').querySelector('.nav-text').innerText = "Galeri Seni Maya";
-
-                    if (heroTitle) heroTitle.innerText = "Selamat Datang ke Studio SeniKreatif Cikgu!";
-                    if (heroDesc) heroDesc.innerText = "Inilah tempat bermulanya magik kesenian murid anda. Terokai senarai silibus buku teks yang tersusun lengkap, laksanakan demonstrasi lakaran terus di skrin, tonton video pengajaran, dan jana RPH pintar dalam beberapa klik sahaja!";
+                    executeSwitchToTeacherMode();
                 }
-
-                showTab('dashboard');
             } catch (e) {
                 console.error("Toggle Mode error:", e);
             }
+        }
+
+        function executeSwitchToStudentMode() {
+            playSynthSound('idea');
+            currentRoleMode = "murid";
+            const badge = document.getElementById('role-badge');
+            const toggleBtn = document.getElementById('toggle-mode-btn');
+            const rphNavBtn = document.getElementById('nav-rph');
+            const btnModRPH = document.getElementById('btn-mod-rph');
+            const pbdNavBtn = document.getElementById('nav-pbd');
+            
+            const heroTitle = document.getElementById('dashboard-hero-title');
+            const heroDesc = document.getElementById('dashboard-hero-desc');
+
+            badge.innerText = `Murid: ${currentStudentName} 🧑‍🎨`;
+            badge.className = "bg-rose-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider truncate max-w-[150px]";
+            toggleBtn.innerHTML = `<i class="fa-solid fa-chalkboard-user"></i> <span>Aktifkan Mod Guru</span>`;
+            toggleBtn.classList.replace('bg-rose-500', 'bg-indigo-600');
+            toggleBtn.classList.replace('hover:bg-rose-600', 'hover:bg-indigo-700');
+            
+            if (rphNavBtn) rphNavBtn.classList.add('hidden');
+            if (btnModRPH) btnModRPH.classList.add('hidden');
+            if (pbdNavBtn) pbdNavBtn.classList.add('hidden');
+            
+            document.getElementById('nav-dashboard').querySelector('.nav-text').innerText = "Istana Kita";
+            document.getElementById('nav-imbas').querySelector('.nav-text').innerText = "Kad Seni Magic 🃏";
+            document.getElementById('nav-silibus').querySelector('.nav-text').innerText = "Silibus & Buku Teks 📚";
+            document.getElementById('nav-canvas').querySelector('.nav-text').innerText = "Studio Lukis Kita 🎨";
+            document.getElementById('nav-galeri').querySelector('.nav-text').innerText = "Galeri Lukisan Murid 🖼️";
+
+            if (heroTitle) heroTitle.innerText = `Hai ${currentStudentName}! Mari Mewarna & Belajar Seni!`;
+            if (heroDesc) heroDesc.innerText = "Selamat datang ke studio mewarna SeniKreatif bersama maskot Cikgu Aimuni. Jom kita teroka kad-kad seni magic yang berwarna-warni, jawab kuiz seronok untuk kumpul bintang ganjaran, dan hantar hasil lukisan comel kita terus ke galeri maya!";
+            
+            speakText(`Hai ${currentStudentName}! Jom belajar seni visual bersama Cikgu Aimuni!`);
+            showTab('dashboard');
+        }
+
+        function executeSwitchToTeacherMode() {
+            playSynthSound('idea');
+            currentRoleMode = "guru";
+            const badge = document.getElementById('role-badge');
+            const toggleBtn = document.getElementById('toggle-mode-btn');
+            const rphNavBtn = document.getElementById('nav-rph');
+            const btnModRPH = document.getElementById('btn-mod-rph');
+            const pbdNavBtn = document.getElementById('nav-pbd');
+            
+            const heroTitle = document.getElementById('dashboard-hero-title');
+            const heroDesc = document.getElementById('dashboard-hero-desc');
+
+            badge.innerText = "Mod Guru 👨‍🏫";
+            badge.className = "bg-indigo-600 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider";
+            toggleBtn.innerHTML = `<i class="fa-solid fa-graduation-cap"></i> <span>Aktifkan Mod Murid</span>`;
+            toggleBtn.classList.replace('bg-indigo-600', 'bg-rose-500');
+            toggleBtn.classList.replace('hover:bg-indigo-700', 'hover:bg-rose-600');
+            
+            if (rphNavBtn) rphNavBtn.classList.remove('hidden');
+            if (btnModRPH) btnModRPH.classList.remove('hidden');
+            if (pbdNavBtn) pbdNavBtn.classList.remove('hidden');
+            
+            document.getElementById('nav-dashboard').querySelector('.nav-text').innerText = "Papan Pemuka";
+            document.getElementById('nav-imbas').querySelector('.nav-text').innerText = "Bahasa Seni (Kad)";
+            document.getElementById('nav-silibus').querySelector('.nav-text').innerText = "Silibus & Modul";
+            document.getElementById('nav-canvas').querySelector('.nav-text').innerText = "Studio Video & Lakaran";
+            document.getElementById('nav-galeri').querySelector('.nav-text').innerText = "Galeri Seni Maya";
+
+            if (heroTitle) heroTitle.innerText = "Selamat Datang ke Studio SeniKreatif Cikgu!";
+            if (heroDesc) heroDesc.innerText = "Inilah tempat bermulanya magik kesenian murid anda. Terokai senarai silibus buku teks yang tersusun lengkap, laksanakan demonstrasi lakaran terus di skrin, tonton video pengajaran, dan jana RPH pintar dalam beberapa klik sahaja!";
+            
+            showTab('dashboard');
         }
 
         // --- STREAMING_CHUNK: Mengurus fungsi penukaran tab utama... ---
@@ -1787,11 +1935,59 @@
                 const nextBtn = document.getElementById('quiz-next-btn');
                 if (nextBtn) nextBtn.classList.add('hidden');
 
+                // Perekodan skor PBD jika dalam Mod Murid
+                if (currentRoleMode === "murid" && activeQuizQuestions.length > 0) {
+                    const dateStr = new Date().toLocaleDateString('ms-MY');
+                    const tp = quizScore >= 4 ? "TP 4-6 (Kreatif)" : (quizScore >= 2 ? "TP 2-3 (Asas)" : "TP 1 (Bimbingan)");
+                    const tpClass = quizScore >= 4 ? "bg-emerald-100 text-emerald-700" : (quizScore >= 2 ? "bg-yellow-100 text-yellow-700" : "bg-rose-100 text-rose-700");
+                    
+                    pentaksiranRecords.push({
+                        tarikh: dateStr,
+                        nama: currentStudentName,
+                        kelas: currentStudentClass,
+                        unit: `${selectedYear}: ${selectedUnitCode}`,
+                        skor: `${quizScore} / ${activeQuizQuestions.length}`,
+                        tpLabel: tp,
+                        tpClass: tpClass
+                    });
+                    renderPBDRecords();
+                }
+
                 if (quizScore === activeQuizQuestions.length) {
                     triggerConfettiSparkle();
                 }
             } catch (e) {
                 console.error("Scoreboard display error:", e);
+            }
+        }
+
+        function renderPBDRecords() {
+            try {
+                const tbody = document.getElementById('pbd-table-body');
+                if (!tbody) return;
+                
+                if (pentaksiranRecords.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500 font-medium text-sm">Belum ada rekod kuiz untuk sesi ini. Murid perlu mendaftar masuk dan melengkapkan kuiz terlebih dahulu.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                pentaksiranRecords.forEach(record => {
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                            <td class="p-4 text-xs font-bold text-slate-500">${record.tarikh}</td>
+                            <td class="p-4 text-sm font-black comic-font text-slate-900">${record.nama}</td>
+                            <td class="p-4 text-xs font-bold text-slate-700">${record.kelas}</td>
+                            <td class="p-4 text-xs font-bold text-indigo-600">${record.unit}</td>
+                            <td class="p-4 text-center text-sm font-black text-slate-800">${record.skor}</td>
+                            <td class="p-4 text-center">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${record.tpClass} border-current">${record.tpLabel}</span>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                console.error("Error rendering PBD records:", e);
             }
         }
 
@@ -2192,6 +2388,20 @@
                         pre.innerText = inp.value;
                     }
                 });
+
+                // Mengumpulkan dan menggabungkan semua SK dan SP yang ditanda (checked)
+                const skChecked = Array.from(document.querySelectorAll('.sk-checkbox:checked')).map(cb => cb.value);
+                const spChecked = Array.from(document.querySelectorAll('.sp-checkbox:checked')).map(cb => cb.value);
+
+                const previewSK = document.getElementById('preview-rph-sk');
+                if (previewSK) {
+                    previewSK.innerHTML = skChecked.length > 0 ? skChecked.join('<br>') : '-';
+                }
+
+                const previewSP = document.getElementById('preview-rph-sp');
+                if (previewSP) {
+                    previewSP.innerHTML = spChecked.length > 0 ? spChecked.join('<br>') : '-';
+                }
 
                 const previewTahunMasa = document.getElementById('preview-rph-tahun-masa');
                 if (previewTahunMasa) {
