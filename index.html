@@ -6,849 +6,550 @@
     <title>Seni Visual Tahun 2: Uli-Uli Tembikar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Comic+Neue:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Quicksand', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-            background-color: #f8fafc;
-            /* Kursor Bintang Besar */
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23fcd34d" stroke="%23b45309" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>') 16 16, auto;
-        }
-
-        h1, h2, h3, .comic-font {
-            font-family: 'Fredoka One', cursive; /* Font yang lebih bulat dan ceria */
-            letter-spacing: 1px;
-        }
-
-        /* Latar Belakang Animasi Super Terang */
-        .color-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #f6d365, #fda085);
-            background-size: 600% 600%;
-            animation: gradientBG 20s ease infinite;
-            z-index: -2;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Elemen Terapung Latar Belakang */
-        .floating-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .shape {
-            position: absolute;
-            opacity: 0.6;
-            animation: floatShape linear infinite;
-        }
-        @keyframes floatShape {
-            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
-        }
-
-        /* Animasi Transisi Halaman (Bouncing Slide Up) */
-        .step-container {
-            display: none;
-            animation: bounceSlideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
-        .step-container.active {
-            display: block;
-        }
-        @keyframes bounceSlideUp {
-            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* Butang TTS Berkelip */
-        .btn-tts {
-            transition: all 0.2s;
-            animation: pulse-ring 2s infinite;
-        }
-        .btn-tts:active { transform: scale(0.8); }
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
-        }
-
-        /* Pop Hover Extreme */
+        body { font-family: 'Quicksand', sans-serif; margin: 0; overflow-x: hidden; background-color: #f8fafc; cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>') 12 12, auto; }
+        h1, h2, h3, .comic-font { font-family: 'Comic Neue', cursive; }
+        .color-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(45deg, #fce7f3, #e0f2fe, #fef3c7, #f3e8ff); background-size: 400% 400%; animation: gradientBG 15s ease infinite; z-index: -2; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .nav-item.active { background-color: #ec4899; color: white; font-weight: bold; transform: scale(1.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-color: #fbcfe8; }
+        .step-container { display: none; animation: slideUpFade 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .step-container.active { display: block; }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
         .pop-hover { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .pop-hover:hover {
-            transform: scale(1.08) translateY(-8px) rotate(1deg);
-            box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.2);
-            z-index: 20;
-        }
+        .pop-hover:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); z-index: 10; }
+        .wiggle-hover:hover { animation: wiggle 0.5s ease-in-out infinite; }
+        @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } }
+        
+        /* Gaya Flip Card 3D */
+        .flip-card { perspective: 1000px; height: 320px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; text-align: center; border-radius: 1.5rem; border-width: 4px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .flip-card-back { transform: rotateY(180deg); }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        .particle { position: fixed; pointer-events: none; animation: popOut 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; z-index: 9999; font-size: 1.5rem; }
+        @keyframes popOut { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot)); opacity: 0; } }
+        
+        @media print { .no-print { display: none !important; } body { background: white; } .color-bg { display: none; } }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px solid rgba(255, 255, 255, 0.6); }
+        .reader-mode-active *:hover { outline: 3px dashed #3b82f6 !important; cursor: pointer !important; background-color: #eff6ff !important; }
 
-        /* Kad Magic Override */
-        .glow-effect {
-            box-shadow: 0 0 40px 15px rgba(250, 204, 21, 0.9) !important;
-            border-color: #facc15 !important;
-            background-color: #fef08a !important; 
-            transform: scale(1.1) !important;
-            z-index: 30;
-        }
-        .zoom-effect svg {
-            transform: scale(1.8) !important;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
-        }
-
-        /* Papan Gabus (Corkboard) untuk Galeri */
-        .corkboard {
-            background-color: #d97706;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-            border: 12px solid #78350f;
-            border-radius: 20px;
-        }
-        .polaroid {
-            background: white;
-            padding: 10px 10px 25px 10px;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .pin {
-            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-            width: 20px; height: 20px; border-radius: 50%;
-            box-shadow: 0 5px 5px rgba(0,0,0,0.3), inset -3px -3px 5px rgba(0,0,0,0.2);
-        }
-
-        /* Terapung */
-        .animate-float-fast { animation: float 2s ease-in-out infinite; }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Muzik Float Button */
-        #music-toggle {
-            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
-        }
+        @keyframes squishClay { 0%, 100% { transform: scale(1); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 50% { transform: scale(1.05); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
+        .animate-squish { animation: squishClay 3s ease-in-out infinite; }
+        @keyframes pressThumb { 0%, 100% { transform: translateY(-15px) rotate(-10deg); opacity: 0.5; } 50% { transform: translateY(10px) rotate(0deg); opacity: 1; } }
+        .animate-thumb { animation: pressThumb 2s ease-in-out infinite; }
+        @keyframes pinchAction { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.85); } }
+        .animate-pinch { animation: pinchAction 1.5s ease-in-out infinite; }
+        @keyframes pokeTool { 0%, 100% { transform: translate(15px, -15px) rotate(45deg); } 50% { transform: translate(0px, 0px) rotate(45deg); } }
+        .animate-poke { animation: pokeTool 1s ease-in-out infinite; }
     </style>
 </head>
 <body class="text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden" onclick="createParticles(event)">
 
-    <!-- HALAMAN UTAMA (LANDING PAGE) -->
     <div id="landing-page" class="fixed inset-0 z-[100] flex flex-col items-center justify-center transition-all duration-1000 ease-in-out" style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6, #ec4899);">
-        
         <div id="audio-hint" class="absolute top-6 right-6 bg-yellow-300 px-6 py-3 rounded-full animate-bounce text-sm font-black text-slate-800 shadow-xl border-4 border-white z-50">
-            <i class="fa-solid fa-hand-pointer mr-2 text-lg"></i> Klik skrin untuk aktifkan magik!
+            <i class="fa-solid fa-hand-pointer mr-2"></i> Klik skrin untuk aktifkan magik!
         </div>
-
-        <!-- Latar belakang SVG Tradisional Parallax -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none transition-transform duration-300 ease-out" id="landing-bg-svg">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <!-- Motif Corak & Bintang -->
-                <circle cx="15%" cy="20%" r="5" fill="#fde047" class="animate-pulse" />
-                <path d="M 15% 90% L 20% 80% L 25% 90% Z" fill="rgba(255,255,255,0.3)" class="animate-pulse"/>
-                <path d="M 75% 10% L 80% 20% L 85% 10% Z" fill="rgba(255,255,255,0.3)" />
-                <path d="M 5% 40% C 10% 35%, 15% 45%, 20% 40% C 25% 35%, 30% 45%, 35% 40%" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="5"/>
-                <circle cx="85%" cy="60%" r="40" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="10" stroke-dasharray="15,10" class="animate-spin" style="animation-duration: 20s;"/>
-            </svg>
-        </div>
-
-        <div id="landing-glass-panel" class="bg-white/90 backdrop-blur-xl border-4 border-white rounded-[3rem] p-8 md:p-14 max-w-2xl w-[90%] text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative animate-float-fast transition-transform duration-300 ease-out z-10">
+        
+        <div id="landing-glass-panel" class="glass-panel rounded-[3rem] p-8 md:p-12 max-w-4xl w-[95%] text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative animate-float z-10">
+            <h2 class="text-xl md:text-2xl font-bold text-sky-600 mb-2 tracking-widest uppercase bg-sky-50 inline-block px-6 py-2 rounded-full border-2 border-sky-200">Pendidikan Seni Visual Tahun 2</h2>
+            <h1 class="text-5xl md:text-7xl font-black text-slate-800 comic-font mb-6 leading-tight drop-shadow-md">Uli-Uli <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">Tembikar</span></h1>
             
-            <!-- Maskot Tobi Landing -->
-            <div class="absolute -top-20 left-1/2 transform -translate-x-1/2 drop-shadow-2xl pop-hover" onclick="speakText('Hai! Saya Tobi. Mari kita main tanah liat bersama Cikgu Aimuni!')">
-                <svg width="150" height="150" viewBox="0 0 100 100">
-                    <path d="M 20 50 C 10 90, 90 90, 80 50 C 70 20, 30 20, 20 50 Z" fill="#f59e0b" stroke="#b45309" stroke-width="4"/>
-                    <ellipse cx="50" cy="20" rx="30" ry="10" fill="#fbbf24" stroke="#b45309" stroke-width="4"/>
-                    <circle cx="35" cy="55" r="5" fill="#1e293b"/> <!-- Mata kiri -->
-                    <circle cx="65" cy="55" r="5" fill="#1e293b"/> <!-- Mata kanan -->
-                    <circle cx="37" cy="53" r="2" fill="white"/> <circle cx="67" cy="53" r="2" fill="white"/> <!-- Kilauan mata -->
-                    <path d="M 40 65 Q 50 75 60 65" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/> <!-- Senyum -->
-                    <circle cx="25" cy="60" r="4" fill="#ef4444" opacity="0.6"/> <!-- Pipi -->
-                    <circle cx="75" cy="60" r="4" fill="#ef4444" opacity="0.6"/> <!-- Pipi -->
-                </svg>
-            </div>
-
-            <h2 class="text-xl md:text-2xl font-bold text-sky-500 mt-12 mb-2 tracking-widest uppercase bg-sky-50 inline-block px-4 py-1 rounded-full border-2 border-sky-200">Pendidikan Seni Visual Tahun 2</h2>
-            <h1 class="text-5xl md:text-7xl font-black text-slate-800 comic-font mb-6 leading-tight drop-shadow-md">Uli-Uli <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">Tembikar</span></h1>
-            
-            <!-- Profil Gambar Cikgu Aimuni -->
-            <div class="bg-gradient-to-r from-pink-100 to-purple-100 rounded-3xl p-4 md:p-6 mb-8 inline-block shadow-lg border-4 border-white flex flex-col md:flex-row items-center gap-6 max-w-md mx-auto pop-hover cursor-pointer" onclick="speakText('Selamat datang ke kelas Seni bersama Cikgu Aimuni!')">
-                <div class="relative w-28 h-28 rounded-full border-4 border-pink-500 overflow-hidden shadow-xl flex-shrink-0 bg-white">
-                    <img src="C.AI (2).jpeg" alt="Cikgu Aimuni" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=Aimuni+Athirah&background=ec4899&color=fff&size=128'">
-                </div>
-                <div class="text-center md:text-left">
-                    <p class="text-pink-600 font-bold mb-1 uppercase tracking-widest text-sm bg-white px-3 py-1 rounded-full shadow-sm border border-pink-200 inline-block">Projek Interaktif Oleh</p>
-                    <p class="text-3xl font-black text-slate-800 comic-font mt-2">Cikgu Aimuni</p>
+            <div class="flex justify-center items-center mb-8">
+                <div class="bg-white/90 p-6 md:p-8 rounded-[2rem] border-4 border-pink-300 shadow-xl pop-hover flex flex-col md:flex-row items-center gap-6 w-full max-w-2xl">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-pink-500 overflow-hidden shadow-inner bg-slate-100 shrink-0">
+                        <img src="C.AI (2).jpeg" alt="Cikgu Aimuni" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/ec4899/white?text=Cikgu+Aimuni'">
+                    </div>
+                    <div class="text-center md:text-left flex-1 w-full">
+                        <p class="text-pink-600 font-bold uppercase tracking-widest text-[10px] md:text-xs bg-pink-100 px-3 py-1 rounded-full inline-block mb-2 border border-pink-200">Disediakan Oleh</p>
+                        <h3 class="text-2xl md:text-3xl font-black text-slate-800 comic-font mb-4 leading-tight">Aimuni Athirah binti Latif</h3>
+                        <div class="space-y-3 text-sm md:text-base font-bold text-slate-600 bg-slate-50 p-4 rounded-xl border-2 border-slate-200 w-full">
+                            <p class="flex justify-between border-b border-slate-200 pb-2"><span class="text-slate-400">Angka Giliran:</span> <span class="text-indigo-600 font-black tracking-wider">2025022400049</span></p>
+                            <p class="flex justify-between pt-1"><span class="text-slate-400">No. K/P:</span> <span class="text-indigo-600 font-black tracking-wider">951117135480</span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div>
-                <button onclick="enterPortal(event)" class="bg-gradient-to-b from-green-400 to-emerald-600 hover:from-green-300 hover:to-emerald-500 text-white text-3xl comic-font py-4 px-12 rounded-full shadow-[0_10px_0_#065f46] hover:shadow-[0_5px_0_#065f46] hover:translate-y-2 transition-all flex items-center justify-center mx-auto gap-4 border-4 border-white">
-                    <i class="fa-solid fa-wand-magic-sparkles animate-pulse"></i> MULA MAIN!
-                </button>
-            </div>
+            <button onclick="enterPortal(event)" class="bg-gradient-to-b from-green-400 to-emerald-600 hover:from-green-300 hover:to-emerald-500 text-white text-2xl md:text-3xl font-black comic-font py-4 px-12 rounded-full shadow-[0_10px_0_#065f46] hover:shadow-[0_5px_0_#065f46] hover:translate-y-1 transition-all flex items-center justify-center mx-auto gap-3 border-4 border-white mt-4">
+                <i class="fa-solid fa-wand-magic-sparkles animate-pulse"></i> Masuk Dunia Seni
+            </button>
         </div>
     </div>
 
     <div class="color-bg"></div>
-    <div class="floating-bg" id="floating-bg"></div>
 
-    <!-- Butang Audio BGM Terapung -->
-    <button id="music-toggle" onclick="toggleBGM()" class="bg-white text-pink-500 border-4 border-pink-500 w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_8px_0_#be185d] hover:translate-y-1 hover:shadow-[0_4px_0_#be185d] transition-all pop-hover">
+    <button id="reader-toggle" onclick="toggleReaderMode()" class="bg-blue-500 text-white border-4 border-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-[0_6px_0_#1e3a8a] hover:translate-y-1 hover:shadow-[0_3px_0_#1e3a8a] transition-all pop-hover fixed bottom-24 right-6 z-[90] no-print">
+        <i class="fa-solid fa-ear-listen"></i>
+    </button>
+    <button id="music-toggle" onclick="toggleBGM()" class="bg-white text-pink-500 border-4 border-pink-500 w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-[0_6px_0_#be185d] hover:translate-y-1 hover:shadow-[0_3px_0_#be185d] transition-all pop-hover fixed bottom-6 right-6 z-[90] no-print">
         <i class="fa-solid fa-music"></i>
     </button>
 
-    <!-- Peta Pembelajaran (Sidebar) -->
-    <nav class="w-full md:w-72 bg-white/95 backdrop-blur-md shadow-2xl md:h-full overflow-y-auto flex-shrink-0 z-10 border-r-8 border-pink-300 no-print flex flex-col relative">
-        <div class="p-6 bg-gradient-to-br from-pink-500 to-rose-500 text-white text-center sticky top-0 z-20 shadow-xl border-b-4 border-pink-600">
-            <h1 class="text-3xl font-black comic-font drop-shadow-md"><i class="fa-solid fa-palette text-yellow-300"></i> Seni Tahun 2</h1>
-            <p class="text-pink-100 font-bold bg-black/20 rounded-full px-3 py-1 inline-block mt-2">Uli-Uli Tembikar</p>
+    <nav class="w-full md:w-72 bg-white/90 backdrop-blur-md shadow-2xl md:h-full overflow-y-auto flex-shrink-0 z-10 border-r-4 border-pink-300 no-print flex flex-col relative">
+        <div class="p-6 bg-gradient-to-br from-pink-500 to-rose-500 text-white text-center sticky top-0 z-20 shadow-lg border-b-4 border-pink-600">
+            <h1 class="text-2xl font-black comic-font drop-shadow-md"><i class="fa-solid fa-palette text-yellow-300"></i> Seni Tahun 2</h1>
         </div>
         
+        <div class="p-4 bg-pink-50 border-b-2 border-pink-100 flex flex-col items-center">
+            <div class="relative mb-2 group cursor-pointer" onclick="changeAvatar()">
+                <div id="student-avatar" class="w-16 h-16 bg-blue-200 rounded-full border-4 border-white shadow-md flex items-center justify-center text-3xl">👦</div>
+                <div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-pen text-white text-xs"></i></div>
+            </div>
+            <input type="text" id="sidebar-student-name" placeholder="Nama Anda" class="w-full text-center bg-white border-2 border-pink-200 rounded-full py-1 px-3 font-bold text-slate-700 text-sm focus:outline-none focus:border-pink-500 mb-2">
+            
+            <div class="flex gap-2" id="badges-container">
+                <div class="badge-icon w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs opacity-50 grayscale" title="Lencana Pelajar"><i class="fa-solid fa-book-open"></i></div>
+                <div class="badge-icon w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs opacity-50 grayscale" title="Lencana Pelukis"><i class="fa-solid fa-palette"></i></div>
+                <div class="badge-icon w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs opacity-50 grayscale" title="Lencana Artis"><i class="fa-solid fa-star"></i></div>
+            </div>
+        </div>
+
         <div class="p-4 flex-1">
-            <ul class="space-y-3 font-bold text-lg text-slate-600">
-                <li><button onclick="goToStep(1)" id="nav-1" class="nav-item active w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-house w-8 text-center mr-2 text-xl"></i> Laman Utama</button></li>
-                <li><button onclick="goToStep(2)" id="nav-2" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-bullseye w-8 text-center mr-2 text-xl text-blue-500"></i> Objektif</button></li>
-                <li><button onclick="goToStep(3)" id="nav-3" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-box w-8 text-center mr-2 text-xl text-purple-500"></i> Set Induksi</button></li>
-                <li><button onclick="goToStep(4)" id="nav-4" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-magnifying-glass w-8 text-center mr-2 text-xl text-green-500"></i> Jom Teroka</button></li>
-                <li><button onclick="goToStep(5)" id="nav-5" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-wand-magic-sparkles w-8 text-center mr-2 text-xl text-yellow-500"></i> Kad Magic</button></li>
-                <li><button onclick="goToStep(6)" id="nav-6" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-brands fa-youtube w-8 text-center mr-2 text-xl text-red-500"></i> Video PdP</button></li>
-                <li><button onclick="goToStep(7)" id="nav-7" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-paintbrush w-8 text-center mr-2 text-xl text-orange-500"></i> Studio Lukis</button></li>
-                <li><button onclick="goToStep(8)" id="nav-8" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-hands w-8 text-center mr-2 text-xl text-emerald-500"></i> Mari Menguli</button></li>
-                <li><button onclick="goToStep(9)" id="nav-9" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-images w-8 text-center mr-2 text-xl text-indigo-500"></i> Galeri Seni</button></li>
-                <li><button onclick="goToStep(10)" id="nav-10" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-comment-dots w-8 text-center mr-2 text-xl text-teal-500"></i> Apresiasi</button></li>
-                <li><button onclick="goToStep(11)" id="nav-11" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-star w-8 text-center mr-2 text-xl text-amber-500"></i> Uji Minda</button></li>
-                <li><button onclick="goToStep(12)" id="nav-12" class="nav-item w-full text-left px-4 py-4 rounded-2xl transition flex items-center border-2 border-transparent hover:border-pink-200"><i class="fa-solid fa-trophy w-8 text-center mr-2 text-xl text-yellow-500"></i> Ganjaran</button></li>
+            <ul class="space-y-1 font-bold text-slate-600 text-sm">
+                <li><button onclick="goToStep(1)" id="nav-1" class="nav-item active w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-house w-6 text-center mr-2 text-pink-500"></i> 1. Laman Utama</button></li>
+                <li><button onclick="goToStep(2)" id="nav-2" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-bullseye w-6 text-center mr-2 text-blue-500"></i> 2. DSKP & Objektif</button></li>
+                <li><button onclick="goToStep(3)" id="nav-3" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-book-open w-6 text-center mr-2 text-orange-500"></i> 3. Pengenalan</button></li>
+                <li><button onclick="goToStep(4)" id="nav-4" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-box w-6 text-center mr-2 text-purple-500"></i> 4. Set Induksi</button></li>
+                <li><button onclick="goToStep(5)" id="nav-5" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-magnifying-glass w-6 text-center mr-2 text-green-500"></i> 5. Jom Teroka</button></li>
+                <li><button onclick="goToStep(6)" id="nav-6" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-brands fa-youtube w-6 text-center mr-2 text-red-500"></i> 6. Video PdP</button></li>
+                <li><button onclick="goToStep(7)" id="nav-7" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-paintbrush w-6 text-center mr-2 text-teal-500"></i> 7. Studio & Galeri</button></li>
+                <li><button onclick="goToStep(8)" id="nav-8" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-hands w-6 text-center mr-2 text-emerald-500"></i> 8. Mari Menguli</button></li>
+                <li><button onclick="goToStep(9)" id="nav-9" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-comment-dots w-6 text-center mr-2 text-sky-500"></i> 9. Apresiasi</button></li>
+                <li><button onclick="goToStep(10)" id="nav-10" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-pen-to-square w-6 text-center mr-2 text-amber-500"></i> 10. Uji Minda PBD</button></li>
+                <li><button onclick="goToStep(11)" id="nav-11" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><i class="fa-solid fa-face-smile w-6 text-center mr-2 text-pink-400"></i> 11. Refleksi</button></li>
             </ul>
         </div>
         
-        <div class="p-6 bg-yellow-100 m-4 rounded-3xl border-4 border-yellow-400 text-center shadow-lg relative overflow-hidden">
-            <div class="absolute -right-4 -top-4 text-yellow-300 text-6xl opacity-30"><i class="fa-solid fa-star"></i></div>
-            <h3 class="font-black text-yellow-700 mb-2 text-xl comic-font relative z-10">Kumpul Bintang!</h3>
-            <div class="flex justify-center text-yellow-500 text-3xl mb-2 relative z-10 drop-shadow-md" id="star-container">
-                <i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i>
-            </div>
-            <p class="text-sm text-yellow-800 font-bold bg-white inline-block px-4 py-1 rounded-full border-2 border-yellow-300">Tahap: <span id="star-count">1/12</span></p>
+        <div class="p-5 bg-yellow-100 m-4 rounded-3xl border-4 border-yellow-400 text-center shadow-lg relative overflow-hidden">
+            <h3 class="font-black text-yellow-700 mb-2 text-lg comic-font relative z-10">Kumpul Bintang!</h3>
+            <div class="flex justify-center text-yellow-500 text-2xl mb-2 relative z-10 drop-shadow-md" id="star-container"><i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i></div>
+            <p class="text-xs text-yellow-800 font-bold bg-white inline-block px-3 py-1 rounded-full border-2 border-yellow-300">Tahap: <span id="star-count">1/11</span></p>
         </div>
     </nav>
 
     <main class="flex-1 h-full overflow-y-auto p-4 md:p-8 relative scroll-smooth bg-white/40">
-        <div class="max-w-5xl mx-auto pb-32">
+        <div class="max-w-4xl mx-auto pb-32">
 
-            <!-- STEP 1: Laman Utama Portal -->
+            <!-- STEP 1: Laman Utama -->
             <div id="step-1" class="step-container active">
-                <div class="text-center pt-10 md:pt-16 animate-float-fast relative">
-                    
-                    <!-- Butang Kembali ke Landing Page -->
-                    <button onclick="showLandingPage(event)" class="absolute -top-4 md:top-0 left-0 md:left-4 bg-white text-pink-500 font-black px-6 py-3 rounded-full shadow-[0_6px_0_#fbcfe8] hover:translate-y-1 hover:shadow-[0_2px_0_#fbcfe8] transition-all border-4 border-pink-200 z-20 flex items-center gap-2 pop-hover comic-font">
-                        <i class="fa-solid fa-arrow-left"></i> Muka Depan
-                    </button>
-
+                <div class="text-center pt-10 md:pt-16 animate-float relative">
+                    <button onclick="showLandingPage(event)" class="absolute -top-4 left-0 md:left-4 bg-white text-pink-500 font-black px-6 py-3 rounded-full shadow-[0_6px_0_#fbcfe8] hover:translate-y-1 transition-all border-4 border-pink-200 z-20 flex items-center gap-2 pop-hover comic-font"><i class="fa-solid fa-arrow-left"></i> Muka Depan</button>
                     <div class="inline-block bg-white border-8 border-pink-400 rounded-[3rem] p-8 md:p-16 shadow-[0_20px_0_#f472b6] relative mt-12 md:mt-0">
-                        
-                        <!-- Butang TTS Besar -->
-                        <button onclick="speakText('Selamat Datang ke Dunia Tembikar! Mari kita belajar buat tembikar yang cantik bersama-sama.')" class="btn-tts absolute -top-8 -right-8 bg-sky-400 text-white w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-[0_8px_0_#0284c7] border-4 border-white z-20">
-                            <i class="fa-solid fa-volume-up"></i>
-                        </button>
-
-                        <div class="flex justify-center items-center gap-6 mb-6">
-                            <!-- Tobi Kiri -->
-                            <svg width="80" height="80" viewBox="0 0 100 100" class="animate-bounce" style="animation-delay: 0.2s">
-                                <path d="M 20 50 C 10 90, 90 90, 80 50 C 70 20, 30 20, 20 50 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="4"/>
-                                <path d="M 40 60 Q 50 70 60 60" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                            </svg>
-                            <i class="fa-solid fa-hands-holding-circle text-7xl text-pink-500 drop-shadow-md"></i>
-                            <!-- Tobi Kanan -->
-                            <svg width="80" height="80" viewBox="0 0 100 100" class="animate-bounce" style="animation-delay: 0.5s">
-                                <path d="M 20 50 C 10 90, 90 90, 80 50 C 70 20, 30 20, 20 50 Z" fill="#10b981" stroke="#047857" stroke-width="4"/>
-                                <circle cx="50" cy="65" r="10" fill="white"/>
-                            </svg>
-                        </div>
-
-                        <h2 class="text-4xl font-bold text-purple-600 mb-4 uppercase tracking-widest">Selamat Datang ke</h2>
-                        <h1 class="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500 comic-font mb-6 drop-shadow-sm">Dunia Tembikar!</h1>
-                        <p class="text-2xl text-slate-600 font-bold mb-10 max-w-lg mx-auto leading-relaxed bg-slate-100 p-4 rounded-2xl">Mari kita belajar buat tembikar yang cantik menggunakan jari-jemari magis kita.</p>
-                        
-                        <button onclick="goToStep(2)" class="bg-pink-500 text-white text-3xl font-black comic-font py-6 px-12 rounded-full hover:bg-pink-400 transition-transform transform hover:scale-110 shadow-[0_12px_0_#be185d] hover:shadow-[0_6px_0_#be185d] hover:translate-y-2 border-4 border-white">
-                            Mula Belajar! <i class="fa-solid fa-arrow-right ml-4"></i>
-                        </button>
+                        <button onclick="speakText('Selamat Datang ke Dunia Tembikar! Mari kita belajar buat tembikar yang cantik.')" class="absolute -top-8 -right-8 bg-sky-400 text-white w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-[0_8px_0_#0284c7] border-4 border-white z-20 hover:scale-110"><i class="fa-solid fa-volume-up"></i></button>
+                        <h2 class="text-3xl font-bold text-purple-600 mb-2 uppercase tracking-widest">Selamat Datang ke</h2>
+                        <h1 class="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500 comic-font mb-6 drop-shadow-sm">Dunia Tembikar!</h1>
+                        <p class="text-xl text-slate-600 font-bold mb-10 max-w-lg mx-auto bg-slate-100 p-4 rounded-2xl">Mari kita belajar buat tembikar yang cantik menggunakan jari-jemari magis kita bersama Cikgu Aimuni.</p>
+                        <button onclick="goToStep(2)" class="bg-pink-500 text-white text-2xl font-black comic-font py-5 px-10 rounded-full shadow-[0_10px_0_#be185d] border-4 border-white hover:scale-105 transition-transform">Mula Belajar! <i class="fa-solid fa-arrow-right ml-3"></i></button>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 2: Objektif -->
+            <!-- STEP 2: Objektif & DSKP -->
             <div id="step-2" class="step-container">
-                <div class="bg-white border-8 border-blue-400 rounded-[3rem] p-10 shadow-[0_20px_0_#60a5fa] relative mt-10">
+                <div class="bg-white border-8 border-blue-400 rounded-[3rem] p-8 md:p-12 shadow-[0_20px_0_#60a5fa] relative mt-10">
+                    <button onclick="speakText('Objektif pembelajaran hari ini ialah murid dapat menghasilkan karya tembikar mangkuk teknik picitan dengan jalinan yang menarik.')" class="absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20 hover:scale-110"><i class="fa-solid fa-volume-up"></i></button>
+                    <h2 class="text-4xl md:text-5xl font-black text-center text-blue-600 comic-font mb-8"><i class="fa-solid fa-bullseye text-yellow-400"></i> Matlamat Pembelajaran</h2>
                     
-                    <button onclick="speakText('Objektif pembelajaran hari ini. Di akhir kelas, kamu akan dapat memahami maksud tembikar, mengenal bentuk dan jalinan, membuat tembikar picitan, dan menceritakan hasil karya kamu.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
-
-                    <div class="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white w-32 h-32 rounded-full flex items-center justify-center text-6xl shadow-xl border-8 border-white">
-                        <i class="fa-solid fa-bullseye animate-pulse"></i>
-                    </div>
-
-                    <h2 class="text-5xl font-black text-center text-blue-600 comic-font mb-10 mt-10">Apa Kita Belajar Hari Ini?</h2>
-                    
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="bg-blue-50 p-8 rounded-3xl border-4 border-blue-200 pop-hover">
-                            <h3 class="text-3xl font-black text-blue-700 mb-6 flex items-center"><span class="bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center mr-4 shadow-md">1</span> Objektif</h3>
-                            <ul class="space-y-4 text-xl text-slate-700 font-bold">
-                                <li class="flex items-center bg-white p-3 rounded-xl shadow-sm"><i class="fa-solid fa-check-circle text-green-500 text-2xl mr-4"></i> Memahami maksud tembikar.</li>
-                                <li class="flex items-center bg-white p-3 rounded-xl shadow-sm"><i class="fa-solid fa-check-circle text-green-500 text-2xl mr-4"></i> Mengenal Bentuk & Jalinan.</li>
-                                <li class="flex items-center bg-white p-3 rounded-xl shadow-sm"><i class="fa-solid fa-check-circle text-green-500 text-2xl mr-4"></i> Membuat tembikar picitan.</li>
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-blue-50 p-6 rounded-3xl border-4 border-blue-200 pop-hover">
+                            <h3 class="font-black text-blue-700 mb-3 text-xl"><i class="fa-solid fa-book mr-2"></i> Standard Kandungan</h3>
+                            <ul class="text-slate-700 font-bold space-y-2">
+                                <li>1.1 Bahasa Seni Visual</li>
+                                <li>2.1 Kemahiran Seni Visual</li>
+                                <li>3.1 Penghasilan Karya Kreatif</li>
                             </ul>
                         </div>
-                        
-                        <div class="bg-yellow-50 p-8 rounded-3xl border-4 border-yellow-300 pop-hover">
-                            <h3 class="text-3xl font-black text-yellow-600 mb-6 flex items-center"><span class="bg-yellow-500 text-white w-12 h-12 rounded-full flex items-center justify-center mr-4 shadow-md">2</span> Kejayaan</h3>
-                            <p class="font-black text-slate-700 mb-4 text-xl">Saya berjaya apabila saya dapat:</p>
-                            <ul class="space-y-4 text-xl text-slate-700 font-bold">
-                                <li class="flex items-center bg-white p-3 rounded-xl border border-yellow-200"><i class="fa-solid fa-star text-yellow-500 text-3xl mr-4 animate-spin-slow"></i> Terangkan ciri tembikar.</li>
-                                <li class="flex items-center bg-white p-3 rounded-xl border border-yellow-200"><i class="fa-solid fa-star text-yellow-500 text-3xl mr-4 animate-spin-slow"></i> Buat 1 mangkuk tembikar.</li>
-                                <li class="flex items-center bg-white p-3 rounded-xl border border-yellow-200"><i class="fa-solid fa-star text-yellow-500 text-3xl mr-4 animate-spin-slow"></i> Cerita tentang karya saya.</li>
+                        <div class="bg-indigo-50 p-6 rounded-3xl border-4 border-indigo-200 pop-hover">
+                            <h3 class="font-black text-indigo-700 mb-3 text-xl"><i class="fa-solid fa-list-check mr-2"></i> Standard Pembelajaran</h3>
+                            <ul class="text-slate-700 font-bold space-y-2">
+                                <li>1.1.4 Mengenal bahasa seni visual pada kraf tembikar.</li>
+                                <li>2.1.4 Mengaplikasikan teknik picitan.</li>
                             </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-green-50 p-8 rounded-3xl border-4 border-green-300 pop-hover text-center mb-6">
+                        <h3 class="font-black text-green-700 mb-4 text-2xl"><i class="fa-solid fa-flag-checkered text-green-500"></i> Objektif Pembelajaran</h3>
+                        <p class="font-bold text-lg text-slate-700">Pada akhir pembelajaran, murid dapat menghasilkan sekurang-kurangnya satu karya tembikar mangkuk menggunakan teknik picitan berserta jalinan yang menarik.</p>
+                    </div>
+
+                    <div class="bg-amber-50 p-6 rounded-3xl border-4 border-amber-300 pop-hover">
+                        <h3 class="font-black text-amber-700 mb-4 text-xl"><i class="fa-solid fa-check-circle text-amber-500"></i> Kriteria Kejayaan</h3>
+                        <p class="font-bold text-slate-700 mb-2">Saya akan berjaya jika saya dapat:</p>
+                        <ul class="text-slate-600 font-bold space-y-2 ml-2">
+                            <li class="flex items-center"><i class="fa-solid fa-star text-yellow-500 mr-3"></i> Menyebut bentuk dan jalinan pada tembikar.</li>
+                            <li class="flex items-center"><i class="fa-solid fa-star text-yellow-500 mr-3"></i> Menguli tanah liat menjadi bola bulat.</li>
+                            <li class="flex items-center"><i class="fa-solid fa-star text-yellow-500 mr-3"></i> Memicit tanah liat menjadi mangkuk.</li>
+                            <li class="flex items-center"><i class="fa-solid fa-star text-yellow-500 mr-3"></i> Membuat corak jalinan pada dinding mangkuk.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step-3" class="step-container">
+                <div class="bg-white border-8 border-orange-400 rounded-[3rem] p-8 md:p-12 shadow-[0_20px_0_#fb923c] relative mt-10">
+                    <button onclick="speakText('Tembikar ialah kraf tradisional nenek moyang kita. Ia diperbuat daripada tanah liat yang diuli, dibentuk, dan dibakar dalam api yang sangat panas supaya menjadi keras dan tidak mudah pecah.')" class="absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20 hover:scale-110"><i class="fa-solid fa-volume-up"></i></button>
+                    <h2 class="text-4xl md:text-5xl font-black text-center text-orange-600 comic-font mb-8"><i class="fa-solid fa-book-open text-orange-400"></i> Apa Itu Tembikar?</h2>
+                    
+                    <div class="bg-orange-50 rounded-3xl p-8 border-4 border-orange-200 text-center font-bold text-xl mb-8 leading-relaxed text-slate-700 shadow-inner">
+                        Tembikar ialah kraf tradisional nenek moyang kita. Ia diperbuat daripada <span class="text-orange-700 font-black bg-orange-200 px-2 py-1 rounded">tanah liat</span>. Tanah liat ini perlu diuli seperti adunan roti, dibentuk dengan tangan, dan dibakar di dalam api yang sangat panas supaya ia menjadi keras.
+                    </div>
+                    
+                    <h3 class="text-2xl font-black text-center text-slate-700 mb-6 comic-font">3 Tembikar Terkenal di Malaysia:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div class="bg-slate-800 text-white p-6 rounded-3xl pop-hover border-4 border-slate-600">
+                            <div class="text-5xl mb-3">🏺</div>
+                            <h4 class="font-black text-2xl text-yellow-400 mb-2">Labu Sayong</h4>
+                            <p class="text-sm font-bold opacity-90">Berasal dari Perak. Bentuknya seperti buah labu, boleh menyejukkan air minuman.</p>
+                        </div>
+                        <div class="bg-amber-100 text-amber-900 p-6 rounded-3xl pop-hover border-4 border-amber-300">
+                            <div class="text-5xl mb-3">🥘</div>
+                            <h4 class="font-black text-2xl text-amber-700 mb-2">Tembikar Mambong</h4>
+                            <p class="text-sm font-bold opacity-90">Berasal dari Kelantan. Biasanya berbentuk periuk digunakan untuk memasak.</p>
+                        </div>
+                        <div class="bg-rose-100 text-rose-900 p-6 rounded-3xl pop-hover border-4 border-rose-300">
+                            <div class="text-5xl mb-3">🏺</div>
+                            <h4 class="font-black text-2xl text-rose-700 mb-2">Tembikar Sarawak</h4>
+                            <p class="text-sm font-bold opacity-90">Berasal dari Sarawak. Dihiasi dengan corak ukiran yang sangat cantik.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 3: Set Induksi -->
-            <div id="step-3" class="step-container">
-                <div class="bg-white border-8 border-purple-400 rounded-[3rem] p-10 shadow-[0_20px_0_#a855f7] relative mt-10">
+            <div id="step-4" class="step-container">
+                <div class="bg-white border-8 border-purple-400 rounded-[3rem] p-10 md:p-14 shadow-[0_20px_0_#a855f7] relative mt-10">
+                    <h2 class="text-5xl font-black text-center text-purple-600 comic-font mb-4"><i class="fa-solid fa-box text-yellow-400"></i> Kotak Misteri</h2>
+                    <p class="text-center text-slate-500 text-2xl font-bold mb-10">Cuba teka, apakah benda di dalam kotak ini?</p>
                     
-                    <button onclick="speakText('Kotak misteri digital! Cuba teka, apakah yang ada di dalam kotak ini? Klik pada kotak hitam untuk membukanya.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
-
-                    <h2 class="text-5xl font-black text-center text-purple-600 comic-font mb-4"><i class="fa-solid fa-box text-yellow-400 drop-shadow-md"></i> Kotak Misteri Digital</h2>
-                    <p class="text-center text-slate-500 text-2xl font-bold mb-10">Cuba teka, apakah benda ini?</p>
-
-                    <div class="max-w-lg mx-auto bg-slate-100 rounded-[3rem] p-6 shadow-xl border-4 border-slate-300 pop-hover wiggle-hover relative">
-                        <div id="mystery-box" class="relative w-full h-80 bg-amber-100 rounded-3xl overflow-hidden cursor-pointer flex items-center justify-center border-8 border-dashed border-amber-300 transition-all" onclick="revealMystery()">
-                            <!-- Overlay -->
+                    <div class="max-w-lg mx-auto bg-slate-100 rounded-[3rem] p-6 shadow-2xl border-4 border-slate-300 pop-hover wiggle-hover relative">
+                        <div id="mystery-box" class="relative w-full h-80 bg-gradient-to-br from-amber-100 to-amber-200 rounded-3xl overflow-hidden cursor-pointer flex items-center justify-center border-8 border-dashed border-amber-400 transition-all shadow-inner" onclick="revealMystery()">
+                            
                             <div id="mystery-overlay" class="absolute inset-0 bg-slate-800 z-10 flex flex-col items-center justify-center text-white transition-all duration-500">
-                                <i class="fa-solid fa-box text-8xl text-yellow-400 mb-6 animate-pulse drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]"></i>
+                                <i class="fa-solid fa-box text-8xl text-yellow-400 mb-6 animate-pulse"></i>
                                 <p class="font-black text-3xl bg-slate-900 px-8 py-3 rounded-full border-4 border-slate-600 shadow-lg">KLIK BUKA!</p>
                             </div>
                             
-                            <!-- Labu Sayong -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" class="h-full drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)] transform scale-90 transition-transform duration-500" id="labu-svg">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" class="h-full drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)] transform scale-90 transition-transform duration-500 hidden" id="labu-svg">
                                 <path d="M 100 20 C 110 20, 115 30, 115 50 C 115 80, 130 90, 130 110 C 130 130, 110 140, 110 150 C 110 160, 150 180, 160 220 C 170 260, 130 280, 100 280 C 70 280, 30 260, 40 220 C 50 180, 90 160, 90 150 C 90 140, 70 130, 70 110 C 70 90, 85 80, 85 50 C 85 30, 90 20, 100 20 Z" fill="#292524" />
-                                <path d="M 85 20 L 115 20 L 115 25 L 85 25 Z" fill="#1c1917" />
-                                <path d="M 60 220 C 55 200, 70 180, 90 170" fill="none" stroke="#44403c" stroke-width="5" stroke-linecap="round"/>
-                                <path d="M 80 110 C 75 100, 80 90, 90 85" fill="none" stroke="#44403c" stroke-width="4" stroke-linecap="round"/>
-                                <path d="M 50 240 Q 100 260 150 240" fill="none" stroke="#44403c" stroke-width="3" stroke-dasharray="4,4"/>
-                                <path d="M 45 220 Q 100 240 155 220" fill="none" stroke="#44403c" stroke-width="3" stroke-dasharray="4,4"/>
                             </svg>
                         </div>
                     </div>
-
-                    <div class="mt-10 text-center bg-green-50 rounded-3xl p-6 border-4 border-green-300 hidden transition-all" id="mystery-questions">
-                        <h3 class="text-4xl font-black text-green-600 mb-6 comic-font animate-bounce"><i class="fa-solid fa-star text-yellow-400"></i> TADAA! Ini Tembikar!</h3>
-                        <div class="flex justify-center gap-4 text-xl text-slate-700 font-bold flex-wrap">
-                            <span class="bg-white px-6 py-3 rounded-full border-2 border-green-200 shadow-sm"><i class="fa-solid fa-circle-question text-pink-500 mr-2"></i> Pernah lihat?</span>
-                            <span class="bg-white px-6 py-3 rounded-full border-2 border-green-200 shadow-sm"><i class="fa-solid fa-circle-question text-pink-500 mr-2"></i> Guna untuk apa?</span>
-                            <span class="bg-white px-6 py-3 rounded-full border-2 border-green-200 shadow-sm"><i class="fa-solid fa-circle-question text-pink-500 mr-2"></i> Buat dari apa?</span>
-                        </div>
-                        <button onclick="speakText('Tadaaa! Ini ialah Tembikar Labu Sayong. Pernahkah kamu melihatnya? Apakah kegunaannya? Dan dibuat daripada apa?')" class="mt-4 bg-sky-400 text-white px-6 py-2 rounded-full font-bold shadow-[0_4px_0_#0284c7] active:translate-y-1 active:shadow-none"><i class="fa-solid fa-volume-up mr-2"></i> Dengar Jawapan</button>
+                    
+                    <div class="mt-10 text-center bg-green-50 rounded-3xl p-6 border-4 border-green-300 hidden animate-float" id="mystery-questions">
+                        <h3 class="text-4xl font-black text-green-600 comic-font"><i class="fa-solid fa-star text-yellow-400"></i> TADAA! Ini Tembikar!</h3>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 4: Jom Teroka -->
-            <div id="step-4" class="step-container">
-                <div class="bg-white border-8 border-green-400 rounded-[3rem] p-10 shadow-[0_20px_0_#4ade80] relative mt-10">
-                    <button onclick="speakText('Jom teroka ciri tembikar! Klik pada mana-mana gambar pasu di bawah untuk melihat ciri-cirinya seperti bentuk, jalinan, imbangan dan kepelbagaian.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
-
-                    <h2 class="text-5xl font-black text-center text-green-600 comic-font mb-4"><i class="fa-solid fa-magnifying-glass text-slate-800"></i> Jom Teroka</h2>
-                    <p class="text-center text-slate-500 text-2xl font-bold mb-10 bg-slate-100 p-4 rounded-full max-w-2xl mx-auto"><i class="fa-solid fa-hand-pointer text-pink-500 animate-bounce"></i> Klik gambar tembikar di bawah!</p>
-
-                    <div class="flex flex-wrap justify-center gap-8 mb-10">
-                        <div class="w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-orange-300 to-red-400 rounded-full flex items-center justify-center cursor-pointer border-8 border-white pop-hover shadow-xl" onclick="showTraits(event)">
-                            <svg width="100" height="120" viewBox="0 0 100 120" class="drop-shadow-xl"><path d="M 30 20 C 30 10, 70 10, 70 20 C 70 40, 90 60, 90 90 C 90 120, 10 120, 10 90 C 10 60, 30 40, 30 20 Z" fill="#9a3412" /><ellipse cx="50" cy="20" rx="20" ry="5" fill="#78350f" /></svg>
-                        </div>
-                        <div class="w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-blue-300 to-indigo-400 rounded-full flex items-center justify-center cursor-pointer border-8 border-white pop-hover shadow-xl" onclick="showTraits(event)">
-                            <svg width="120" height="100" viewBox="0 0 120 100" class="drop-shadow-xl"><path d="M 10 40 C 10 10, 110 10, 110 40 C 110 90, 80 100, 60 100 C 40 100, 10 90, 10 40 Z" fill="#1e3a8a" /><ellipse cx="60" cy="40" rx="50" ry="10" fill="#172554" /></svg>
-                        </div>
-                        <div class="w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-purple-300 to-pink-400 rounded-full flex items-center justify-center cursor-pointer border-8 border-white pop-hover shadow-xl" onclick="showTraits(event)">
-                            <svg width="100" height="120" viewBox="0 0 100 120" class="drop-shadow-xl"><rect x="30" y="20" width="40" height="80" rx="10" fill="#6b21a8" /><path d="M 20 20 L 80 20 L 70 40 L 30 40 Z" fill="#4c1d95" /></svg>
-                        </div>
-                    </div>
-
-                    <div id="traits-container" class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center hidden opacity-0 transition-all duration-700 transform translate-y-10">
-                        <div class="bg-blue-100 p-6 rounded-3xl border-4 border-blue-400 shadow-lg">
-                            <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto text-blue-500 text-4xl mb-4 shadow-inner border-2 border-blue-200"><i class="fa-solid fa-cube"></i></div>
-                            <h3 class="font-black text-blue-700 text-2xl">Bentuk</h3>
-                        </div>
-                        <div class="bg-green-100 p-6 rounded-3xl border-4 border-green-400 shadow-lg">
-                            <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto text-green-500 text-4xl mb-4 shadow-inner border-2 border-green-200"><i class="fa-solid fa-fingerprint"></i></div>
-                            <h3 class="font-black text-green-700 text-2xl">Jalinan</h3>
-                        </div>
-                        <div class="bg-purple-100 p-6 rounded-3xl border-4 border-purple-400 shadow-lg">
-                            <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto text-purple-500 text-4xl mb-4 shadow-inner border-2 border-purple-200"><i class="fa-solid fa-scale-balanced"></i></div>
-                            <h3 class="font-black text-purple-700 text-2xl">Imbangan</h3>
-                        </div>
-                        <div class="bg-orange-100 p-6 rounded-3xl border-4 border-orange-400 shadow-lg">
-                            <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto text-orange-500 text-4xl mb-4 shadow-inner border-2 border-orange-200"><i class="fa-solid fa-shapes"></i></div>
-                            <h3 class="font-black text-orange-700 text-2xl">Pelbagai</h3>
-                        </div>
-                    </div>
-
-                    <!-- TAMBAHAN: Hasil Karya Guru -->
-                    <div class="mt-16 bg-gradient-to-br from-pink-100 to-rose-200 rounded-[3rem] p-8 md:p-12 border-8 border-pink-400 shadow-xl relative overflow-visible pop-hover">
-                        <!-- Label Terapung -->
-                        <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-pink-500 text-white font-black px-8 py-3 rounded-full border-4 border-white shadow-lg z-10 comic-font text-2xl flex items-center w-max animate-bounce" style="animation-duration: 2s;">
-                            <i class="fa-solid fa-crown text-yellow-300 mr-3 text-3xl"></i> Karya Inspirasi
-                        </div>
-
-                        <h3 class="text-4xl font-black text-center text-pink-700 comic-font mb-4 mt-6">Tembikar Cikgu Aimuni</h3>
-                        <p class="text-center text-slate-700 font-bold text-xl mb-10 bg-white/60 py-3 px-6 rounded-full inline-block mx-auto flex justify-center w-max border-2 border-pink-200">Mari kaji ciri-ciri pada pasu yang cikgu hasilkan ini!</p>
-
-                        <div class="flex flex-col md:flex-row items-center justify-center gap-12">
-                            <!-- Gambar Karya (Image Interactive) -->
-                            <div class="relative w-64 h-64 bg-white rounded-full border-8 border-pink-400 shadow-[0_0_40px_rgba(244,114,182,0.6)] flex items-center justify-center cursor-pointer group" onclick="speakText('Ini ialah tembikar cikgu. Cikgu gunakan warna-warna yang terang seperti hijau, biru dan kuning. Bentuknya seperti bekas silinder, jalinannya rasa kasar kerana teknik picitan, dan ia sangat kukuh. Menarik kan?')">
-                                <!-- Audio Hint -->
-                                <div class="absolute -right-2 -top-2 bg-sky-400 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl border-4 border-white z-20 group-hover:scale-125 transition-transform animate-pulse">
-                                    <i class="fa-solid fa-volume-up"></i>
-                                </div>
-                                
-                                <!-- Imej Tembikar Sebenar -->
-                                <div class="w-full h-full rounded-full overflow-hidden group-hover:rotate-3 transition-transform duration-300 transform group-hover:scale-110">
-                                    <img src="contoh karya guru.jpg" alt="Karya Cikgu Aimuni" class="w-full h-full object-cover">
-                                </div>
-                            </div>
-
-                            <!-- Ciri-ciri Karya -->
-                            <div class="flex flex-col gap-5">
-                                <div class="bg-white px-8 py-4 rounded-[2rem] border-4 border-pink-300 shadow-lg flex items-center gap-5 transform hover:translate-x-4 transition-transform pop-hover">
-                                    <div class="bg-blue-100 text-blue-500 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl border-2 border-blue-200"><i class="fa-solid fa-cube"></i></div>
-                                    <div>
-                                        <p class="font-black text-pink-600 uppercase text-sm tracking-widest">Bentuk</p>
-                                        <p class="font-bold text-slate-700 text-2xl comic-font">Bekas Silinder</p>
-                                    </div>
-                                </div>
-                                <div class="bg-white px-8 py-4 rounded-[2rem] border-4 border-pink-300 shadow-lg flex items-center gap-5 transform hover:translate-x-4 transition-transform pop-hover" style="transition-delay: 0.1s">
-                                    <div class="bg-green-100 text-green-500 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl border-2 border-green-200"><i class="fa-solid fa-fingerprint"></i></div>
-                                    <div>
-                                        <p class="font-black text-pink-600 uppercase text-sm tracking-widest">Jalinan</p>
-                                        <p class="font-bold text-slate-700 text-2xl comic-font">Kasar & Beralun</p>
-                                    </div>
-                                </div>
-                                <div class="bg-white px-8 py-4 rounded-[2rem] border-4 border-pink-300 shadow-lg flex items-center gap-5 transform hover:translate-x-4 transition-transform pop-hover" style="transition-delay: 0.2s">
-                                    <div class="bg-purple-100 text-purple-500 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl border-2 border-purple-200"><i class="fa-solid fa-scale-balanced"></i></div>
-                                    <div>
-                                        <p class="font-black text-pink-600 uppercase text-sm tracking-widest">Imbangan</p>
-                                        <p class="font-bold text-slate-700 text-2xl comic-font">Kukuh & Stabil</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 5: Kad Seni Magic -->
             <div id="step-5" class="step-container">
-                <div class="bg-white border-8 border-pink-400 rounded-[3rem] p-10 shadow-[0_20px_0_#f472b6] relative mt-10">
-                    <button onclick="speakText('Kad Seni Magic! Sila klik pada setiap kad untuk melihat keajaiban visual dan belajar lebih mendalam tentang bentuk, jalinan, imbangan dan kepelbagaian.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
-
-                    <h2 class="text-5xl font-black text-center text-pink-600 comic-font mb-4"><i class="fa-solid fa-wand-magic-sparkles text-yellow-400"></i> Kad Seni Magic</h2>
-                    <p class="text-center text-slate-500 mb-10 text-2xl font-bold bg-pink-50 p-4 rounded-full max-w-xl mx-auto"><i class="fa-solid fa-hand-pointer text-pink-500 animate-bounce"></i> Klik setiap kad untuk lihat magik!</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        
-                        <!-- Kad Bentuk -->
-                        <div class="magic-card bg-sky-100 rounded-[2.5rem] p-8 shadow-xl border-4 border-sky-300 relative overflow-hidden" onclick="toggleMagic(this, 'glow-effect')">
-                            <h3 class="text-4xl font-black text-center mb-4 text-sky-700 comic-font">Bentuk</h3>
-                            <p class="text-center text-slate-700 mb-6 font-bold text-xl">Tembikar ada bentuk 3D. Ia boleh disentuh dan ada isi padu.</p>
-                            <div class="flex justify-center mb-6 h-40 items-end">
-                                <svg width="120" height="140" viewBox="0 0 100 120" class="drop-shadow-2xl">
-                                    <path d="M 30 20 C 30 10, 70 10, 70 20 C 70 40, 90 60, 90 90 C 90 120, 10 120, 10 90 C 10 60, 30 40, 30 20 Z" fill="#0284c7" />
-                                    <ellipse cx="50" cy="20" rx="20" ry="5" fill="#075985" />
-                                    <path d="M 20 90 C 15 70, 30 50, 40 40" fill="none" stroke="#bae6fd" stroke-width="4" stroke-linecap="round" />
-                                </svg>
-                            </div>
-                            <div class="text-center font-black text-white bg-sky-500 py-2 rounded-full shadow-inner">KLIK UNTUK CAHAYA!</div>
+                <div class="bg-white border-8 border-green-400 rounded-[3rem] p-8 md:p-12 shadow-[0_20px_0_#4ade80] relative mt-10">
+                    <h2 class="text-4xl md:text-5xl font-black text-center text-green-600 comic-font mb-8"><i class="fa-solid fa-magnifying-glass"></i> Jom Teroka Seni Tembikar</h2>
+                    
+                    <!-- Karya Guru -->
+                    <div class="bg-slate-50 p-6 md:p-8 rounded-[2rem] border-4 border-slate-200 mb-12 flex flex-col md:flex-row items-center gap-8 justify-center pop-hover shadow-lg">
+                        <div class="w-64 h-64 rounded-2xl border-8 border-white shadow-xl overflow-hidden rotate-[-2deg] shrink-0 bg-slate-200">
+                            <img src="contoh karya guru_2.jpg" alt="Tembikar Cikgu Aimuni" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/3b82f6/white?text=Gambar+Karya+Cikgu'">
                         </div>
-
-                        <!-- Kad Jalinan -->
-                        <div class="magic-card bg-emerald-100 rounded-[2.5rem] p-8 shadow-xl border-4 border-emerald-300 relative overflow-hidden" onclick="toggleMagic(this, 'zoom-effect')">
-                            <h3 class="text-4xl font-black text-center mb-4 text-emerald-700 comic-font z-10 relative">Jalinan</h3>
-                            <p class="text-center text-slate-700 mb-6 font-bold text-xl z-10 relative">Permukaan tembikar boleh rasa kasar, licin atau berbiji-biji.</p>
-                            <div class="flex justify-center mb-6 h-40 items-center">
-                                <svg width="120" height="120" viewBox="0 0 100 100" class="drop-shadow-2xl transition-transform duration-500 z-0">
-                                    <circle cx="50" cy="50" r="45" fill="#10b981" />
-                                    <ellipse cx="50" cy="15" rx="25" ry="8" fill="#047857" />
-                                    <path d="M 10 50 Q 25 30, 50 50 T 90 50" fill="none" stroke="#022c22" stroke-width="6" stroke-dasharray="5,5" />
-                                    <path d="M 15 70 Q 30 50, 50 70 T 85 70" fill="none" stroke="#022c22" stroke-width="6" />
-                                    <circle cx="30" cy="60" r="4" fill="#022c22"/> <circle cx="50" cy="60" r="4" fill="#022c22"/> <circle cx="70" cy="60" r="4" fill="#022c22"/>
-                                </svg>
-                            </div>
-                            <div class="text-center font-black text-white bg-emerald-500 py-2 rounded-full shadow-inner relative z-10">KLIK UNTUK ZOOM!</div>
+                        <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 flex-1 w-full max-w-sm text-center md:text-left">
+                            <h3 class="text-3xl font-black text-slate-700 comic-font mb-4">Karya Cikgu Aimuni</h3>
+                            <p class="text-slate-500 font-bold mb-4">Mari kita teliti apakah Bahasa Seni Visual yang cikgu gunakan pada tembikar hijau biru ini.</p>
+                            <ul class="space-y-3 font-bold text-slate-700 bg-blue-50 p-4 rounded-xl border-2 border-blue-100 inline-block text-left">
+                                <li class="flex items-center"><i class="fa-solid fa-cube text-blue-500 mr-3 text-xl w-6"></i> Bentuk: Silinder (Mangkuk)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-fingerprint text-green-500 mr-3 text-xl w-6"></i> Jalinan: Kasar & Beralun</li>
+                            </ul>
                         </div>
-
-                        <!-- Kad Imbangan -->
-                        <div class="magic-card bg-fuchsia-100 rounded-[2.5rem] p-8 shadow-xl border-4 border-fuchsia-300 relative" onclick="toggleMagic(this, 'symmetry-effect')">
-                            <h3 class="text-4xl font-black text-center mb-4 text-fuchsia-700 comic-font">Imbangan</h3>
-                            <p class="text-center text-slate-700 mb-6 font-bold text-xl">Bentuk yang sama pada kiri dan kanan supaya ia kukuh berdiri.</p>
-                            <div class="flex justify-center mb-6 h-40 items-end relative">
-                                <div class="symmetry-line absolute top-0 bottom-0 left-1/2 w-2 bg-red-500 opacity-0 z-20 shadow-[0_0_10px_red]" style="transform: translateX(-50%);"></div>
-                                <svg width="120" height="120" viewBox="0 0 100 100" class="drop-shadow-2xl relative z-10">
-                                    <path d="M 20 20 L 80 20 L 90 90 L 10 90 Z" fill="#9333ea" />
-                                    <rect x="30" y="10" width="40" height="10" fill="#581c87" />
-                                </svg>
-                            </div>
-                            <div class="text-center font-black text-white bg-fuchsia-500 py-2 rounded-full shadow-inner relative z-10">KLIK UNTUK SIMETRI!</div>
-                        </div>
-
-                        <!-- Kad Kepelbagaian -->
-                        <div class="magic-card bg-amber-100 rounded-[2.5rem] p-8 shadow-xl border-4 border-amber-300 relative" onclick="toggleMagic(this, 'shapes-effect')">
-                            <h3 class="text-4xl font-black text-center mb-4 text-amber-700 comic-font">Kepelbagaian</h3>
-                            <p class="text-center text-slate-700 mb-6 font-bold text-xl">Tembikar dicipta dengan macam-macam bentuk yang unik dan berbeza!</p>
-                            <div class="flex justify-center items-end h-40 gap-4">
-                                <svg width="50" height="80" viewBox="0 0 40 60" class="drop-shadow-xl hidden-shape opacity-90 transition-all duration-500" style="transition-delay: 0.1s;">
-                                    <rect x="10" y="10" width="20" height="50" rx="10" fill="#ea580c" />
-                                </svg>
-                                <svg width="80" height="100" viewBox="0 0 60 80" class="drop-shadow-xl hidden-shape opacity-90 transition-all duration-500" style="transition-delay: 0.3s;">
-                                    <path d="M 10 30 C 10 10, 50 10, 50 30 C 50 60, 60 80, 30 80 C 0 80, 10 60, 10 30 Z" fill="#d97706" />
-                                </svg>
-                                <svg width="70" height="60" viewBox="0 0 50 40" class="drop-shadow-xl hidden-shape opacity-90 transition-all duration-500" style="transition-delay: 0.2s;">
-                                    <path d="M 5 10 L 45 10 L 35 40 L 15 40 Z" fill="#b45309" />
-                                </svg>
-                            </div>
-                            <div class="text-center font-black text-white bg-amber-500 py-2 rounded-full shadow-inner relative z-10 mt-2">KLIK UNTUK LOMPAT!</div>
-                        </div>
-
                     </div>
+
+                    <!-- Flip Cards (Kad Magic) -->
+                    <div class="border-t-4 border-dashed border-green-200 pt-12">
+                        <h2 class="text-3xl md:text-4xl font-black text-center text-pink-600 comic-font mb-10"><i class="fa-solid fa-wand-magic-sparkles text-yellow-400 mr-2"></i> Terokai Bahasa Seni Visual</h2>
+                        <p class="text-center font-bold text-slate-600 mb-8 bg-pink-50 p-4 rounded-full border-2 border-pink-200 max-w-2xl mx-auto">Klik pada setiap kad di bawah untuk menterbalikkannya dan dengar rahsianya!</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            
+                            <!-- Kad Bentuk -->
+                            <div class="flip-card" onclick="flipCardAndSpeak(this, 'Bentuk Tiga Dimensi. Tembikar bukan lukisan rata di atas kertas. Ia adalah bentuk 3D kerana ia mempunyai isipadu, boleh dipegang dari semua arah, dan mempunyai ruang di dalamnya.')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front bg-sky-50 border-sky-300">
+                                        <h3 class="text-3xl font-black mb-6 text-sky-700 comic-font">Bentuk 3D</h3>
+                                        <svg width="100" height="120" viewBox="0 0 100 120" class="drop-shadow-2xl mx-auto"><path d="M 30 20 C 30 10, 70 10, 70 20 C 70 40, 90 60, 90 90 C 90 120, 10 120, 10 90 C 10 60, 30 40, 30 20 Z" fill="#0284c7" /><ellipse cx="50" cy="20" rx="20" ry="5" fill="#075985" /></svg>
+                                        <p class="mt-8 text-sky-600 font-bold bg-sky-100 px-4 py-2 rounded-full text-sm animate-pulse"><i class="fa-solid fa-hand-pointer mr-2"></i>Klik untuk pusing</p>
+                                    </div>
+                                    <div class="flip-card-back bg-sky-500 border-sky-700 text-white">
+                                        <i class="fa-solid fa-volume-high text-4xl mb-4 text-yellow-300 animate-pulse"></i>
+                                        <h3 class="text-2xl font-black mb-4 comic-font text-yellow-300">Bentuk 3D</h3>
+                                        <p class="font-bold text-lg leading-relaxed">Tembikar bukan lukisan rata. Ia bentuk 3D kerana ada isipadu, boleh dipegang, dan ada ruang di dalamnya.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Kad Jalinan -->
+                            <div class="flip-card" onclick="flipCardAndSpeak(this, 'Jalinan Sentuh. Jalinan ialah corak atau rasa pada permukaan luar tembikar. Jika kamu sentuh karya cikgu, permukaannya tidak licin, ia mempunyai garisan beralun yang dirasa dengan jari.')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front bg-emerald-50 border-emerald-300">
+                                        <h3 class="text-3xl font-black mb-6 text-emerald-700 comic-font">Jalinan</h3>
+                                        <svg width="100" height="100" viewBox="0 0 100 100" class="drop-shadow-2xl mx-auto"><circle cx="50" cy="50" r="45" fill="#10b981" /><path d="M 10 50 Q 25 30, 50 50 T 90 50" fill="none" stroke="#022c22" stroke-width="6" stroke-dasharray="5,5" /></svg>
+                                        <p class="mt-8 text-emerald-600 font-bold bg-emerald-100 px-4 py-2 rounded-full text-sm animate-pulse"><i class="fa-solid fa-hand-pointer mr-2"></i>Klik untuk pusing</p>
+                                    </div>
+                                    <div class="flip-card-back bg-emerald-500 border-emerald-700 text-white">
+                                        <i class="fa-solid fa-volume-high text-4xl mb-4 text-yellow-300 animate-pulse"></i>
+                                        <h3 class="text-2xl font-black mb-4 comic-font text-yellow-300">Jalinan Sentuh</h3>
+                                        <p class="font-bold text-lg leading-relaxed">Corak atau rasa pada permukaan tembikar. Jika kamu sentuh, corak garisan itu boleh dirasa dengan jari.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Kad Imbangan -->
+                            <div class="flip-card" onclick="flipCardAndSpeak(this, 'Imbangan Simetri. Imbangan bermaksud tembikar itu berdiri tegak dan stabil. Jika kita belah tembikar di tengah, bahagian kiri dan kanan mempunyai bentuk yang sama.')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front bg-fuchsia-50 border-fuchsia-300">
+                                        <h3 class="text-3xl font-black mb-6 text-fuchsia-700 comic-font">Imbangan</h3>
+                                        <div class="flex justify-center h-24 items-end relative mx-auto max-w-[150px]">
+                                            <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-red-500 z-20" style="transform: translateX(-50%);"></div>
+                                            <svg width="80" height="80" viewBox="0 0 100 100" class="drop-shadow-2xl relative z-10 mx-auto"><path d="M 20 20 L 80 20 L 90 90 L 10 90 Z" fill="#c084fc" /><rect x="30" y="10" width="40" height="10" fill="#9333ea" /></svg>
+                                        </div>
+                                        <p class="mt-8 text-fuchsia-600 font-bold bg-fuchsia-100 px-4 py-2 rounded-full text-sm animate-pulse"><i class="fa-solid fa-hand-pointer mr-2"></i>Klik untuk pusing</p>
+                                    </div>
+                                    <div class="flip-card-back bg-fuchsia-500 border-fuchsia-700 text-white">
+                                        <i class="fa-solid fa-volume-high text-4xl mb-4 text-yellow-300 animate-pulse"></i>
+                                        <h3 class="text-2xl font-black mb-4 comic-font text-yellow-300">Imbangan Simetri</h3>
+                                        <p class="font-bold text-lg leading-relaxed">Tembikar berdiri tegak. Jika dibelah tengah, bahagian kiri dan kanan mempunyai bentuk dan berat yang sama.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Kad Kepelbagaian -->
+                            <div class="flip-card" onclick="flipCardAndSpeak(this, 'Kepelbagaian. Tembikar menjadi lebih menarik dan tidak membosankan apabila kita menggabungkan pelbagai bentuk, rupa, atau warna bersama-sama.')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front bg-amber-50 border-amber-300">
+                                        <h3 class="text-3xl font-black mb-6 text-amber-700 comic-font">Kepelbagaian</h3>
+                                        <div class="flex justify-center items-end h-24 gap-4 mx-auto">
+                                            <svg width="40" height="60" viewBox="0 0 40 60" class="drop-shadow-xl"><rect x="10" y="10" width="20" height="50" rx="10" fill="#fbbf24" /></svg>
+                                            <svg width="60" height="80" viewBox="0 0 60 80" class="drop-shadow-xl"><path d="M 10 30 C 10 10, 50 10, 50 30 C 50 60, 60 80, 30 80 C 0 80, 10 60, 10 30 Z" fill="#f59e0b" /></svg>
+                                            <svg width="50" height="40" viewBox="0 0 50 40" class="drop-shadow-xl"><path d="M 5 10 L 45 10 L 35 40 L 15 40 Z" fill="#d97706" /></svg>
+                                        </div>
+                                        <p class="mt-8 text-amber-600 font-bold bg-amber-100 px-4 py-2 rounded-full text-sm animate-pulse"><i class="fa-solid fa-hand-pointer mr-2"></i>Klik untuk pusing</p>
+                                    </div>
+                                    <div class="flip-card-back bg-amber-500 border-amber-700 text-white">
+                                        <i class="fa-solid fa-volume-high text-4xl mb-4 text-yellow-300 animate-pulse"></i>
+                                        <h3 class="text-2xl font-black mb-4 comic-font text-yellow-300">Kepelbagaian Unik</h3>
+                                        <p class="font-bold text-lg leading-relaxed">Gabungan pelbagai rupa dan warna pada satu karya supaya ia nampak lebih cantik dan tidak membosankan.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- STEP 6: Video -->
             <div id="step-6" class="step-container">
                 <div class="bg-white border-8 border-red-400 rounded-[3rem] p-10 shadow-[0_20px_0_#f87171] relative mt-10">
-                    <button onclick="speakText('Mari tonton video ini untuk melihat demonstrasi sebenar cara membuat tembikar menggunakan teknik picitan.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
                     <h2 class="text-5xl font-black text-center text-red-600 comic-font mb-4"><i class="fa-brands fa-youtube"></i> Video Pembelajaran</h2>
-                    <p class="text-center text-slate-600 mb-10 text-2xl font-bold bg-red-50 p-4 rounded-full max-w-2xl mx-auto">Mari tonton cara sebenar membuat tembikar picitan!</p>
-                    
-                    <div class="bg-slate-900 rounded-3xl overflow-hidden aspect-video shadow-2xl relative border-8 border-slate-800 pop-hover">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VTJCyrfaEvA?si=G0p0Qn0q1Q0X1p1z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="absolute inset-0"></iframe>
+                    <div class="bg-slate-900 rounded-3xl overflow-hidden aspect-video shadow-2xl relative border-8 border-slate-800">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VTJCyrfaEvA" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 7: Studio Lukisan Kita -->
             <div id="step-7" class="step-container">
-                <div class="bg-white border-8 border-orange-400 rounded-[3rem] p-10 shadow-[0_20px_0_#fb923c] relative mt-10">
-                    <button onclick="speakText('Studio Lukisan Kita. Latih tangan kamu melukis corak jalinan pada pasu ini. Kamu boleh tukar warna dan saiz berus!')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
+                <div class="bg-white border-8 border-teal-400 rounded-[3rem] p-8 md:p-12 shadow-[0_20px_0_#2dd4bf] relative mt-10">
+                    <h2 class="text-4xl md:text-5xl font-black text-center text-teal-600 comic-font mb-6"><i class="fa-solid fa-paintbrush"></i> Studio Lukis Maya</h2>
+                    <p class="text-center font-bold text-slate-500 mb-8 max-w-xl mx-auto">Lakar idea corak jalinan tembikar kamu di sini, kemudian hantar ke papan galeri!</p>
                     
-                    <h2 class="text-5xl font-black text-center text-orange-500 comic-font mb-4"><i class="fa-solid fa-paintbrush text-yellow-400"></i> Studio Lukisan</h2>
-                    <p class="text-center text-slate-600 mb-10 text-2xl font-bold bg-orange-50 p-4 rounded-full max-w-3xl mx-auto">Lukis corak (jalinan) pada tembikar maya ini dengan jari kamu!</p>
-
-                    <div class="flex flex-col items-center">
-                        <div class="flex flex-wrap justify-center items-center gap-6 mb-8 bg-slate-100 p-6 rounded-[3rem] border-4 border-slate-300 shadow-inner w-full max-w-2xl">
-                            <div class="flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border-2 border-slate-200">
-                                <label class="font-bold text-slate-700 text-lg"><i class="fa-solid fa-palette text-pink-500"></i> Warna:</label>
-                                <input type="color" id="colorPicker" value="#db2777" class="w-12 h-12 rounded-full cursor-pointer border-none p-0 overflow-hidden">
-                            </div>
-                            
-                            <div class="flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border-2 border-slate-200 flex-1 min-w-[200px]">
-                                <label class="font-bold text-slate-700 text-lg"><i class="fa-solid fa-pen text-blue-500"></i> Saiz Berus:</label>
-                                <input type="range" id="brushSize" min="2" max="30" value="8" class="w-full accent-pink-500 cursor-pointer h-4 bg-slate-200 rounded-lg appearance-none">
-                            </div>
-
-                            <button id="clearBtn" onclick="clearCanvas()" class="bg-red-500 text-white px-8 py-3 rounded-full font-black hover:bg-red-400 transition-colors shadow-[0_5px_0_#991b1b] active:translate-y-1 active:shadow-none text-xl border-2 border-white"><i class="fa-solid fa-eraser mr-2"></i> Padam</button>
+                    <div class="flex flex-col items-center mb-12">
+                        <div class="flex flex-wrap justify-center items-center gap-4 mb-6 bg-slate-100 p-4 rounded-full border-4 border-slate-200">
+                            <input type="color" id="colorPicker" value="#db2777" class="w-12 h-12 rounded-full cursor-pointer border-2 border-white" title="Pilih Warna">
+                            <input type="range" id="brushSize" min="2" max="30" value="8" class="w-24 accent-pink-500" title="Saiz Berus">
+                            <button onclick="clearCanvas()" class="ml-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-bold shadow-md transition-colors"><i class="fa-solid fa-eraser"></i> Padam</button>
                         </div>
                         
-                        <div class="relative w-full max-w-md h-[500px] bg-gradient-to-b from-orange-50 to-orange-100 rounded-[4rem] border-8 border-dashed border-orange-400 overflow-hidden shadow-inner cursor-crosshair">
-                            <!-- Placeholder Tembikar -->
-                            <div class="absolute inset-0 flex items-center justify-center opacity-40 pointer-events-none">
-                                <svg width="80%" height="80%" viewBox="0 0 100 120" class="drop-shadow-sm">
-                                    <path d="M 30 20 C 30 10, 70 10, 70 20 C 70 40, 90 60, 90 90 C 90 120, 10 120, 10 90 C 10 60, 30 40, 30 20 Z" fill="#fdba74" />
-                                    <ellipse cx="50" cy="20" rx="20" ry="5" fill="#f97316" />
-                                </svg>
-                            </div>
+                        <div class="relative w-full max-w-md h-96 bg-teal-50 rounded-[3rem] border-8 border-dashed border-teal-400 overflow-hidden cursor-crosshair shadow-inner">
                             <canvas id="drawingCanvas" class="absolute inset-0 w-full h-full touch-none"></canvas>
                         </div>
+                        
+                        <div class="mt-8 flex flex-col items-center bg-teal-100 p-6 rounded-3xl border-4 border-teal-300 w-full max-w-md">
+                            <p class="font-bold text-teal-800 mb-2 text-lg">Pamerkan Karya Anda!</p>
+                            <input type="text" id="drawing-name" placeholder="Tulis Nama Karya/Pelukis" class="w-full text-center bg-white border-2 border-teal-400 rounded-xl py-3 px-4 font-bold text-slate-700 mb-4 focus:outline-none focus:border-teal-600 shadow-sm">
+                            <button onclick="submitToGallery()" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-black py-4 px-8 rounded-full shadow-[0_5px_0_#0f766e] hover:translate-y-1 transition-all text-xl"><i class="fa-solid fa-paper-plane mr-2"></i> Hantar ke Papan Galeri</button>
+                        </div>
+                    </div>
+
+                    <div id="galeri-section" class="border-t-4 border-dashed border-teal-200 pt-12 mt-12">
+                        <div class="bg-indigo-400 p-8 md:p-10 rounded-[2.5rem] text-center border-8 border-indigo-600 shadow-xl relative">
+                            <h2 class="text-4xl font-black text-white comic-font mb-6"><i class="fa-solid fa-images text-yellow-300"></i> Galeri Seni Kelas</h2>
+                            
+                            <div class="bg-white/20 p-4 rounded-2xl border-2 border-white/50 mb-10 max-w-sm mx-auto no-print">
+                                <p class="text-white font-bold mb-2">Muat naik gambar tembikar fizikal yang telah siap!</p>
+                                <input type="file" id="image-upload" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                                <label for="image-upload" class="bg-white text-indigo-600 font-bold py-3 px-6 rounded-full cursor-pointer hover:bg-indigo-50 transition shadow-md flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-camera text-xl"></i> Muat Naik Gambar Fizikal
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8" id="gallery-grid">
+                                <div class="bg-white p-6 rounded-2xl rotate-[-3deg] shadow-lg pop-hover border-4 border-slate-100"><div class="w-full h-40 bg-orange-100 rounded-xl flex items-center justify-center text-7xl mb-4 border-2 border-orange-200 shadow-inner">🏺</div><p class="font-black text-xl text-slate-700">Adam</p></div>
+                                <div class="bg-white p-6 rounded-2xl rotate-[4deg] shadow-lg pop-hover border-4 border-slate-100"><div class="w-full h-40 bg-pink-100 rounded-xl flex items-center justify-center text-7xl mb-4 border-2 border-pink-200 shadow-inner">🍵</div><p class="font-black text-xl text-slate-700">Bella</p></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 8: Mari Menguli -->
             <div id="step-8" class="step-container">
-                <style>
-                    @keyframes squishClay { 0%, 100% { transform: scale(1); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 50% { transform: scale(1.05); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
-                    .animate-squish { animation: squishClay 3s ease-in-out infinite; }
-                    @keyframes pressThumb { 0%, 100% { transform: translateY(-15px) rotate(-10deg); opacity: 0.5; } 50% { transform: translateY(10px) rotate(0deg); opacity: 1; } }
-                    .animate-thumb { animation: pressThumb 2s ease-in-out infinite; }
-                    @keyframes pinchAction { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.85); } }
-                    .animate-pinch { animation: pinchAction 1.5s ease-in-out infinite; }
-                    @keyframes pokeTool { 0%, 100% { transform: translate(15px, -15px) rotate(45deg); } 50% { transform: translate(0px, 0px) rotate(45deg); } }
-                    .animate-poke { animation: pokeTool 1s ease-in-out infinite; }
-                </style>
-                <div class="bg-white border-8 border-emerald-400 rounded-[3rem] p-10 shadow-[0_20px_0_#34d399] relative mt-10">
-                    <button onclick="speakText('Masa untuk menguli! Ikut lima langkah mudah ini. Sediakan tanah liat, bulatkan, tekan tengahnya dengan ibu jari, picit-picit dindingnya, dan akhir sekali hiaskan jalinan.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
-
-                    <h2 class="text-5xl font-black text-center text-emerald-600 comic-font mb-4"><i class="fa-solid fa-hands text-yellow-500"></i> Masa Menguli!</h2>
-                    <p class="text-center text-slate-500 mb-10 text-2xl font-bold bg-emerald-50 p-4 rounded-full max-w-2xl mx-auto">Ikut langkah-langkah animasi di bawah untuk buat tembikar kamu sendiri.</p>
+                <div class="bg-white border-8 border-emerald-400 rounded-[3rem] p-8 md:p-12 shadow-[0_20px_0_#34d399] relative mt-10">
+                    <h2 class="text-4xl md:text-5xl font-black text-center text-emerald-600 comic-font mb-10"><i class="fa-solid fa-hands"></i> 5 Langkah Teknik Picitan</h2>
                     
                     <div class="relative border-l-8 border-emerald-200 ml-6 md:ml-12 space-y-12 pb-6">
-                        
-                        <!-- Kad 1 -->
-                        <div class="relative pl-12 md:pl-16 pop-hover">
+                        <div class="relative pl-10 md:pl-16 pop-hover">
                             <div class="absolute -left-[32px] top-6 bg-emerald-500 w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-white font-black text-3xl shadow-lg">1</div>
-                            <div class="bg-slate-50 p-6 rounded-3xl border-4 border-slate-200 shadow-md flex flex-col md:flex-row items-center gap-8">
-                                <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center border-4 border-slate-300 shrink-0 shadow-inner">
-                                    <div class="w-20 h-20 bg-slate-400 animate-squish shadow-md" style="border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;"></div>
-                                </div>
-                                <div class="text-center md:text-left">
-                                    <h3 class="text-3xl font-black text-slate-700 comic-font mb-2">Sedia Tanah Liat</h3>
-                                    <p class="text-slate-600 font-bold text-xl">Ambil plastisin atau tanah liat. Ramas-ramas supaya lembut.</p>
-                                </div>
+                            <div class="bg-slate-50 p-6 rounded-3xl border-4 border-slate-200 shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                                <div class="w-24 h-24 bg-white rounded-full flex justify-center items-center border-4 border-slate-300 shrink-0"><div class="w-16 h-16 bg-slate-400 animate-squish" style="border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;"></div></div>
+                                <div><h3 class="text-2xl font-black text-slate-700 comic-font mb-2">Sedia Tanah Liat</h3><p class="text-slate-600 font-bold">Ramas dan uli plastisin atau tanah liat berulang kali menggunakan tapak tangan supaya ia menjadi lembut.</p></div>
                             </div>
                         </div>
-
-                        <!-- Kad 2 -->
-                        <div class="relative pl-12 md:pl-16 pop-hover">
+                        <div class="relative pl-10 md:pl-16 pop-hover">
                             <div class="absolute -left-[32px] top-6 bg-emerald-500 w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-white font-black text-3xl shadow-lg">2</div>
-                            <div class="bg-orange-50 p-6 rounded-3xl border-4 border-orange-200 shadow-md flex flex-col md:flex-row items-center gap-8">
-                                <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center border-4 border-orange-300 shrink-0 shadow-inner">
-                                    <svg width="80" height="80" viewBox="0 0 100 100" class="animate-[spin_4s_linear_infinite]">
-                                        <circle cx="50" cy="50" r="45" fill="#fb923c" />
-                                        <path d="M 20 50 A 30 30 0 0 1 50 20" fill="none" stroke="#fdba74" stroke-width="10" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                                <div class="text-center md:text-left">
-                                    <h3 class="text-3xl font-black text-orange-600 comic-font mb-2">Bulatkan (Uli)</h3>
-                                    <p class="text-slate-600 font-bold text-xl">Pusingkan di tapak tangan sehingga jadi bola bulat yang kemas.</p>
-                                </div>
+                            <div class="bg-orange-50 p-6 rounded-3xl border-4 border-orange-200 shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                                <div class="w-24 h-24 bg-white rounded-full flex justify-center items-center border-4 border-orange-300 shrink-0"><svg width="60" height="60" viewBox="0 0 100 100" class="animate-[spin_4s_linear_infinite]"><circle cx="50" cy="50" r="45" fill="#fb923c" /><path d="M 20 50 A 30 30 0 0 1 50 20" fill="none" stroke="#fdba74" stroke-width="10" stroke-linecap="round" /></svg></div>
+                                <div><h3 class="text-2xl font-black text-orange-600 comic-font mb-2">Bulatkan</h3><p class="text-slate-600 font-bold">Gelekkan di antara dua tapak tangan sehingga menjadi sebiji bola bulat yang padat dan licin.</p></div>
                             </div>
                         </div>
-
-                        <!-- Kad 3 -->
-                        <div class="relative pl-12 md:pl-16 pop-hover">
+                        <div class="relative pl-10 md:pl-16 pop-hover">
                             <div class="absolute -left-[32px] top-6 bg-emerald-500 w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-white font-black text-3xl shadow-lg">3</div>
-                            <div class="bg-pink-50 p-6 rounded-3xl border-4 border-pink-200 shadow-md flex flex-col md:flex-row items-center gap-8">
-                                <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center border-4 border-pink-300 shrink-0 shadow-inner relative overflow-hidden">
-                                    <svg width="80" height="80" viewBox="0 0 100 100" class="absolute mt-8"><circle cx="50" cy="50" r="45" fill="#fb923c" /></svg>
-                                    <svg width="50" height="80" viewBox="0 0 40 70" class="absolute z-10 animate-thumb top-0">
-                                        <rect x="5" y="0" width="30" height="60" rx="15" fill="#fbcfe8" stroke="#f472b6" stroke-width="3"/>
-                                        <path d="M 10 20 Q 20 10 30 20" fill="none" stroke="#f472b6" stroke-width="2"/>
-                                    </svg>
-                                </div>
-                                <div class="text-center md:text-left">
-                                    <h3 class="text-3xl font-black text-pink-600 comic-font mb-2">Tekan Tengah</h3>
-                                    <p class="text-slate-600 font-bold text-xl">Tekan tepat di tengah bola dengan <span class="bg-pink-200 text-pink-800 px-2 rounded">ibu jari</span> kamu.</p>
-                                </div>
+                            <div class="bg-pink-50 p-6 rounded-3xl border-4 border-pink-200 shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                                <div class="w-24 h-24 bg-white rounded-full flex justify-center items-center border-4 border-pink-300 shrink-0 relative overflow-hidden"><svg width="60" height="60" viewBox="0 0 100 100" class="absolute mt-4"><circle cx="50" cy="50" r="45" fill="#fb923c" /></svg><svg width="40" height="60" viewBox="0 0 40 70" class="absolute z-10 animate-thumb top-0"><rect x="5" y="0" width="30" height="60" rx="15" fill="#fbcfe8" stroke="#f472b6" stroke-width="3"/></svg></div>
+                                <div><h3 class="text-2xl font-black text-pink-600 comic-font mb-2">Tekan Tengah</h3><p class="text-slate-600 font-bold">Gunakan <span class="text-pink-600 font-black">ibu jari</span> untuk menekan bahagian tengah bola tersebut sedalam yang boleh.</p></div>
                             </div>
                         </div>
-
-                        <!-- Kad 4 -->
-                        <div class="relative pl-12 md:pl-16 pop-hover">
+                        <div class="relative pl-10 md:pl-16 pop-hover">
                             <div class="absolute -left-[32px] top-6 bg-emerald-500 w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-white font-black text-3xl shadow-lg">4</div>
-                            <div class="bg-blue-50 p-6 rounded-3xl border-4 border-blue-200 shadow-md flex flex-col md:flex-row items-center gap-8">
-                                <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center border-4 border-blue-300 shrink-0 shadow-inner relative">
-                                    <div class="absolute left-1 text-blue-500 text-4xl animate-pulse"><i class="fa-solid fa-chevron-right"></i></div>
-                                    <div class="absolute right-1 text-blue-500 text-4xl animate-pulse"><i class="fa-solid fa-chevron-left"></i></div>
-                                    <svg width="70" height="70" viewBox="0 0 100 100" class="animate-pinch">
-                                        <path d="M 10 40 C 10 90, 90 90, 90 40 C 90 60, 10 60, 10 40 Z" fill="#ea580c" />
-                                        <ellipse cx="50" cy="40" rx="40" ry="15" fill="#fdba74" />
-                                    </svg>
-                                </div>
-                                <div class="text-center md:text-left">
-                                    <h3 class="text-3xl font-black text-blue-600 comic-font mb-2">Picit Mangkuk</h3>
-                                    <p class="text-slate-600 font-bold text-xl">Picit dindingnya perlahan-lahan sambil pusing untuk buat mangkuk.</p>
-                                </div>
+                            <div class="bg-blue-50 p-6 rounded-3xl border-4 border-blue-200 shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                                <div class="w-24 h-24 bg-white rounded-full flex justify-center items-center border-4 border-blue-300 shrink-0"><svg width="60" height="60" viewBox="0 0 100 100" class="animate-pinch"><path d="M 10 40 C 10 90, 90 90, 90 40 C 90 60, 10 60, 10 40 Z" fill="#ea580c" /><ellipse cx="50" cy="40" rx="40" ry="15" fill="#fdba74" /></svg></div>
+                                <div><h3 class="text-2xl font-black text-blue-600 comic-font mb-2">Picit Keliling</h3><p class="text-slate-600 font-bold">Gunakan teknik picitan secara perlahan-lahan sambil memusingkannya supaya bentuk mangkuk terjadi.</p></div>
                             </div>
                         </div>
-
-                        <!-- Kad 5 -->
-                        <div class="relative pl-12 md:pl-16 pop-hover">
+                        <div class="relative pl-10 md:pl-16 pop-hover">
                             <div class="absolute -left-[32px] top-6 bg-emerald-500 w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-white font-black text-3xl shadow-lg">5</div>
-                            <div class="bg-purple-50 p-6 rounded-3xl border-4 border-purple-200 shadow-md flex flex-col md:flex-row items-center gap-8">
-                                <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center border-4 border-purple-300 shrink-0 shadow-inner relative">
-                                    <svg width="70" height="70" viewBox="0 0 100 100" class="absolute bottom-4">
-                                        <path d="M 10 40 C 10 90, 90 90, 90 40 C 90 60, 10 60, 10 40 Z" fill="#ea580c" />
-                                        <path d="M 20 60 Q 50 80 80 60" fill="none" stroke="#7c2d12" stroke-width="5" stroke-dasharray="5,5"/>
-                                        <ellipse cx="50" cy="40" rx="40" ry="15" fill="#fdba74" />
-                                    </svg>
-                                    <svg width="40" height="40" viewBox="0 0 100 100" class="absolute right-1 top-1 animate-poke">
-                                        <path d="M 80 20 L 30 70 L 10 90 L 30 70 L 80 20 Z" fill="#fcd34d" stroke="#b45309" stroke-width="4"/>
-                                        <polygon points="10,90 20,80 30,90" fill="#334155" />
-                                        <polygon points="80,20 70,30 90,10" fill="#ef4444" />
-                                    </svg>
-                                </div>
-                                <div class="text-center md:text-left">
-                                    <h3 class="text-3xl font-black text-purple-600 comic-font mb-2">Hiaskan Jalinan</h3>
-                                    <p class="text-slate-600 font-bold text-xl">Tekan corak garisan di luar mangkuk guna pensel atau lidi.</p>
-                                </div>
+                            <div class="bg-yellow-50 p-6 rounded-3xl border-4 border-yellow-300 shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                                <div class="w-24 h-24 bg-white rounded-full flex justify-center items-center border-4 border-yellow-400 shrink-0 relative"><svg width="60" height="60" viewBox="0 0 100 100"><path d="M 10 40 C 10 90, 90 90, 90 40 C 90 60, 10 60, 10 40 Z" fill="#ea580c" /><ellipse cx="50" cy="40" rx="40" ry="15" fill="#fdba74" /><path d="M 20 60 Q 50 80 80 60" fill="none" stroke="#7c2d12" stroke-width="4" stroke-dasharray="4,4"/></svg><div class="absolute animate-poke"><i class="fa-solid fa-pen text-3xl text-yellow-600"></i></div></div>
+                                <div><h3 class="text-2xl font-black text-yellow-700 comic-font mb-2">Hiaskan Jalinan</h3><p class="text-slate-600 font-bold">Gunakan batang lidi atau pen untuk membuat corak garisan (jalinan) pada dinding luar mangkuk.</p></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 9: Galeri Karya Murid (Corkboard) -->
             <div id="step-9" class="step-container">
-                <div class="corkboard p-8 md:p-12 relative mt-10 pop-hover">
-                    <button onclick="speakText('Ini adalah Galeri Seni Kelas Kita. Lihatlah hasil kerja kawan-kawan kamu yang sangat cantik di atas papan kenyataan ini.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
+                <div class="bg-white border-8 border-sky-400 rounded-[3rem] p-10 mt-10 shadow-xl">
+                    <h2 class="text-4xl md:text-5xl font-black text-center text-sky-600 comic-font mb-6"><i class="fa-solid fa-comment-dots text-sky-400"></i> Mari Bercerita (Apresiasi)</h2>
+                    <p class="text-xl font-bold text-slate-600 text-center mb-8 bg-sky-50 py-3 rounded-full">Sila jawab soalan ini tentang karya kamu di hadapan kelas:</p>
                     
-                    <h2 class="text-5xl font-black text-center text-white comic-font mb-10 drop-shadow-md bg-black/30 inline-block px-10 py-3 rounded-full border-4 border-white mx-auto flex justify-center w-max"><i class="fa-solid fa-images text-yellow-300 mr-4"></i> Galeri Seni Kita</h2>
-
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                        <div class="polaroid transform rotate-[-3deg] hover:rotate-0 transition-transform cursor-pointer pop-hover border-4 border-white">
-                            <div class="pin bg-red-500"></div>
-                            <div class="h-32 bg-orange-200 mb-3 flex items-center justify-center text-orange-600 text-6xl shadow-inner border border-slate-200"><i class="fa-solid fa-bowl-food"></i></div>
-                            <p class="font-black text-xl text-center text-slate-800 comic-font">Adam</p>
+                    <div class="space-y-6 max-w-2xl mx-auto">
+                        <div class="bg-sky-50 p-6 rounded-2xl border-4 border-sky-200 flex items-start gap-6 pop-hover shadow-sm">
+                            <div class="bg-sky-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-black text-2xl shrink-0 shadow-md">1</div>
+                            <p class="text-xl text-slate-700 font-bold mt-2">Apakah <span class="text-pink-500 font-black">bentuk</span> tembikar yang kamu buat?</p>
                         </div>
-                        <div class="polaroid transform rotate-[4deg] hover:rotate-0 transition-transform cursor-pointer pop-hover border-4 border-white">
-                            <div class="pin bg-blue-500"></div>
-                            <div class="h-32 bg-pink-200 mb-3 flex items-center justify-center text-pink-600 text-6xl shadow-inner border border-slate-200"><i class="fa-solid fa-mug-hot"></i></div>
-                            <p class="font-black text-xl text-center text-slate-800 comic-font">Bella</p>
+                        <div class="bg-sky-50 p-6 rounded-2xl border-4 border-sky-200 flex items-start gap-6 pop-hover shadow-sm">
+                            <div class="bg-sky-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-black text-2xl shrink-0 shadow-md">2</div>
+                            <p class="text-xl text-slate-700 font-bold mt-2">Apakah <span class="text-pink-500 font-black">jalinan (corak)</span> yang kamu buat pada dinding luarnya?</p>
                         </div>
-                        <div class="polaroid transform rotate-[-2deg] hover:rotate-0 transition-transform cursor-pointer pop-hover border-4 border-white">
-                            <div class="pin bg-green-500"></div>
-                            <div class="h-32 bg-green-200 mb-3 flex items-center justify-center text-green-600 text-6xl shadow-inner border border-slate-200"><i class="fa-solid fa-vase"></i></div>
-                            <p class="font-black text-xl text-center text-slate-800 comic-font">Chong</p>
+                        <div class="bg-sky-50 p-6 rounded-2xl border-4 border-sky-200 flex items-start gap-6 pop-hover shadow-sm">
+                            <div class="bg-sky-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-black text-2xl shrink-0 shadow-md">3</div>
+                            <p class="text-xl text-slate-700 font-bold mt-2">Adakah kamu <span class="text-pink-500 font-black">gembira</span> dan berpuas hati dengan hasil kerja kamu hari ini?</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 10: Apresiasi Karya -->
             <div id="step-10" class="step-container">
-                <div class="bg-white border-8 border-teal-400 rounded-[3rem] p-10 shadow-[0_20px_0_#2dd4bf] relative mt-10">
-                    <button onclick="speakText('Mari buat apresiasi karya. Jawab tiga soalan ini tentang hasil kerja kamu sendiri.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
-
-                    <h2 class="text-5xl font-black text-center text-teal-600 comic-font mb-10"><i class="fa-solid fa-comment-dots text-yellow-400"></i> Apresiasi Seni</h2>
+                <div class="bg-white border-8 border-amber-400 rounded-[3rem] p-8 md:p-12 mt-10 shadow-xl relative">
+                    <h2 class="text-5xl font-black text-center text-amber-600 comic-font mb-4"><i class="fa-solid fa-pen-to-square"></i> Uji Minda PBD</h2>
+                    <p class="text-center font-bold text-slate-500 mb-8">Pilih jawapan yang betul untuk menilai kefahaman kamu.</p>
                     
-                    <div class="bg-teal-50 rounded-[2.5rem] p-8 border-4 border-teal-200 pop-hover">
-                        <p class="text-2xl font-black text-slate-700 mb-8 text-center bg-white py-3 rounded-full shadow-sm">Ceritakan tentang karya kamu:</p>
-                        <div class="space-y-6">
-                            <div class="bg-white p-6 rounded-2xl border-2 border-teal-100 shadow-md flex items-center gap-6 transform hover:scale-[1.02] transition">
-                                <div class="bg-teal-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-black text-2xl shrink-0 shadow-inner">1</div>
-                                <p class="text-slate-600 font-bold text-xl">Apakah <span class="text-pink-500 font-black">bentuk</span> tembikar yang kamu buat? (Cth: Mangkuk)</p>
-                            </div>
-                            <div class="bg-white p-6 rounded-2xl border-2 border-teal-100 shadow-md flex items-center gap-6 transform hover:scale-[1.02] transition">
-                                <div class="bg-teal-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-black text-2xl shrink-0 shadow-inner">2</div>
-                                <p class="text-slate-600 font-bold text-xl">Apakah <span class="text-pink-500 font-black">corak jalinan</span> yang ada? (Cth: Titik, Garis)</p>
-                            </div>
-                            <div class="bg-white p-6 rounded-2xl border-2 border-teal-100 shadow-md flex items-center gap-6 transform hover:scale-[1.02] transition">
-                                <div class="bg-teal-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-black text-2xl shrink-0 shadow-inner">3</div>
-                                <p class="text-slate-600 font-bold text-xl">Adakah kamu <span class="text-pink-500 font-black">gembira</span> dengan hasil ini?</p>
+                    <div id="quiz-container" class="space-y-8 max-w-2xl mx-auto">
+                        <div class="bg-amber-50 p-6 rounded-3xl border-4 border-amber-200 shadow-sm">
+                            <p class="font-black text-2xl mb-4 text-slate-700">1. Tembikar yang dibina mempunyai isipadu. Ini dipanggil ciri apa?</p>
+                            <div class="space-y-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl border-2 border-amber-100 cursor-pointer hover:bg-amber-100 transition"><input type="radio" name="q1" value="bentuk" class="mr-4 w-6 h-6"> <span class="text-xl font-bold">A. Bentuk 3D</span></label>
+                                <label class="flex items-center p-4 bg-white rounded-xl border-2 border-amber-100 cursor-pointer hover:bg-amber-100 transition"><input type="radio" name="q1" value="warna" class="mr-4 w-6 h-6"> <span class="text-xl font-bold">B. Warna</span></label>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 11: Kuiz & PBD -->
-            <div id="step-11" class="step-container">
-                <div class="bg-white border-8 border-amber-400 rounded-[3rem] p-10 shadow-[0_20px_0_#fbbf24] relative mt-10">
-                    <button onclick="speakText('Masa untuk Uji Minda! Sila baca dan jawab semua soalan dengan betul untuk mendapatkan markah PBD kamu.')" class="btn-tts absolute -top-8 right-10 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20 no-print">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
-
-                    <h2 class="text-5xl font-black text-center text-amber-600 comic-font mb-6"><i class="fa-solid fa-pen-to-square text-sky-400"></i> Uji Minda PBD</h2>
-                    <p class="text-center text-slate-500 mb-10 text-2xl font-bold no-print bg-amber-50 py-3 rounded-full max-w-lg mx-auto">Jawab soalan untuk semak Tahap Penguasaan.</p>
-
-                    <!-- Quiz Form -->
-                    <div id="quiz-container" class="space-y-8 no-print">
-                        <div class="bg-amber-50 p-8 rounded-3xl border-4 border-amber-200 shadow-sm">
-                            <p class="font-black text-2xl mb-6 text-slate-700">1. Tembikar ada isi padu dan 3D. Ini ciri apa?</p>
-                            <div class="space-y-4">
-                                <label class="flex items-center p-4 bg-white rounded-2xl border-2 border-slate-200 cursor-pointer hover:bg-amber-100 hover:border-amber-400 transition text-xl font-bold text-slate-600">
-                                    <input type="radio" name="q1" value="bentuk" class="mr-4 w-6 h-6 accent-amber-500"> Bentuk
-                                </label>
-                                <label class="flex items-center p-4 bg-white rounded-2xl border-2 border-slate-200 cursor-pointer hover:bg-amber-100 hover:border-amber-400 transition text-xl font-bold text-slate-600">
-                                    <input type="radio" name="q1" value="warna" class="mr-4 w-6 h-6 accent-amber-500"> Warna
-                                </label>
+                        <div class="bg-amber-50 p-6 rounded-3xl border-4 border-amber-200 shadow-sm">
+                            <p class="font-black text-2xl mb-4 text-slate-700">2. Corak luar tembikar dipanggil apa?</p>
+                            <div class="space-y-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl border-2 border-amber-100 cursor-pointer hover:bg-amber-100 transition"><input type="radio" name="q2" value="imbangan" class="mr-4 w-6 h-6"> <span class="text-xl font-bold">A. Imbangan</span></label>
+                                <label class="flex items-center p-4 bg-white rounded-xl border-2 border-amber-100 cursor-pointer hover:bg-amber-100 transition"><input type="radio" name="q2" value="jalinan" class="mr-4 w-6 h-6"> <span class="text-xl font-bold">B. Jalinan Sentuh</span></label>
                             </div>
                         </div>
-
-                        <div class="bg-amber-50 p-8 rounded-3xl border-4 border-amber-200 shadow-sm">
-                            <p class="font-black text-2xl mb-6 text-slate-700">2. Corak garis-garis kasar di luar tembikar dipanggil apa?</p>
-                            <div class="space-y-4">
-                                <label class="flex items-center p-4 bg-white rounded-2xl border-2 border-slate-200 cursor-pointer hover:bg-amber-100 hover:border-amber-400 transition text-xl font-bold text-slate-600">
-                                    <input type="radio" name="q2" value="imbangan" class="mr-4 w-6 h-6 accent-amber-500"> Imbangan
-                                </label>
-                                <label class="flex items-center p-4 bg-white rounded-2xl border-2 border-slate-200 cursor-pointer hover:bg-amber-100 hover:border-amber-400 transition text-xl font-bold text-slate-600">
-                                    <input type="radio" name="q2" value="jalinan" class="mr-4 w-6 h-6 accent-amber-500"> Jalinan
-                                </label>
+                        <div class="bg-amber-50 p-6 rounded-3xl border-4 border-amber-200 shadow-sm">
+                            <p class="font-black text-2xl mb-4 text-slate-700">3. Apakah alat utama badan kita untuk teknik picitan?</p>
+                            <div class="space-y-3">
+                                <label class="flex items-center p-4 bg-white rounded-xl border-2 border-amber-100 cursor-pointer hover:bg-amber-100 transition"><input type="radio" name="q3" value="jari" class="mr-4 w-6 h-6"> <span class="text-xl font-bold">A. Ibu Jari (Tangan)</span></label>
+                                <label class="flex items-center p-4 bg-white rounded-xl border-2 border-amber-100 cursor-pointer hover:bg-amber-100 transition"><input type="radio" name="q3" value="kaki" class="mr-4 w-6 h-6"> <span class="text-xl font-bold">B. Kaki</span></label>
                             </div>
                         </div>
-
-                        <div class="bg-amber-50 p-8 rounded-3xl border-4 border-amber-200 shadow-sm">
-                            <p class="font-black text-2xl mb-6 text-slate-700">3. Apakah alat utama teknik picitan?</p>
-                            <div class="space-y-4">
-                                <label class="flex items-center p-4 bg-white rounded-2xl border-2 border-slate-200 cursor-pointer hover:bg-amber-100 hover:border-amber-400 transition text-xl font-bold text-slate-600">
-                                    <input type="radio" name="q3" value="jari" class="mr-4 w-6 h-6 accent-amber-500"> Jari (Ibu Jari)
-                                </label>
-                                <label class="flex items-center p-4 bg-white rounded-2xl border-2 border-slate-200 cursor-pointer hover:bg-amber-100 hover:border-amber-400 transition text-xl font-bold text-slate-600">
-                                    <input type="radio" name="q3" value="kaki" class="mr-4 w-6 h-6 accent-amber-500"> Kaki
-                                </label>
-                            </div>
-                        </div>
-
-                        <button onclick="checkAnswers()" class="w-full bg-amber-500 text-white text-3xl comic-font py-6 rounded-full hover:bg-amber-400 transition shadow-[0_10px_0_#b45309] active:translate-y-2 active:shadow-none border-4 border-white mt-4"><i class="fa-solid fa-paper-plane mr-2"></i> Hantar Jawapan</button>
+                        <button onclick="checkAnswers()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-black text-2xl md:text-3xl py-5 rounded-full shadow-[0_8px_0_#d97706] hover:translate-y-1 transition-all border-4 border-white mt-4">Hantar Jawapan PBD</button>
                     </div>
 
-                    <!-- Result PBD (Hidden initially) -->
-                    <div id="pbd-result" class="hidden text-center py-10 bg-blue-50 rounded-3xl border-4 border-blue-200 mt-8">
-                        <i class="fa-solid fa-certificate text-8xl text-blue-500 mb-6 animate-[spin_4s_linear_infinite] drop-shadow-md no-print"></i>
-                        <h3 class="text-4xl font-black text-slate-800 comic-font mb-6">Rekod Pentaksiran Bilik Darjah</h3>
-                        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-6xl font-black py-6 px-12 rounded-[2rem] inline-block border-8 border-white shadow-xl mb-6 transform scale-110">
-                            <span id="tp-score">TP 1</span>
-                        </div>
-                        <p class="text-slate-500 mb-8 font-bold text-xl no-print bg-white inline-block px-6 py-2 rounded-full">*Disimpan automatik untuk Cikgu Aimuni.</p>
+                    <div id="pbd-result" class="hidden mt-6 p-8 bg-blue-50 rounded-[3rem] border-8 border-blue-200 shadow-inner text-center">
+                        <i class="fa-solid fa-certificate text-7xl text-blue-500 mb-4 animate-[spin_3s_linear_infinite]"></i>
+                        <h3 class="text-3xl font-black text-slate-800 comic-font mb-6 border-b-4 border-blue-200 pb-4">Laporan Pentaksiran Bilik Darjah (PBD)</h3>
                         
-                        <div class="flex justify-center gap-6 no-print flex-wrap">
-                            <button onclick="window.print()" class="bg-slate-800 text-white font-black text-xl py-4 px-8 rounded-full hover:bg-slate-700 transition shadow-[0_6px_0_#1e293b] active:translate-y-1 active:shadow-none border-4 border-transparent flex items-center">
-                                <i class="fa-solid fa-print mr-3 text-2xl"></i> Cetak PDF
-                            </button>
+                        <div class="bg-white p-6 rounded-2xl border-2 border-blue-100 text-left max-w-sm mx-auto mb-6 shadow-sm">
+                            <p class="font-bold text-slate-600 mb-2">Nama Murid: <span id="report-name" class="text-blue-700 font-black">Murid</span></p>
+                            <p class="font-bold text-slate-600 mb-2">Skor Kuiz: <span id="report-score" class="text-green-600 font-black">0/3</span></p>
+                            <p class="font-bold text-slate-600">Tarikh: <span id="report-date" class="text-slate-800"></span></p>
+                        </div>
 
-                            <button onclick="goToStep(12)" class="bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black text-xl py-4 px-8 rounded-full hover:from-pink-400 hover:to-rose-400 transition shadow-[0_6px_0_#be185d] active:translate-y-1 active:shadow-none border-4 border-white flex items-center pop-hover">
-                                Tuntut Ganjaran! <i class="fa-solid fa-gift ml-3 text-2xl"></i>
+                        <div class="bg-blue-500 text-white text-6xl font-black py-4 px-12 rounded-[2rem] inline-block border-8 border-white shadow-lg mb-6"><span id="tp-score">TP 1</span></div>
+                        
+                        <div id="auto-save-status" class="hidden font-bold text-lg mb-6 py-2 px-4 rounded-full mx-auto border-2 w-max transition-all"></div>
+
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-colors flex items-center justify-center text-xl no-print">
+                                <i class="fa-solid fa-print mr-3"></i> Cetak Rekod
+                            </button>
+                            <button onclick="goToStep(11)" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-colors flex items-center justify-center text-xl no-print border-2 border-white">
+                                Seterusnya <i class="fa-solid fa-arrow-right ml-3"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 12: Ganjaran Akhir (Confetti) -->
-            <div id="step-12" class="step-container no-print">
-                <div class="bg-gradient-to-br from-yellow-300 to-amber-500 border-8 border-white rounded-[3rem] p-16 shadow-[0_20px_50px_rgba(245,158,11,0.5)] text-center relative mt-10 overflow-hidden">
-                    <button onclick="speakText('Syabas! Tahniah! Kamu telah berjaya menjadi seorang artis tembikar yang hebat pada hari ini.')" class="btn-tts absolute top-6 right-6 bg-white text-amber-500 w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#fbbf24] z-20">
-                        <i class="fa-solid fa-volume-up"></i>
-                    </button>
+            <div id="step-11" class="step-container">
+                <div class="bg-white border-8 border-pink-400 rounded-[3rem] p-8 md:p-12 mt-10 shadow-xl relative text-center">
+                    <h2 class="text-4xl md:text-5xl font-black text-pink-600 comic-font mb-6"><i class="fa-solid fa-face-smile text-yellow-400"></i> Refleksi Kendiri</h2>
+                    <p class="text-xl font-bold text-slate-600 mb-8">Bagaimana perasaan anda belajar dan menghasilkan tembikar hari ini?</p>
                     
-                    <i class="fa-solid fa-trophy text-[150px] text-white mb-8 drop-shadow-2xl animate-bounce" style="animation-duration: 2s;"></i>
-                    <h2 class="text-7xl font-black text-white comic-font mb-6 drop-shadow-lg">SYABAS!</h2>
-                    <p class="text-3xl text-amber-900 font-bold mb-10 bg-white/50 py-4 px-8 rounded-full inline-block">Kamu telah menjadi seorang...</p>
-                    
-                    <div class="bg-white p-6 rounded-[2rem] inline-block border-8 border-amber-200 shadow-2xl pop-hover transform scale-110 rotate-[-2deg]">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 text-5xl md:text-6xl comic-font font-black block">ARTIS TEMBIKAR!</span>
+                    <div class="flex justify-center gap-6 mb-10" id="emoji-container">
+                        <button onclick="selectEmotion('gembira')" class="text-6xl md:text-7xl hover:scale-125 transition-transform pop-hover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 emoji-btn" id="emo-gembira">🤩</button>
+                        <button onclick="selectEmotion('biasa')" class="text-6xl md:text-7xl hover:scale-125 transition-transform pop-hover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 emoji-btn" id="emo-biasa">🙂</button>
+                        <button onclick="selectEmotion('sedih')" class="text-6xl md:text-7xl hover:scale-125 transition-transform pop-hover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 emoji-btn" id="emo-sedih">😢</button>
+                    </div>
+
+                    <div id="journal-container" class="hidden bg-pink-50 p-6 md:p-8 rounded-3xl border-4 border-pink-200 transition-all max-w-2xl mx-auto">
+                        <p id="emotion-response" class="font-black text-xl text-pink-600 mb-4 comic-font"></p>
+                        <h3 class="font-bold text-slate-700 mb-2 text-left">📝 Jurnal Seni Saya:</h3>
+                        <textarea placeholder="Hari ini saya seronok melukis dan picit tembikar..." class="w-full h-24 rounded-xl border-2 border-pink-300 p-4 font-bold text-slate-600 focus:outline-none focus:border-pink-500 mb-6 shadow-inner"></textarea>
+                        <button onclick="showGanjaranAkhir()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-black text-2xl py-4 px-8 rounded-full shadow-[0_6px_0_#be185d] hover:translate-y-1 transition-all border-4 border-white">Hantar & Tuntut Ganjaran! 🎉</button>
+                    </div>
+
+                    <div id="ganjaran-container" class="hidden border-t-4 border-dashed border-pink-200 pt-10 mt-10 no-print">
+                        <div class="bg-gradient-to-br from-yellow-300 to-amber-500 border-8 border-white rounded-[3rem] p-10 md:p-16 shadow-2xl pop-hover relative overflow-hidden">
+                            <i class="fa-solid fa-trophy text-[100px] md:text-[140px] text-white mb-8 animate-bounce drop-shadow-2xl"></i>
+                            <h2 class="text-5xl md:text-7xl font-black text-white comic-font mb-6 drop-shadow-lg">SYABAS!</h2>
+                            <p class="text-xl md:text-3xl text-amber-900 font-bold bg-white/80 py-4 px-8 rounded-full inline-block border-4 border-amber-200">Kamu kini seorang <span class="text-pink-600 font-black">Artis Tembikar!</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -856,347 +557,344 @@
         </div>
     </main>
 
-    <!-- FUNGSI JAVASCRIPT SEPENUHNYA -->
     <script>
-        // --- 1. SPEECH SYNTHESIS (TEXT-TO-SPEECH) ---
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Henti suara sedia ada
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'ms-MY'; // Bahasa Melayu
-                utterance.rate = 0.9;     // Kelajuan mesra kanak-kanak
-                utterance.pitch = 1.2;    // Suara ceria
-                window.speechSynthesis.speak(utterance);
-                
-                // Tambah kesan visual
-                createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2});
-            } else {
-                alert("Maaf, browser anda tidak menyokong fungsi suara.");
-            }
-        }
-
-        // --- 2. SOUND ENGINE (GENERATIVE AUDIO) ---
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
-        let bgmInterval = null;
-        let isBgmPlaying = false;
-
+        // --- AUDIO ENGINE ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let isBgmPlaying = false; let bgmInterval;
+        
         function playSound(freq, type, duration, vol=0.1) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+            osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
+            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
-        // BGM Latar (Ceria Pentatonic Loop)
-        function toggleBGM() {
-            const btn = document.getElementById('music-toggle');
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            
-            if (isBgmPlaying) {
-                clearInterval(bgmInterval);
-                isBgmPlaying = false;
-                btn.innerHTML = '<i class="fa-solid fa-music"></i>';
-                btn.classList.replace('bg-pink-500', 'bg-white');
-                btn.classList.replace('text-white', 'text-pink-500');
+        // --- AKSESIBILITI & BACAAN SUARA ---
+        let readerMode = false;
+        function toggleReaderMode() {
+            readerMode = !readerMode;
+            const btn = document.getElementById('reader-toggle');
+            if(readerMode) {
+                btn.classList.replace('bg-blue-500', 'bg-green-500');
+                document.body.classList.add('reader-mode-active');
+                speakText("Mod baca teks diaktifkan. Klik mana-mana tulisan untuk mendengarnya.");
             } else {
-                isBgmPlaying = true;
-                btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-                btn.classList.replace('bg-white', 'bg-pink-500');
-                btn.classList.replace('text-pink-500', 'text-white');
-                
-                const melody = [329.63, 392.00, 440.00, 523.25, 659.25, 523.25, 440.00, 392.00]; // Pentatonic E G A C E C A G
-                let i = 0;
-                bgmInterval = setInterval(() => {
-                    playSound(melody[i], 'sine', 0.5, 0.03); // Volume sangat perlahan 0.03
-                    i = (i + 1) % melody.length;
-                }, 400); // tempo
+                btn.classList.replace('bg-green-500', 'bg-blue-500');
+                document.body.classList.remove('reader-mode-active');
+                window.speechSynthesis.cancel();
             }
         }
-
-        // --- 3. PARTICLE ENGINE (LETUSAN BINTANG & CONFETTI) ---
-        function createParticles(e) {
-            if(e.target && e.target.id === 'drawingCanvas') return;
-            const x = e.clientX || window.innerWidth/2;
-            const y = e.clientY || window.innerHeight/2;
-            const emojis = ['⭐', '✨', '🎨', '🌟', '💖'];
-            
-            for(let i=0; i<6; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                document.body.appendChild(p);
-                
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 120 + 50;
-                p.style.left = x + 'px';
-                p.style.top = y + 'px';
-                p.style.setProperty('--tx', (Math.cos(angle) * distance) + 'px');
-                p.style.setProperty('--ty', (Math.sin(angle) * distance) + 'px');
-                p.style.setProperty('--rot', (Math.random() * 360) + 'deg');
-                
-                setTimeout(() => p.remove(), 800);
-            }
-        }
-
-        function launchConfetti() {
-            const colors = ['#fce7f3', '#fef08a', '#bbf7d0', '#bfdbfe', '#e9d5ff'];
-            for(let i=0; i<100; i++) {
-                const p = document.createElement('div');
-                p.style.position = 'fixed';
-                p.style.width = Math.random()*15+5+'px';
-                p.style.height = Math.random()*15+5+'px';
-                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.top = '-20px';
-                p.style.zIndex = '9999';
-                p.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                p.style.transition = `transform ${Math.random()*2+2}s linear, top ${Math.random()*2+2}s ease-in`;
-                document.body.appendChild(p);
-                
-                setTimeout(() => {
-                    p.style.top = '120vh';
-                    p.style.transform = `rotate(${Math.random()*720}deg) translateX(${Math.random()*200-100}px)`;
-                }, 50);
-                setTimeout(() => p.remove(), 4000);
-            }
-        }
-
-        // --- 4. NAVIGATION & GAMIFICATION ---
-        let maxStepReached = 1;
-        function goToStep(stepNum) {
-            playSound(400, 'triangle', 0.1); // Swipe sound
-            
-            document.querySelectorAll('.step-container').forEach(el => {
-                el.classList.remove('active');
-                el.style.animation = 'none'; el.offsetHeight; el.style.animation = null; 
-            });
-            document.getElementById(`step-${stepNum}`).classList.add('active');
-            
-            document.querySelectorAll('.nav-item').forEach(el => {
-                el.classList.remove('active', 'bg-pink-500', 'text-white', 'border-pink-200');
-                el.classList.add('border-transparent');
-            });
-            const activeNav = document.getElementById(`nav-${stepNum}`);
-            if(activeNav) {
-                activeNav.classList.add('active', 'bg-pink-500', 'text-white', 'border-pink-200');
-            }
-
-            document.querySelector('main').scrollTo({top:0, behavior:'smooth'});
-
-            if(stepNum === 7) setTimeout(resizeCanvas, 100);
-            
-            // Ganjaran Confetti
-            if(stepNum === 12) {
-                playSound(600, 'square', 0.3); setTimeout(() => playSound(800, 'square', 0.5), 150);
-                launchConfetti();
-            }
-
-            // Update Gamification
-            if(stepNum > maxStepReached) {
-                maxStepReached = stepNum;
-                playSound(800 + (stepNum*50), 'sine', 0.2); // Level up chime
-            }
-            
-            document.getElementById('star-count').innerText = `${maxStepReached}/12`;
-            const starContainer = document.getElementById('star-container');
-            starContainer.innerHTML = '';
-            const fullStars = Math.floor(maxStepReached / 4);
-            const remainder = maxStepReached % 4;
-            
-            for(let i=0; i<3; i++) {
-                if(i < fullStars) starContainer.innerHTML += '<i class="fa-solid fa-star transform scale-125 text-yellow-500 shadow-yellow-200 mx-1"></i>';
-                else if (i === fullStars && remainder > 0) starContainer.innerHTML += '<i class="fa-solid fa-star-half-stroke text-yellow-400 mx-1"></i>';
-                else starContainer.innerHTML += '<i class="fa-regular fa-star text-yellow-300 mx-1"></i>';
-            }
-        }
-
-        // --- 5. MODULE SPECIFIC LOGIC ---
-        // Landing Page Audio Setup
-        let audioInit = false;
-        document.body.addEventListener('click', () => {
-            if(!audioInit) {
-                if(audioCtx.state === 'suspended') audioCtx.resume();
-                document.getElementById('audio-hint').style.display = 'none';
-                audioInit = true;
-            }
-        }, {once:true});
-
-        // Parallax & Musical Mouse on Landing
-        const pentatonicScale = [523.25, 587.33, 659.25, 783.99, 880.00]; // C5 D5 E5 G5 A5
-        let lastChimeTime = 0;
-        document.getElementById('landing-page').addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 30; 
-            const y = (e.clientY / window.innerHeight - 0.5) * 30;
-            const bgSvg = document.getElementById('landing-bg-svg');
-            if(bgSvg) bgSvg.style.transform = `translate(${x}px, ${y}px)`;
-            const panel = document.getElementById('landing-glass-panel');
-            if(panel) panel.style.transform = `translate(${-x/2}px, ${-y/2}px)`; 
-
-            if (audioInit && audioCtx.state === 'running' && !isBgmPlaying) {
-                let now = Date.now();
-                if (now - lastChimeTime > 150) { // Limit chime rate
-                    let noteIndex = Math.floor((e.clientX / window.innerWidth) * pentatonicScale.length);
-                    if(noteIndex >= pentatonicScale.length) noteIndex = pentatonicScale.length - 1;
-                    playSound(pentatonicScale[noteIndex], 'sine', 0.3, 0.02);
-                    lastChimeTime = now;
-                }
+        
+        document.body.addEventListener('click', (e) => {
+            if(readerMode && ['H1','H2','H3','P','LI','SPAN','DIV'].includes(e.target.tagName) && e.target.innerText.trim().length > 0 && !e.target.closest('button') && !e.target.closest('.flip-card')) {
+                e.preventDefault(); e.stopPropagation(); speakText(e.target.innerText);
             }
         });
 
-        // Mystery Box
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text); u.lang = 'ms-MY'; u.rate = 0.9;
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        // --- FLIP CARDS INTERAKTIF (JOM TEROKA) ---
+        function flipCardAndSpeak(element, textToSpeak) {
+            const isFlipped = element.classList.contains('flipped');
+            
+            // Tutup semula semua kad yang lain dan hentikan suara supaya tidak bertindih
+            document.querySelectorAll('.flip-card').forEach(card => card.classList.remove('flipped'));
+            window.speechSynthesis.cancel();
+
+            if (!isFlipped) {
+                // Terbalikkan kad yang dipilih
+                element.classList.add('flipped');
+                playSound(600, 'triangle', 0.1);
+                
+                // Bacakan teks rahsia di belakang kad
+                speakText(textToSpeak);
+            }
+        }
+
+        // --- GOOGLE DRIVE AUTO-SUBMIT (APPS SCRIPT) ---
+        function hantarKeGoogleDrive() {
+            const statusEl = document.getElementById('auto-save-status');
+            statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Menghantar rekod kepada guru...';
+            statusEl.className = 'text-blue-600 font-bold text-lg mb-6 bg-blue-100 py-2 px-4 rounded-full mx-auto border-2 border-blue-200 block';
+            
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxyFKPDxXMNU8QQL8FS4ymfuD6xRwDBAVUpkamV1dPLSniwc92OhxBixJ66pdzUOtMr/exec';
+            const namaMurid = document.getElementById('sidebar-student-name').value || 'Murid Tanpa Nama';
+            const markah = window.pbdScore || 0;
+            const tp = window.pbdTP || 1;
+            
+            const formData = new FormData();
+            formData.append('tarikh', new Date().toLocaleString('ms-MY'));
+            formData.append('nama', namaMurid);
+            formData.append('topik', "Uli-Uli Tembikar");
+            formData.append('markah', markah + "/3");
+            formData.append('tp', "TP " + tp);
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    statusEl.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> Rekod PBD berjaya dihantar kepada Cikgu!';
+                    statusEl.classList.replace('text-blue-600', 'text-green-700');
+                    statusEl.classList.replace('bg-blue-100', 'bg-green-100');
+                    statusEl.classList.replace('border-blue-200', 'border-green-300');
+                })
+                .catch(error => { 
+                    statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> Ralat menghantar rekod kepada Cikgu.';
+                    statusEl.classList.replace('text-blue-600', 'text-red-600');
+                    statusEl.classList.replace('bg-blue-100', 'bg-red-100');
+                    statusEl.classList.replace('border-blue-200', 'border-red-200');
+                });
+        }
+
+        // --- GAMIFICATION & NAVIGATION ---
+        let maxStepReached = 1;
+        const avatars = ['👦','👧','👨‍🦱','👩‍🦱','🧑‍🦰','🦸‍♂️','🦸‍♀️','🥷','🧑‍🚀']; let currentAvatarIdx = 0;
+        
+        function changeAvatar() { 
+            currentAvatarIdx = (currentAvatarIdx+1)%avatars.length; 
+            document.getElementById('student-avatar').innerText = avatars[currentAvatarIdx]; 
+            playSound(500, 'triangle', 0.1); 
+        }
+        
+        function unlockBadges(step) {
+            const badges = document.querySelectorAll('.badge-icon');
+            if(step >= 5) { badges[0].classList.remove('opacity-50', 'grayscale'); badges[0].classList.add('bg-yellow-300', 'text-yellow-700', 'shadow-md'); }
+            if(step >= 8) { badges[1].classList.remove('opacity-50', 'grayscale'); badges[1].classList.add('bg-pink-300', 'text-pink-700', 'shadow-md'); }
+            if(step >= 11) { badges[2].classList.remove('opacity-50', 'grayscale'); badges[2].classList.add('bg-amber-400', 'text-white', 'shadow-md'); }
+        }
+
+        // Fungsi baharu untuk menghidupkan ikon 3 Bintang
+        function updateStars(step) {
+            const stars = document.getElementById('star-container').querySelectorAll('i');
+            if(step >= 4 && stars[0].classList.contains('fa-regular')) { 
+                stars[0].classList.replace('fa-regular', 'fa-solid'); 
+                stars[0].classList.add('animate-bounce');
+                setTimeout(() => stars[0].classList.remove('animate-bounce'), 1000);
+            }
+            if(step >= 8 && stars[1].classList.contains('fa-regular')) { 
+                stars[1].classList.replace('fa-regular', 'fa-solid'); 
+                stars[1].classList.add('animate-bounce');
+                setTimeout(() => stars[1].classList.remove('animate-bounce'), 1000);
+            }
+            if(step >= 11 && stars[2].classList.contains('fa-regular')) { 
+                stars[2].classList.replace('fa-regular', 'fa-solid'); 
+                stars[2].classList.add('animate-bounce');
+                setTimeout(() => stars[2].classList.remove('animate-bounce'), 1000);
+            }
+        }
+
+        function goToStep(stepNum) {
+            playSound(400, 'triangle', 0.1);
+            document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step-${stepNum}`).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'bg-pink-500', 'text-white'));
+            const activeNav = document.getElementById(`nav-${stepNum}`);
+            if(activeNav) activeNav.classList.add('active', 'bg-pink-500', 'text-white');
+            
+            document.querySelector('main').scrollTo({top:0, behavior:'smooth'});
+            
+            if(stepNum === 7) setTimeout(resizeCanvas, 100);
+            
+            if(stepNum > maxStepReached) { 
+                maxStepReached = stepNum; 
+                unlockBadges(stepNum); 
+                updateStars(stepNum); // Kemas kini bintang yang terkumpul
+            }
+            document.getElementById('star-count').innerText = `${maxStepReached}/11`;
+        }
+
+        // --- MISTERI BOX ---
         let boxOpen = false;
         function revealMystery() {
-            const overlay = document.getElementById('mystery-overlay');
-            const questions = document.getElementById('mystery-questions');
-            const svg = document.getElementById('labu-svg');
-
             if(!boxOpen) {
-                playSound(400, 'square', 0.1); setTimeout(() => playSound(600, 'square', 0.2), 100); 
-                overlay.style.opacity = '0';
-                svg.style.transform = 'scale(1.1)';
-                setTimeout(() => overlay.style.display = 'none', 500); 
-                questions.classList.remove('hidden');
-                setTimeout(() => questions.classList.add('opacity-100'), 50);
+                playSound(400, 'square', 0.1);
+                document.getElementById('mystery-overlay').style.opacity = '0';
+                setTimeout(() => document.getElementById('mystery-overlay').style.display = 'none', 500);
+                document.getElementById('labu-svg').classList.remove('hidden');
+                document.getElementById('mystery-questions').classList.remove('hidden');
                 boxOpen = true;
-            } else {
-                playSound(200, 'triangle', 0.2);
-                overlay.style.display = 'flex';
-                svg.style.transform = 'scale(0.9)';
-                setTimeout(() => overlay.style.opacity = '1', 10);
-                questions.classList.add('hidden');
-                boxOpen = false;
+                setTimeout(() => { speakText("Wah! Rupa-rupanya ada Tembikar di dalam kotak ini."); }, 600);
             }
         }
 
-        // Jom Teroka
-        function showTraits(e) {
-            if(e) e.stopPropagation();
-            createParticles({clientX: e.clientX, clientY: e.clientY});
-            const container = document.getElementById('traits-container');
-            if (container.classList.contains('hidden')) {
-                playSound(500, 'square', 0.1); setTimeout(() => playSound(700, 'square', 0.2), 100); setTimeout(() => playSound(900, 'sine', 0.3), 200); 
-                container.classList.remove('hidden');
-                setTimeout(() => { container.classList.remove('opacity-0', 'translate-y-10'); }, 50);
-            } else {
-                playSound(800, 'sine', 0.1);
-                const children = container.querySelectorAll('.bg-blue-100, .bg-green-100, .bg-purple-100, .bg-orange-100');
-                children.forEach(child => { child.classList.add('animate-bounce'); setTimeout(() => child.classList.remove('animate-bounce'), 1000); });
+        // --- STREAMING_CHUNK:Initializing Canvas scripts for drawing... ---
+        const canvas = document.getElementById('drawingCanvas'); const ctx = canvas.getContext('2d'); let isDrawing = false;
+        
+        function resizeCanvas() { 
+            const rect = canvas.parentElement.getBoundingClientRect(); 
+            canvas.width = rect.width; canvas.height = rect.height; 
+            ctx.lineCap = 'round'; ctx.lineJoin = 'round'; 
+        }
+        
+        function draw(e) { 
+            if (!isDrawing) return; 
+            const rect = canvas.getBoundingClientRect(); 
+            let clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX; 
+            let clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY; 
+            const x = (clientX - rect.left) * (canvas.width / rect.width); 
+            const y = (clientY - rect.top) * (canvas.height / rect.height); 
+            ctx.strokeStyle = document.getElementById('colorPicker').value; 
+            ctx.lineWidth = document.getElementById('brushSize').value; 
+            ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y); 
+        }
+        
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; ctx.beginPath(); draw(e); }); 
+        canvas.addEventListener('mousemove', draw); 
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true; ctx.beginPath(); draw(e); }, {passive: false}); 
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, {passive: false}); 
+        canvas.addEventListener('touchend', () => isDrawing = false);
+        
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        
+        function submitToGallery() {
+            const name = document.getElementById('drawing-name').value || 'Murid Maya';
+            const imgData = canvas.toDataURL();
+            const gallery = document.getElementById('gallery-grid');
+            const newCard = document.createElement('div');
+            newCard.className = `bg-white p-6 rounded-2xl rotate-[${Math.floor(Math.random()*10)-5}deg] shadow-lg pop-hover border-4 border-slate-100`;
+            newCard.innerHTML = `<img src="${imgData}" class="w-full h-40 object-contain bg-teal-50 rounded-xl mb-4 border-2 border-teal-200 shadow-inner"><p class="font-black text-xl text-slate-700">${name}</p>`;
+            gallery.insertBefore(newCard, gallery.firstChild);
+            launchConfetti(); playSound(800, 'square', 0.2);
+            document.getElementById('galeri-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- GALERI UPLOAD FIZIKAL ---
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const name = document.getElementById('sidebar-student-name').value || 'Karya Saya';
+                    const gallery = document.getElementById('gallery-grid');
+                    const newCard = document.createElement('div');
+                    newCard.className = `bg-white p-6 rounded-2xl rotate-[${Math.floor(Math.random()*10)-5}deg] shadow-lg pop-hover border-4 border-slate-100`;
+                    newCard.innerHTML = `<img src="${e.target.result}" class="w-full h-40 object-cover bg-slate-100 rounded-xl mb-4 border-2 border-indigo-200 shadow-inner"><p class="font-black text-xl text-slate-700">${name}</p>`;
+                    gallery.insertBefore(newCard, gallery.firstChild);
+                    playSound(600, 'triangle', 0.2);
+                }
+                reader.readAsDataURL(file);
             }
         }
 
-        // Magic Cards
-        function toggleMagic(element, effectClass) {
-            playSound(800, 'sine', 0.1);
-            if(element.classList.contains(effectClass)) element.classList.remove(effectClass);
-            else element.classList.add(effectClass);
-        }
-
-        // Canvas Logic
-        const canvas = document.getElementById('drawingCanvas');
-        const ctx = canvas.getContext('2d');
-        let isDrawing = false;
-        function resizeCanvas() {
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width; canvas.height = rect.height;
-            ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-            const brushSize = document.getElementById('brushSize');
-            if(brushSize) ctx.lineWidth = brushSize.value;
-        }
-        function startDrawing(e) { isDrawing = true; ctx.beginPath(); draw(e); }
-        function stopDrawing() { isDrawing = false; ctx.beginPath(); }
-        function draw(e) {
-            if (!isDrawing) return;
-            const rect = canvas.getBoundingClientRect();
-            let clientX, clientY;
-            if (e.type.includes('touch')) { e.preventDefault(); clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; } 
-            else { clientX = e.clientX; clientY = e.clientY; }
-            const x = (clientX - rect.left) * (canvas.width / rect.width);
-            const y = (clientY - rect.top) * (canvas.height / rect.height);
-            ctx.strokeStyle = document.getElementById('colorPicker').value;
-            const brushInput = document.getElementById('brushSize');
-            ctx.lineWidth = brushInput ? brushInput.value : 8;
-            ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
-        }
-        canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing); canvas.addEventListener('mouseout', stopDrawing);
-        canvas.addEventListener('touchstart', startDrawing, {passive: false});
-        canvas.addEventListener('touchmove', draw, {passive: false}); canvas.addEventListener('touchend', stopDrawing);
-        function clearCanvas() { playSound(200, 'sawtooth', 0.1); ctx.clearRect(0, 0, canvas.width, canvas.height); }
-        window.addEventListener('resize', () => { if(document.getElementById('step-7').classList.contains('active')) resizeCanvas(); });
-
-        // Quiz Logic
+        // --- STREAMING_CHUNK:Setting up Quiz Validation and UI Logic... ---
         function checkAnswers() {
             let score = 0;
-            const q1 = document.querySelector('input[name="q1"]:checked');
-            const q2 = document.querySelector('input[name="q2"]:checked');
-            const q3 = document.querySelector('input[name="q3"]:checked');
-
-            if(!q1 || !q2 || !q3) {
-                playSound(300, 'sawtooth', 0.2);
-                alert("Sila jawab semua soalan dahulu!"); return;
-            }
-
-            if(q1.value === 'bentuk') score++;
-            if(q2.value === 'jalinan') score++;
-            if(q3.value === 'jari') score++;
-
-            let tp = 1;
-            if(score === 1) tp = 2; else if(score === 2) tp = 3; else if(score === 3) tp = 4;
-
+            if(document.querySelector('input[name="q1"]:checked')?.value === 'bentuk') score++;
+            if(document.querySelector('input[name="q2"]:checked')?.value === 'jalinan') score++;
+            if(document.querySelector('input[name="q3"]:checked')?.value === 'jari') score++;
+            
+            let tp = score === 0 ? 1 : score === 1 ? 2 : score === 2 ? 3 : 4;
+            if(score === 3) tp = 5; 
+            
+            window.pbdScore = score; window.pbdTP = tp;
+            
+            document.getElementById('report-name').innerText = document.getElementById('sidebar-student-name').value || "Murid";
+            document.getElementById('report-score').innerText = `${score}/3`;
+            document.getElementById('report-date').innerText = new Date().toLocaleDateString('ms-MY');
             document.getElementById('tp-score').innerText = `TP ${tp}`;
-            playSound(500, 'square', 0.1); setTimeout(() => playSound(800, 'square', 0.3), 100);
+            
             document.getElementById('quiz-container').style.display = 'none';
             document.getElementById('pbd-result').classList.remove('hidden');
-            createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2});
-            speakText('Tahniah! Ini adalah markah Tahap Penguasaan kamu.');
+            playSound(500, 'square', 0.1); setTimeout(() => playSound(800, 'square', 0.3), 100);
+
+            // Trigger Google Drive auto save
+            hantarKeGoogleDrive();
         }
 
-        // Portal Entry
-        function enterPortal(e) {
-            if(e) e.stopPropagation(); 
-            playSound(600, 'sine', 0.1); setTimeout(() => playSound(900, 'sine', 0.2), 100);
-            createParticles({clientX: window.innerWidth / 2, clientY: window.innerHeight / 2});
-            const landingPage = document.getElementById('landing-page');
-            landingPage.style.transform = 'translateY(-100vh) scale(0.8)';
-            landingPage.style.opacity = '0';
-            setTimeout(() => { landingPage.style.display = 'none'; }, 1000);
+        // --- REFLEKSI ---
+        function selectEmotion(emo) {
+            document.querySelectorAll('.emoji-btn').forEach(el => { el.classList.add('grayscale', 'opacity-50'); el.classList.remove('scale-125'); });
+            const selected = document.getElementById(`emo-${emo}`);
+            selected.classList.remove('grayscale', 'opacity-50'); selected.classList.add('scale-125');
+            
+            const responseText = document.getElementById('emotion-response');
+            if(emo==='gembira') { responseText.innerText = "Bagus! Cikgu gembira kamu seronok."; playSound(800, 'sine', 0.2); }
+            if(emo==='biasa') { responseText.innerText = "Terima kasih! Kita buat lebih baik lagi nanti ya."; playSound(600, 'sine', 0.2); }
+            if(emo==='sedih') { responseText.innerText = "Jangan sedih. Kamu dah buat yang terbaik hari ini!"; playSound(400, 'sine', 0.3); }
+            
+            document.getElementById('journal-container').classList.remove('hidden');
         }
 
-        function showLandingPage(e) {
-            if(e) e.stopPropagation();
-            playSound(400, 'triangle', 0.2); // bunyi swoosh
-            const landingPage = document.getElementById('landing-page');
-            landingPage.style.display = 'flex';
-            // Reflow DOM untuk pastikan transisi CSS berjalan
-            landingPage.offsetHeight;
-            landingPage.style.transform = 'translateY(0) scale(1)';
-            landingPage.style.opacity = '1';
+        function showGanjaranAkhir() {
+            document.getElementById('ganjaran-container').classList.remove('hidden');
+            launchConfetti();
+            playSound(800, 'square', 0.2); setTimeout(() => playSound(1000, 'square', 0.4), 200);
+            setTimeout(() => { document.getElementById('ganjaran-container').scrollIntoView({ behavior: 'smooth' }); }, 300);
         }
 
-        // Initialize Background Shapes
-        function createFloatingShapes() {
-            const container = document.getElementById('floating-bg');
-            const shapes = ['fa-circle', 'fa-square', 'fa-star', 'fa-play'];
-            const colors = ['text-pink-300', 'text-sky-300', 'text-yellow-300', 'text-emerald-300'];
-            for(let i=0; i<20; i++) {
-                const el = document.createElement('i');
-                el.className = `shape fa-solid ${shapes[Math.floor(Math.random() * shapes.length)]} ${colors[Math.floor(Math.random() * colors.length)]}`;
-                el.style.fontSize = `${Math.random() * 3 + 1}rem`;
-                el.style.left = `${Math.random() * 100}vw`;
-                el.style.animationDuration = `${Math.random() * 20 + 15}s`;
-                el.style.animationDelay = `${Math.random() * 10}s`;
-                container.appendChild(el);
+        // --- VISUAL FX ---
+        function createParticles(e) {
+            if(e.target && (e.target.closest('canvas') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.flip-card') || e.target.closest('.emoji-btn'))) return;
+            const x = e.clientX || window.innerWidth/2; const y = e.clientY || window.innerHeight/2;
+            const emojis = ['⭐', '✨', '🎨'];
+            for(let i=0; i<4; i++) {
+                const p = document.createElement('div'); p.className = 'particle'; p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                document.body.appendChild(p);
+                const angle = Math.random() * Math.PI * 2; const dist = Math.random() * 100 + 50;
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                p.style.setProperty('--tx', (Math.cos(angle)*dist)+'px'); p.style.setProperty('--ty', (Math.sin(angle)*dist)+'px'); p.style.setProperty('--rot', (Math.random()*360)+'deg');
+                setTimeout(() => p.remove(), 800);
             }
         }
-        createFloatingShapes();
+        
+        function launchConfetti() {
+            for(let i=0; i<60; i++) {
+                const p = document.createElement('div'); p.style.position = 'fixed';
+                p.style.width = '12px'; p.style.height = '12px'; p.style.backgroundColor = ['#fce7f3', '#fef08a', '#bbf7d0', '#bfdbfe', '#e9d5ff'][Math.floor(Math.random()*5)];
+                p.style.left = Math.random() * 100 + 'vw'; p.style.top = '-10px'; p.style.zIndex = '9999';
+                p.style.transition = `transform ${Math.random()*2+2}s linear, top ${Math.random()*2+2}s ease-in`;
+                p.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                document.body.appendChild(p);
+                setTimeout(() => { p.style.top = '120vh'; p.style.transform = `rotate(${Math.random()*720}deg) translateX(${Math.random()*100-50}px)`; }, 50);
+                setTimeout(() => p.remove(), 4000);
+            }
+        }
+        
+        function enterPortal(e) {
+            if(e) e.stopPropagation(); playSound(600, 'sine', 0.1); createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2});
+            const lp = document.getElementById('landing-page'); lp.style.transform = 'translateY(-100vh) scale(0.8)'; lp.style.opacity = '0';
+            setTimeout(() => lp.style.display = 'none', 1000);
+        }
+        
+        function showLandingPage(e) {
+            if(e) e.stopPropagation(); playSound(400, 'triangle', 0.2);
+            const lp = document.getElementById('landing-page'); lp.style.display = 'flex'; lp.offsetHeight; lp.style.transform = 'translateY(0) scale(1)'; lp.style.opacity = '1';
+        }
+        
+        function toggleBGM() {
+            const btn = document.getElementById('music-toggle');
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            if(isBgmPlaying) {
+                clearInterval(bgmInterval); isBgmPlaying = false;
+                btn.innerHTML = '<i class="fa-solid fa-music"></i>';
+                btn.className = "bg-white text-pink-500 border-4 border-pink-500 w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-[0_6px_0_#be185d] hover:translate-y-1 hover:shadow-[0_3px_0_#be185d] transition-all pop-hover fixed bottom-6 right-6 z-[90] no-print";
+            } else {
+                isBgmPlaying = true;
+                btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                btn.className = "bg-pink-500 text-white border-4 border-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-[0_6px_0_#be185d] hover:translate-y-1 hover:shadow-[0_3px_0_#be185d] transition-all pop-hover fixed bottom-6 right-6 z-[90] no-print";
+                const melody = [329.63, 392.00, 440.00, 523.25, 659.25, 523.25];
+                let i = 0;
+                bgmInterval = setInterval(() => { playSound(melody[i], 'sine', 0.5, 0.03); i = (i+1)%melody.length; }, 500);
+            }
+        }
+        
+        let audioInit = false; 
+        document.body.addEventListener('click', () => { 
+            if(!audioInit) { 
+                if(audioCtx.state === 'suspended') audioCtx.resume(); 
+                document.getElementById('audio-hint').style.display = 'none'; 
+                audioInit = true; 
+            } 
+        }, {once:true});
     </script>
 </body>
 </html>
