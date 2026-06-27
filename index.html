@@ -49,6 +49,9 @@
 
         .reader-mode-active *:hover { outline: 3px dashed #3b82f6 !important; cursor: pointer !important; background-color: #eff6ff !important; }
         
+        @keyframes achievementBounce { 0% { transform: translate(-50%, -100%); opacity: 0; } 20% { transform: translate(-50%, 20px); opacity: 1; } 80% { transform: translate(-50%, 20px); opacity: 1; } 100% { transform: translate(-50%, -100%); opacity: 0; } }
+        .animate-achievement { animation: achievementBounce 4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
         @media print { 
             .no-print { display: none !important; } 
             body, main { background: white !important; overflow: visible !important; height: auto !important; } 
@@ -57,30 +60,26 @@
             .step-container.active { display: block !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
-
-        .exp-bar-container { width: 100%; height: 8px; background-color: #f1f5f9; border-radius: 9999px; overflow: hidden; margin-top: 4px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
-        .exp-bar-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899); width: 0%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
-        #achievement-banner { animation: slideDownBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes slideDownBounce { 0% { transform: translate(-50%, -100%); } 100% { transform: translate(-50%, 20px); } }
     </style>
 </head>
 <body class="text-slate-800 h-screen flex flex-col md:flex-row overflow-x-hidden" onclick="createParticles(event)">
 
+    <!-- TOAST NOTIFICATION -->
     <div id="toast-message" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-rose-500 text-white font-bold px-8 py-4 rounded-full shadow-2xl z-[9999] transition-all duration-300 opacity-0 -translate-y-10 pointer-events-none border-4 border-white flex items-center gap-3">
         <i class="fa-solid fa-circle-exclamation text-xl"></i>
         <span id="toast-text">Sila jawab semua soalan!</span>
     </div>
 
-    <div id="achievement-banner-container" class="fixed top-0 left-1/2 transform -translate-x-1/2 z-[9999] hidden">
-        <div id="achievement-banner" class="bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-8 py-4 rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.2)] border-4 border-white flex items-center gap-4">
-            <div class="bg-white text-amber-500 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black shadow-inner animate-pulse" id="ach-icon">🏆</div>
-            <div>
-                <p class="text-xs font-black uppercase tracking-wider text-amber-100">Pencapaian Dibuka!</p>
-                <p class="font-black text-xl comic-font drop-shadow-sm" id="ach-text">Pengkaji Seni</p>
-            </div>
+    <!-- PENCAPAIAN DIBUKA (GAMIFICATION NOTIFICATION) -->
+    <div id="achievement-popup" class="fixed top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full px-6 md:px-8 py-3 md:py-4 shadow-[0_10px_25px_-5px_rgba(217,119,6,0.5)] z-[1000] hidden flex items-center gap-4 border-4 border-white">
+        <div id="ach-icon" class="text-3xl md:text-4xl bg-white rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center shadow-inner animate-pulse">🏆</div>
+        <div>
+            <p class="text-[10px] md:text-xs font-black text-amber-900 uppercase tracking-widest">Pencapaian Dibuka!</p>
+            <p id="ach-title" class="text-lg md:text-2xl font-black text-white drop-shadow-md comic-font">Pelukis Cilik</p>
         </div>
     </div>
 
+    <!-- HALAMAN PENDARATAN -->
     <div id="landing-page" class="fixed inset-0 z-[100] flex flex-col items-center justify-center transition-all duration-1000 ease-in-out" style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6, #ec4899);">
         <div id="audio-hint" class="absolute top-6 right-6 bg-yellow-300 px-6 py-3 rounded-full animate-bounce text-sm font-black text-slate-800 shadow-xl border-4 border-white z-50">
             <i class="fa-solid fa-hand-pointer mr-2"></i> Klik skrin untuk mulakan!
@@ -107,31 +106,28 @@
             </div>
             
             <button onclick="enterPortal(event)" class="bg-gradient-to-b from-green-400 to-emerald-600 hover:from-green-300 hover:to-emerald-500 text-white text-2xl md:text-3xl font-black comic-font py-4 px-12 rounded-full shadow-[0_10px_0_#065f46] hover:shadow-[0_5px_0_#065f46] hover:translate-y-1 transition-all flex items-center justify-center mx-auto gap-3 border-4 border-white mt-4">
-                <i class="fa-solid fa-wand-magic-sparkles animate-pulse"></i> Masuk Kelas Seni
+                <i class="fa-solid fa-play"></i> Mula Bermain!
             </button>
         </div>
     </div>
 
     <div class="color-bg"></div>
 
-    <div class="fixed right-4 md:right-8 bottom-6 flex flex-col gap-3 z-[90] no-print">
-        <button onclick="changeFontSize(1)" class="bg-indigo-500 text-white border-4 border-white w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-base md:text-lg font-black shadow-[0_6px_0_#3730a3] hover:translate-y-1 transition-all pop-hover" title="Besarkan Tulisan">A+</button>
-        <button onclick="changeFontSize(-1)" class="bg-indigo-400 text-white border-4 border-white w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-base md:text-lg font-black shadow-[0_6px_0_#312e81] hover:translate-y-1 transition-all pop-hover" title="Kecilkan Tulisan">A-</button>
-        <button id="reader-toggle" onclick="toggleReaderMode()" class="bg-blue-500 text-white border-4 border-white w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-lg md:text-xl shadow-[0_6px_0_#1e3a8a] hover:translate-y-1 transition-all pop-hover" title="Mod Bacaan">
+    <div class="fixed right-6 bottom-6 flex flex-col gap-3 z-[90] no-print">
+        <button onclick="changeFontSize(1)" class="bg-indigo-500 text-white border-4 border-white w-14 h-14 rounded-full flex items-center justify-center text-lg font-black shadow-[0_6px_0_#3730a3] hover:translate-y-1 transition-all pop-hover" title="Besarkan Tulisan">A+</button>
+        <button onclick="changeFontSize(-1)" class="bg-indigo-400 text-white border-4 border-white w-14 h-14 rounded-full flex items-center justify-center text-lg font-black shadow-[0_6px_0_#312e81] hover:translate-y-1 transition-all pop-hover" title="Kecilkan Tulisan">A-</button>
+        <button id="reader-toggle" onclick="toggleReaderMode()" class="bg-blue-500 text-white border-4 border-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-[0_6px_0_#1e3a8a] hover:translate-y-1 transition-all pop-hover" title="Mod Bacaan">
             <i class="fa-solid fa-ear-listen"></i>
         </button>
-        <button id="music-toggle" onclick="toggleBGM()" class="bg-white text-pink-500 border-4 border-pink-500 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-lg md:text-xl shadow-[0_6px_0_#be185d] hover:translate-y-1 transition-all pop-hover" title="Muzik Latar">
+        <button id="music-toggle" onclick="toggleBGM()" class="bg-white text-pink-500 border-4 border-pink-500 w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-[0_6px_0_#be185d] hover:translate-y-1 transition-all pop-hover" title="Muzik Latar">
             <i class="fa-solid fa-music"></i>
         </button>
     </div>
 
+    <!-- PETA PEMBELAJARAN (SIDEBAR) -->
     <nav class="w-full md:w-72 bg-white/95 backdrop-blur-md shadow-2xl md:h-full overflow-y-auto flex-shrink-0 z-10 border-b-4 md:border-b-0 md:border-r-4 border-pink-300 no-print flex flex-col relative max-h-[40vh] md:max-h-full">
-        <div class="p-4 md:p-6 bg-gradient-to-br from-pink-500 to-rose-500 text-white sticky top-0 z-20 shadow-lg border-b-4 border-pink-600 flex justify-between items-center">
+        <div class="p-4 md:p-6 bg-gradient-to-br from-pink-500 to-rose-500 text-white text-center sticky top-0 z-20 shadow-lg border-b-4 border-pink-600 flex justify-between items-center md:block">
             <h1 class="text-xl md:text-2xl font-black comic-font drop-shadow-md"><i class="fa-solid fa-palette text-yellow-300"></i> Seni Tahun 2</h1>
-            <!-- BUTANG HOME DI SINI -->
-            <button onclick="exitPortal(event)" class="bg-white text-pink-600 w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 hover:bg-pink-100 transition-all border-2 border-pink-200" title="Muka Depan">
-                <i class="fa-solid fa-house"></i>
-            </button>
         </div>
         
         <div class="p-4 bg-pink-50 border-b-2 border-pink-100 flex flex-col items-center">
@@ -139,22 +135,26 @@
                 <div id="student-avatar" class="w-16 h-16 bg-blue-200 rounded-full border-4 border-white shadow-md flex items-center justify-center text-3xl">👦</div>
                 <div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-pen text-white text-xs"></i></div>
             </div>
+            <input type="text" id="sidebar-student-name" placeholder="Nama Anda" class="w-full text-center bg-white border-2 border-pink-200 rounded-full py-1 px-3 font-bold text-slate-700 text-sm focus:outline-none focus:border-pink-500 mb-2">
             
-            <div class="w-full mb-3 px-2 text-center">
-                <input type="text" id="sidebar-student-name" placeholder="Nama Anda" class="w-full text-center bg-white border-2 border-pink-200 rounded-full py-1 px-3 font-bold text-slate-700 text-sm focus:outline-none focus:border-pink-500 mb-1">
-                <div class="flex justify-between items-center px-1 mb-1">
-                    <span class="text-[10px] font-black text-indigo-500 uppercase tracking-wider" id="level-display">Tahap 1</span>
-                    <span class="text-[10px] font-black text-slate-400" id="exp-text">0/100 EXP</span>
+            <!-- EXP BAR GAMIFIKASI -->
+            <div class="w-full bg-slate-200 h-3 rounded-full mt-1 mb-1 border-2 border-slate-300 shadow-inner overflow-hidden">
+                <div id="exp-bar" class="bg-gradient-to-r from-yellow-400 to-orange-500 h-full rounded-full w-[10%] transition-all duration-1000 ease-out relative">
+                    <div class="absolute inset-0 bg-white/30 w-full h-full animate-[pulse_1s_ease-in-out_infinite]"></div>
                 </div>
-                <div class="exp-bar-container"><div id="exp-bar" class="exp-bar-fill"></div></div>
             </div>
-            
-            <button onclick="paparProfil()" class="w-full bg-purple-500 text-white text-xs font-bold py-1 px-2 rounded-full mb-3 hover:bg-purple-600 transition shadow-sm"><i class="fa-solid fa-id-card mr-1"></i> Lihat Profil & Portfolio</button>
+            <p class="text-[10px] md:text-xs text-slate-500 font-bold mb-3">PENGALAMAN (EXP): <span id="exp-text" class="text-orange-600 font-black">10/110</span></p>
 
-            <div class="flex gap-2" id="badges-container">
-                <div id="badge-1" class="badge-icon w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs opacity-50 grayscale transition-all duration-500 shadow-inner" title="Misi Rahsia: Pengkaji Seni"><i class="fa-solid fa-book-open"></i></div>
-                <div id="badge-2" class="badge-icon w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs opacity-50 grayscale transition-all duration-500 shadow-inner" title="Misi Rahsia: Pelukis Cilik"><i class="fa-solid fa-palette"></i></div>
-                <div id="badge-3" class="badge-icon w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs opacity-50 grayscale transition-all duration-500 shadow-inner" title="Misi Rahsia: Bijak Seni"><i class="fa-solid fa-star"></i></div>
+            <button onclick="paparProfil()" class="w-full bg-purple-500 text-white text-xs font-bold py-1.5 px-2 rounded-full mb-3 hover:bg-purple-600 transition shadow-sm border-2 border-purple-400"><i class="fa-solid fa-id-card mr-1"></i> Kad Profil Murid</button>
+
+            <!-- LENCANA MISI RAHSIA -->
+            <div class="w-full mt-1">
+                <p class="text-[10px] text-center font-bold text-slate-400 mb-1 uppercase tracking-widest">Lencana Misi</p>
+                <div class="flex justify-center gap-3" id="badges-container">
+                    <div id="badge-teroka" class="badge-icon w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-lg opacity-50 grayscale transition-all duration-500 shadow-inner border-2 border-slate-300" title="Misi: Pengkaji Seni"><i class="fa-solid fa-book-open"></i></div>
+                    <div id="badge-lukis" class="badge-icon w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-lg opacity-50 grayscale transition-all duration-500 shadow-inner border-2 border-slate-300" title="Misi: Pelukis Cilik"><i class="fa-solid fa-palette"></i></div>
+                    <div id="badge-kuiz" class="badge-icon w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-lg opacity-50 grayscale transition-all duration-500 shadow-inner border-2 border-slate-300" title="Misi: Bijak Seni"><i class="fa-solid fa-brain"></i></div>
+                </div>
             </div>
         </div>
 
@@ -170,19 +170,10 @@
                 <li><button onclick="goToStep(8)" id="nav-8" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><span class="w-6 text-center mr-2 text-emerald-500">8.</span> Mari Menguli</button></li>
                 <li><button onclick="goToStep(9)" id="nav-9" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><span class="w-6 text-center mr-2 text-sky-500">9.</span> Apresiasi</button></li>
                 <li><button onclick="goToStep(10)" id="nav-10" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><span class="w-6 text-center mr-2 text-amber-500">10.</span> Uji Minda PBD</button></li>
-                <li><button onclick="goToStep(11)" id="nav-11" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><span class="w-6 text-center mr-2 text-pink-400">11.</span> Refleksi & Tamat</button></li>
+                <li><button onclick="goToStep(11)" id="nav-11" class="nav-item w-full text-left px-3 py-2 rounded-xl transition flex items-center border-2 border-transparent"><span class="w-6 text-center mr-2 text-pink-400">11.</span> Refleksi Akhir</button></li>
             </ul>
         </div>
         
-        <div class="p-4 bg-yellow-100 m-4 rounded-3xl border-4 border-yellow-400 text-center shadow-lg relative overflow-hidden">
-            <h3 class="font-black text-yellow-700 mb-2 text-base comic-font relative z-10">Kumpul Bintang!</h3>
-            <div class="flex justify-center text-yellow-500 text-xl md:text-2xl mb-2 relative z-10 drop-shadow-md" id="star-container">
-                <i class="fa-regular fa-star transition-all duration-300"></i> 
-                <i class="fa-regular fa-star transition-all duration-300"></i> 
-                <i class="fa-regular fa-star transition-all duration-300"></i>
-            </div>
-            <p class="text-[10px] md:text-xs text-yellow-800 font-bold bg-white inline-block px-3 py-1 rounded-full border-2 border-yellow-300">Penjelajahan: <span id="star-count">1/11</span></p>
-        </div>
     </nav>
 
     <main class="flex-1 h-full overflow-y-auto p-4 md:p-8 relative scroll-smooth bg-white/40">
@@ -192,18 +183,22 @@
             <div id="profile-modal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
                 <div class="bg-white rounded-[3rem] p-8 max-w-md w-full border-8 border-purple-400 shadow-2xl relative text-center animate-float">
                     <button onclick="tutupProfil()" class="absolute top-4 right-4 text-3xl text-slate-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-circle-xmark"></i></button>
-                    <div id="modal-avatar" class="text-6xl mb-4 drop-shadow-md">👦</div>
+                    <div id="modal-avatar" class="text-6xl mb-4">👦</div>
                     <h2 id="modal-name" class="text-3xl font-black text-purple-600 comic-font mb-2">Nama Murid</h2>
-                    <p class="text-white font-black text-sm bg-purple-500 px-4 py-1 rounded-full inline-block mb-6 shadow-sm" id="modal-level-badge">Tahap 1</p>
+                    
+                    <div class="bg-gradient-to-r from-yellow-300 to-orange-400 rounded-full py-2 px-4 inline-block mb-6 shadow-md border-2 border-white">
+                        <p class="text-amber-900 font-black text-sm"><i class="fa-solid fa-star"></i> LEVEL <span id="modal-level-num">1</span></p>
+                    </div>
                     
                     <div class="bg-purple-50 p-4 rounded-2xl border-4 border-purple-100 text-left space-y-3 font-bold text-slate-700 mb-6 shadow-inner">
-                        <p class="flex justify-between items-center">Bintang Terkumpul: <span class="text-yellow-500 bg-white px-3 py-1 rounded-full shadow-sm" id="modal-stars">0 ⭐</span></p>
-                        <p class="flex justify-between items-center">Markah Kuiz: <span class="text-green-600 bg-white px-3 py-1 rounded-full shadow-sm" id="modal-score">Belum Dicuba</span></p>
-                        <p class="flex justify-between items-center">Tahap Penguasaan: <span class="text-blue-600 bg-white px-3 py-1 rounded-full shadow-sm" id="modal-tp">-</span></p>
+                        <p class="flex justify-between items-center">Tahap Dilalui: <span class="text-purple-600 bg-white px-3 py-1 rounded-full shadow-sm border border-purple-200" id="modal-level">1/11</span></p>
+                        <p class="flex justify-between items-center">Markah Kuiz: <span class="text-green-600 bg-white px-3 py-1 rounded-full shadow-sm border border-green-200" id="modal-score">Belum Dicuba</span></p>
+                        <p class="flex justify-between items-center">Tahap Penguasaan: <span class="text-blue-600 bg-white px-3 py-1 rounded-full shadow-sm border border-blue-200" id="modal-tp">-</span></p>
                     </div>
                 </div>
             </div>
 
+            <!-- STEP 1 -->
             <div id="step-1" class="step-container active">
                 <div class="text-center pt-10 md:pt-16 animate-float relative">
                     <div class="inline-block bg-white border-8 border-pink-400 rounded-[3rem] p-8 md:p-16 shadow-[0_20px_0_#f472b6] relative mt-12 md:mt-0 w-full max-w-3xl">
@@ -211,11 +206,15 @@
                         <h2 class="text-2xl md:text-3xl font-bold text-purple-600 mb-2 uppercase tracking-widest">Selamat Datang ke</h2>
                         <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500 comic-font mb-6 drop-shadow-sm leading-tight">Dunia Tembikar!</h1>
                         <p class="text-lg md:text-xl text-slate-600 font-bold mb-10 max-w-lg mx-auto bg-slate-100 p-4 rounded-2xl shadow-inner">Mari kita belajar buat tembikar yang cantik menggunakan jari-jemari magis kita bersama Cikgu Aimuni.</p>
-                        <button onclick="goToStep(2)" class="bg-pink-500 text-white text-xl md:text-2xl font-black comic-font py-4 px-10 md:py-5 md:px-16 rounded-full shadow-[0_10px_0_#be185d] border-4 border-white hover:scale-105 hover:shadow-[0_6px_0_#be185d] hover:translate-y-1 transition-all w-full sm:w-auto">Mula Belajar! <i class="fa-solid fa-arrow-right ml-3"></i></button>
+                        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                            <button onclick="exitPortal(event)" class="bg-sky-400 text-white text-xl md:text-2xl font-black comic-font py-4 px-6 md:py-5 md:px-8 rounded-full shadow-[0_10px_0_#0284c7] border-4 border-white hover:scale-105 hover:shadow-[0_6px_0_#0284c7] hover:translate-y-1 transition-all w-full sm:w-auto" title="Kembali ke Muka Depan"><i class="fa-solid fa-house mr-2 sm:mr-0"></i><span class="inline sm:hidden">Muka Depan</span></button>
+                            <button onclick="goToStep(2)" class="bg-pink-500 text-white text-xl md:text-2xl font-black comic-font py-4 px-8 md:py-5 md:px-10 rounded-full shadow-[0_10px_0_#be185d] border-4 border-white hover:scale-105 hover:shadow-[0_6px_0_#be185d] hover:translate-y-1 transition-all w-full sm:w-auto">Mula Belajar! <i class="fa-solid fa-arrow-right ml-3"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- STEP 2 -->
             <div id="step-2" class="step-container">
                 <div class="bg-white border-8 border-blue-400 rounded-[3rem] p-6 md:p-10 shadow-[0_20px_0_#60a5fa] relative mt-10">
                     <button onclick="speakText('Matlamat pembelajaran kita hari ini ialah menghasilkan karya tembikar mangkuk teknik picitan dengan jalinan.')" class="absolute -top-6 right-4 md:right-8 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20 hover:scale-110 transition-transform"><i class="fa-solid fa-volume-up"></i></button>
@@ -261,6 +260,7 @@
                 </div>
             </div>
 
+            <!-- STEP 3 -->
             <div id="step-3" class="step-container">
                 <div class="bg-white border-8 border-orange-400 rounded-[3rem] p-6 md:p-8 shadow-xl mt-10 relative">
                     <button onclick="speakText('Tembikar ialah kraf tradisional daripada tanah liat yang diuli dan dibakar.')" class="absolute -top-6 right-4 md:right-8 bg-sky-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-[0_6px_0_#0284c7] border-4 border-white z-20 hover:scale-110 transition-transform"><i class="fa-solid fa-volume-up"></i></button>
@@ -303,6 +303,7 @@
                 </div>
             </div>
 
+            <!-- STEP 4 -->
             <div id="step-4" class="step-container">
                 <div class="bg-white border-8 border-purple-400 rounded-[3rem] p-6 md:p-10 shadow-[0_20px_0_#a855f7] relative mt-10">
                     <h2 class="text-4xl md:text-5xl font-black text-center text-purple-600 comic-font mb-4"><i class="fa-solid fa-box text-yellow-400 drop-shadow-md"></i> Kotak Misteri</h2>
@@ -327,6 +328,7 @@
                 </div>
             </div>
 
+            <!-- STEP 5 -->
             <div id="step-5" class="step-container">
                 <div class="bg-white border-8 border-green-400 rounded-[3rem] p-6 md:p-8 shadow-xl mt-10">
                     <h2 class="text-3xl md:text-4xl font-black text-center text-green-600 comic-font mb-4"><i class="fa-solid fa-magnifying-glass"></i> Jom Teroka</h2>
@@ -407,6 +409,7 @@
                 </div>
             </div>
 
+            <!-- STEP 6 -->
             <div id="step-6" class="step-container">
                 <div class="bg-white border-8 border-red-400 rounded-[3rem] p-6 md:p-10 shadow-xl mt-10">
                     <h2 class="text-3xl md:text-4xl font-black text-center text-red-600 comic-font mb-6"><i class="fa-brands fa-youtube drop-shadow-md"></i> Video Pembelajaran</h2>
@@ -416,6 +419,7 @@
                 </div>
             </div>
 
+            <!-- STEP 7 -->
             <div id="step-7" class="step-container">
                 <div class="bg-white border-8 border-teal-400 rounded-[3rem] p-6 md:p-8 shadow-xl mt-10">
                     <h2 class="text-3xl md:text-4xl font-black text-center text-teal-600 comic-font mb-6"><i class="fa-solid fa-paintbrush"></i> Studio Lukis</h2>
@@ -459,6 +463,7 @@
                 </div>
             </div>
 
+            <!-- STEP 8 -->
             <div id="step-8" class="step-container">
                 <div class="bg-white border-8 border-emerald-400 rounded-[3rem] p-6 md:p-10 shadow-xl mt-10">
                     <h2 class="text-3xl md:text-4xl font-black text-center text-emerald-600 comic-font mb-4"><i class="fa-solid fa-hands drop-shadow-md"></i> Mari Menguli Tembikar</h2>
@@ -498,6 +503,7 @@
                 </div>
             </div>
 
+            <!-- STEP 9 -->
             <div id="step-9" class="step-container">
                 <div class="bg-white border-8 border-sky-400 rounded-[3rem] p-6 md:p-10 mt-10 shadow-xl">
                     <h2 class="text-3xl md:text-4xl font-black text-center text-sky-600 comic-font mb-6"><i class="fa-solid fa-comment-dots text-sky-400 drop-shadow-md"></i> Mari Bercerita</h2>
@@ -510,83 +516,50 @@
                 </div>
             </div>
 
+            <!-- STEP 10 -->
             <div id="step-10" class="step-container">
-                <div class="bg-white border-8 border-amber-400 rounded-[3rem] p-6 md:p-10 mt-10 shadow-xl relative overflow-hidden">
-                    <h2 class="text-3xl md:text-4xl font-black text-center text-amber-600 comic-font mb-2"><i class="fa-solid fa-gamepad"></i> Kuiz Seni Cilik!</h2>
-                    <p class="text-center font-bold text-slate-500 mb-8" id="quiz-progress-text">Jawab 3 soalan untuk dapatkan Sijil TP!</p>
-
-                    <!-- Start Screen -->
-                    <div id="quiz-start-screen" class="text-center py-10">
-                        <div class="w-32 h-32 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-amber-300 animate-bounce">
-                            <i class="fa-solid fa-play text-6xl text-amber-500 ml-2"></i>
-                        </div>
-                        <button onclick="startQuizGame()" class="bg-gradient-to-b from-amber-400 to-amber-600 text-white font-black text-3xl py-4 px-12 rounded-full shadow-[0_10px_0_#b45309] border-4 border-white hover:translate-y-1 hover:shadow-[0_5px_0_#b45309] transition-all">Mula Main!</button>
-                    </div>
-
-                    <!-- Game Screen -->
-                    <div id="quiz-game-screen" class="hidden">
-                        <div class="w-full bg-slate-100 h-4 rounded-full mb-8 overflow-hidden border-2 border-slate-200"><div id="q-progress-bar" class="bg-amber-500 h-full w-0 transition-all duration-500"></div></div>
+                <div class="bg-white border-8 border-amber-400 rounded-[3rem] p-6 md:p-8 mt-10 shadow-xl relative">
+                    <h2 class="text-3xl md:text-4xl font-black text-center text-amber-600 comic-font mb-6"><i class="fa-solid fa-gamepad"></i> Permainan Minda PBD</h2>
+                    
+                    <div id="quiz-game-container" class="bg-amber-50 p-6 md:p-10 rounded-[3rem] border-4 border-amber-200 shadow-inner relative overflow-hidden transition-all duration-500">
                         
-                        <!-- Q1 -->
-                        <div id="game-q1" class="quiz-question-card hidden">
-                            <div class="bg-amber-50 p-6 md:p-8 rounded-[2rem] border-4 border-amber-200 text-center shadow-inner relative">
-                                <button onclick="speakText('Soalan 1. Tembikar yang dibina mempunyai isipadu. Ini dipanggil ciri apa?')" class="absolute -top-6 -right-4 bg-sky-400 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md border-4 border-white z-10 hover:scale-110"><i class="fa-solid fa-volume-up"></i></button>
-                                <p class="font-black text-2xl text-slate-700 mb-8 comic-font mt-2">1. Tembikar yang dibina mempunyai isipadu. Ini dipanggil ciri apa?</p>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <button onclick="selectGameAnswer(1, 'bentuk', this)" class="ans-btn bg-white border-4 border-slate-200 rounded-2xl p-6 hover:border-blue-400 hover:bg-blue-50 transition-all font-black text-xl text-slate-600 flex flex-col items-center gap-3 pop-hover"><i class="fa-solid fa-cube text-4xl text-blue-400"></i> Bentuk</button>
-                                    <button onclick="selectGameAnswer(1, 'warna', this)" class="ans-btn bg-white border-4 border-slate-200 rounded-2xl p-6 hover:border-red-400 hover:bg-red-50 transition-all font-black text-xl text-slate-600 flex flex-col items-center gap-3 pop-hover"><i class="fa-solid fa-palette text-4xl text-red-400"></i> Warna</button>
-                                </div>
-                            </div>
+                        <div id="quiz-intro" class="text-center py-8">
+                            <div class="w-24 h-24 bg-amber-200 rounded-full flex items-center justify-center text-5xl mx-auto mb-6 animate-bounce shadow-inner">🧠</div>
+                            <h3 class="text-2xl md:text-3xl font-black text-slate-700 comic-font mb-4">Sedia Untuk Uji Minda?</h3>
+                            <p class="font-bold text-slate-600 mb-8 max-w-sm mx-auto">Terdapat 3 soalan cabaran. Jawab dengan betul untuk mengumpul markah Tahap Penguasaan (TP) anda!</p>
+                            <button onclick="mulaKuiz()" class="bg-amber-500 text-white font-black text-xl py-4 px-10 rounded-full shadow-[0_8px_0_#d97706] border-4 border-white hover:translate-y-1 hover:shadow-[0_4px_0_#d97706] transition-all pop-hover"><i class="fa-solid fa-play mr-2"></i> Mula Main!</button>
                         </div>
 
-                        <!-- Q2 -->
-                        <div id="game-q2" class="quiz-question-card hidden">
-                            <div class="bg-amber-50 p-6 md:p-8 rounded-[2rem] border-4 border-amber-200 text-center shadow-inner relative">
-                                <button onclick="speakText('Soalan 2. Corak kesan sentuhan pada luar tembikar dipanggil apa?')" class="absolute -top-6 -right-4 bg-sky-400 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md border-4 border-white z-10 hover:scale-110"><i class="fa-solid fa-volume-up"></i></button>
-                                <p class="font-black text-2xl text-slate-700 mb-8 comic-font mt-2">2. Corak kesan sentuhan pada luar tembikar dipanggil?</p>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <button onclick="selectGameAnswer(2, 'imbangan', this)" class="ans-btn bg-white border-4 border-slate-200 rounded-2xl p-6 hover:border-fuchsia-400 hover:bg-fuchsia-50 transition-all font-black text-xl text-slate-600 flex flex-col items-center gap-3 pop-hover"><i class="fa-solid fa-scale-balanced text-4xl text-fuchsia-400"></i> Imbangan</button>
-                                    <button onclick="selectGameAnswer(2, 'jalinan', this)" class="ans-btn bg-white border-4 border-slate-200 rounded-2xl p-6 hover:border-emerald-400 hover:bg-emerald-50 transition-all font-black text-xl text-slate-600 flex flex-col items-center gap-3 pop-hover"><i class="fa-solid fa-fingerprint text-4xl text-emerald-400"></i> Jalinan</button>
-                                </div>
+                        <div id="quiz-active" class="hidden">
+                            <div class="flex justify-between items-center mb-4">
+                                <span id="quiz-progress-text" class="font-bold text-amber-700 bg-amber-200 px-4 py-1 rounded-full text-sm">Soalan 1 / 3</span>
+                                <span class="font-black text-amber-500"><i class="fa-solid fa-star"></i> Skor: <span id="live-score">0</span></span>
                             </div>
-                        </div>
-
-                        <!-- Q3 -->
-                        <div id="game-q3" class="quiz-question-card hidden">
-                            <div class="bg-amber-50 p-6 md:p-8 rounded-[2rem] border-4 border-amber-200 text-center shadow-inner relative">
-                                <button onclick="speakText('Soalan 3. Apakah alat paling utama digunakan untuk teknik picitan?')" class="absolute -top-6 -right-4 bg-sky-400 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md border-4 border-white z-10 hover:scale-110"><i class="fa-solid fa-volume-up"></i></button>
-                                <p class="font-black text-2xl text-slate-700 mb-8 comic-font mt-2">3. Apakah alat paling utama digunakan untuk teknik picitan?</p>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <button onclick="selectGameAnswer(3, 'jari', this)" class="ans-btn bg-white border-4 border-slate-200 rounded-2xl p-6 hover:border-amber-400 hover:bg-amber-50 transition-all font-black text-xl text-slate-600 flex flex-col items-center gap-3 pop-hover"><i class="fa-solid fa-hand text-4xl text-amber-500"></i> Ibu Jari & Tangan</button>
-                                    <button onclick="selectGameAnswer(3, 'kaki', this)" class="ans-btn bg-white border-4 border-slate-200 rounded-2xl p-6 hover:border-slate-400 hover:bg-slate-50 transition-all font-black text-xl text-slate-600 flex flex-col items-center gap-3 pop-hover"><i class="fa-solid fa-scissors text-4xl text-slate-500"></i> Gunting/Pisau</button>
-                                </div>
+                            <div class="w-full bg-white rounded-full h-4 mb-8 border-2 border-amber-200 shadow-inner">
+                                <div id="quiz-progress" class="bg-amber-500 h-full rounded-full transition-all duration-500 w-0"></div>
                             </div>
-                        </div>
 
-                        <!-- Feedback Panel -->
-                        <div id="game-feedback" class="hidden mt-6 p-6 rounded-2xl border-4 text-center transform scale-90 transition-all duration-300">
-                            <div id="fb-icon" class="text-5xl mb-2"></div>
-                            <h3 id="fb-title" class="text-2xl font-black mb-2 comic-font"></h3>
-                            <p id="fb-desc" class="font-bold"></p>
-                            <button id="btn-next-q" onclick="nextQuestion()" class="mt-6 bg-slate-800 text-white font-black py-3 px-8 rounded-full shadow-md hover:scale-105 transition-transform">Seterusnya <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                            <div id="question-area" class="text-center min-h-[300px] flex flex-col justify-center">
+                                <!-- Rendered dynamically -->
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Result Panel -->
                     <div id="pbd-result" class="hidden mt-8 p-6 md:p-8 bg-blue-50 rounded-[3rem] border-8 border-blue-200 shadow-inner text-center">
                         <i class="fa-solid fa-certificate text-6xl md:text-7xl text-blue-500 mb-4 animate-[spin_3s_linear_infinite]"></i>
-                        <h3 class="text-xl md:text-2xl font-black text-slate-800 comic-font mb-6 border-b-4 border-blue-200 pb-4">Laporan PBD Selesai!</h3>
+                        <h3 class="text-xl md:text-2xl font-black text-slate-800 comic-font mb-6 border-b-4 border-blue-200 pb-4">Laporan PBD</h3>
                         <div class="bg-white p-4 md:p-6 rounded-2xl border-2 border-blue-100 text-left max-w-sm mx-auto mb-6 shadow-sm">
                             <p class="font-bold text-slate-600 mb-2">Nama: <span id="report-name" class="text-blue-700 font-black">Murid</span></p>
                             <p class="font-bold text-slate-600 mb-2">Skor Kuiz: <span id="report-score" class="text-green-600 font-black">0/3</span></p>
                         </div>
                         <div class="bg-blue-500 text-white text-4xl md:text-5xl font-black py-3 px-8 md:py-4 md:px-10 rounded-[2rem] inline-block border-8 border-white shadow-lg mb-6"><span id="tp-score">TP 1</span></div>
                         <div id="auto-save-status" class="hidden font-bold text-sm md:text-lg mb-6 py-2 px-4 rounded-full mx-auto border-2 w-max transition-all"></div>
-                        <button onclick="goToStep(11)" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-4 rounded-full shadow-lg border-2 border-white hover:scale-[1.02] transition-transform">Lihat Refleksi Akhir <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                        <button onclick="goToStep(11)" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-4 rounded-full shadow-lg border-2 border-white hover:scale-[1.02] transition-transform">Seterusnya <i class="fa-solid fa-arrow-right ml-2"></i></button>
                     </div>
                 </div>
             </div>
 
+            <!-- STEP 11 -->
             <div id="step-11" class="step-container">
                 
                 <div class="bg-white border-8 border-pink-400 rounded-[3rem] p-6 md:p-8 mt-10 shadow-xl text-center">
@@ -617,21 +590,21 @@
                     <p class="text-center font-bold text-slate-500 mb-8 text-sm md:text-base bg-indigo-50 py-2 px-4 rounded-full max-w-lg mx-auto border-2 border-indigo-100">Analisis SWOT terhadap proses pengajaran & pembelajaran.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-emerald-50 rounded-3xl p-5 border-4 border-emerald-200 shadow-sm pop-hover">
-                            <h3 class="font-black text-emerald-700 text-lg mb-3 flex items-center"><span class="bg-emerald-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">S</span> Kekuatan (Strengths)</h3>
-                            <textarea class="w-full h-32 rounded-xl border-2 border-emerald-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-emerald-500 text-sm resize-none">Portal PSV berjaya meningkatkan minat dan penglibatan murid melalui penggunaan nota, video, kuiz dan aktiviti interaktif yang tersusun dalam satu platform. Portal juga memudahkan akses kepada bahan pembelajaran serta menyokong pembelajaran kendiri.</textarea>
+                        <div class="bg-emerald-50 rounded-3xl p-5 border-4 border-emerald-200 shadow-sm pop-hover flex flex-col h-full">
+                            <h3 class="font-black text-emerald-700 text-lg mb-3 flex items-start"><span class="bg-emerald-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">S</span> Kekuatan (Strengths)</h3>
+                            <textarea class="w-full flex-1 min-h-[8rem] rounded-xl border-2 border-emerald-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-emerald-500 text-sm resize-none">Portal PSV berjaya meningkatkan minat dan penglibatan murid melalui penggunaan nota, video, kuiz dan aktiviti interaktif yang tersusun dalam satu platform. Portal juga memudahkan akses kepada bahan pembelajaran serta menyokong pembelajaran kendiri.</textarea>
                         </div>
-                        <div class="bg-rose-50 rounded-3xl p-5 border-4 border-rose-200 shadow-sm pop-hover">
-                            <h3 class="font-black text-rose-700 text-lg mb-3 flex items-center"><span class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">W</span> Kelemahan (Weaknesses)</h3>
-                            <textarea class="w-full h-32 rounded-xl border-2 border-rose-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-rose-500 text-sm resize-none">Penggunaan portal masih bergantung kepada capaian internet dan ketersediaan peranti. Selain itu, sistem pemantauan kemajuan murid dan portfolio individu masih boleh dipertingkatkan.</textarea>
+                        <div class="bg-rose-50 rounded-3xl p-5 border-4 border-rose-200 shadow-sm pop-hover flex flex-col h-full">
+                            <h3 class="font-black text-rose-700 text-lg mb-3 flex items-start"><span class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">W</span> Kelemahan (Weaknesses)</h3>
+                            <textarea class="w-full flex-1 min-h-[8rem] rounded-xl border-2 border-rose-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-rose-500 text-sm resize-none">Penggunaan portal masih bergantung kepada capaian internet dan ketersediaan peranti. Selain itu, sistem pemantauan kemajuan murid dan portfolio individu masih boleh dipertingkatkan.</textarea>
                         </div>
-                        <div class="bg-sky-50 rounded-3xl p-5 border-4 border-sky-200 shadow-sm pop-hover">
-                            <h3 class="font-black text-sky-700 text-lg mb-3 flex items-center"><span class="bg-sky-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">O</span> Peluang (Opportunities)</h3>
-                            <textarea class="w-full h-32 rounded-xl border-2 border-sky-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-sky-500 text-sm resize-none">Portal berpotensi diperkembangkan dengan penambahan dashboard kemajuan murid, portfolio digital, integrasi pentaksiran PBD dan aktiviti pembelajaran berasaskan projek bagi meningkatkan keberkesanan PdP.</textarea>
+                        <div class="bg-sky-50 rounded-3xl p-5 border-4 border-sky-200 shadow-sm pop-hover flex flex-col h-full">
+                            <h3 class="font-black text-sky-700 text-lg mb-3 flex items-start"><span class="bg-sky-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">O</span> Peluang (Opportunities)</h3>
+                            <textarea class="w-full flex-1 min-h-[8rem] rounded-xl border-2 border-sky-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-sky-500 text-sm resize-none">Portal berpotensi diperkembangkan dengan penambahan dashboard kemajuan murid, portfolio digital, integrasi pentaksiran PBD dan aktiviti pembelajaran berasaskan projek bagi meningkatkan keberkesanan PdP.</textarea>
                         </div>
-                        <div class="bg-amber-50 rounded-3xl p-5 border-4 border-amber-200 shadow-sm pop-hover">
-                            <h3 class="font-black text-amber-700 text-lg mb-3 flex items-center"><span class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">T</span> Ancaman (Threats)</h3>
-                            <textarea class="w-full h-32 rounded-xl border-2 border-amber-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-amber-500 text-sm resize-none">Gangguan internet, kekurangan peranti dan kemungkinan murid terganggu dengan aplikasi lain semasa menggunakan peranti digital boleh menjejaskan keberkesanan penggunaan portal.</textarea>
+                        <div class="bg-amber-50 rounded-3xl p-5 border-4 border-amber-200 shadow-sm pop-hover flex flex-col h-full">
+                            <h3 class="font-black text-amber-700 text-lg mb-3 flex items-start"><span class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 shadow-sm text-sm shrink-0">T</span> Ancaman (Threats)</h3>
+                            <textarea class="w-full flex-1 min-h-[8rem] rounded-xl border-2 border-amber-300 p-3 font-bold text-slate-600 focus:outline-none focus:border-amber-500 text-sm resize-none">Gangguan internet, kekurangan peranti dan kemungkinan murid terganggu dengan aplikasi lain semasa menggunakan peranti digital boleh menjejaskan keberkesanan penggunaan portal.</textarea>
                         </div>
                     </div>
                     
@@ -709,51 +682,7 @@
         }
 
         let maxStepReached = 1;
-        let studentEXP = 0;
-        let currentLevel = 1;
         const avatars = ['👦','👧','👨‍🦱','👩‍🦱','🧑‍🦰','🦸‍♂️','🦸‍♀️','🥷','🧑‍🚀']; let currentAvatarIdx = 0;
-        
-        let badgesUnlocked = { b1: false, b2: false, b3: false };
-
-        function updateEXP() {
-            studentEXP += 15;
-            if(studentEXP >= 100) {
-                studentEXP = 0; currentLevel++;
-                document.getElementById('level-display').innerText = `Tahap ${currentLevel}`;
-                document.getElementById('modal-level-badge').innerText = `Tahap ${currentLevel}`;
-                playSound(800, 'square', 0.2); setTimeout(()=>playSound(1000, 'square', 0.4), 150);
-                showAchievement('⭐ Naik Tahap!', 'Tahap ' + currentLevel);
-            }
-            document.getElementById('exp-text').innerText = `${studentEXP}/100 EXP`;
-            document.getElementById('exp-bar').style.width = `${studentEXP}%`;
-        }
-
-        function showAchievement(title, desc) {
-            const container = document.getElementById('achievement-banner-container');
-            const banner = document.getElementById('achievement-banner');
-            document.getElementById('ach-text').innerText = desc;
-            
-            container.classList.remove('hidden');
-            banner.style.animation = 'none';
-            banner.offsetHeight; // trigger reflow
-            banner.style.animation = null;
-            
-            playSound(600, 'sine', 0.1); setTimeout(()=>playSound(800, 'sine', 0.2), 100);
-            createParticles({clientX: window.innerWidth/2, clientY: 100});
-            
-            setTimeout(() => { container.classList.add('hidden'); }, 4000);
-        }
-
-        function checkMissions() {
-            // Pengkaji Seni
-            if(maxStepReached >= 5 && !badgesUnlocked.b1) {
-                badgesUnlocked.b1 = true;
-                const b = document.getElementById('badge-1');
-                b.classList.remove('opacity-50', 'grayscale'); b.classList.add('bg-blue-300', 'text-blue-800');
-                showAchievement('Pencapaian Dibuka!', 'Pengkaji Seni');
-                studentEXP += 30; updateEXP();
-            }
-        }
         
         function changeAvatar() { 
             currentAvatarIdx = (currentAvatarIdx+1)%avatars.length; 
@@ -762,38 +691,109 @@
             playSound(500, 'triangle', 0.1); 
         }
 
-        function updateStars(step) {
-            const stars = document.getElementById('star-container').querySelectorAll('i');
-            if(step >= 4 && stars[0].classList.contains('fa-regular')) { stars[0].classList.replace('fa-regular', 'fa-solid'); stars[0].classList.add('animate-bounce'); setTimeout(() => stars[0].classList.remove('animate-bounce'), 1000); studentEXP+=20; updateEXP(); }
-            if(step >= 8 && stars[1].classList.contains('fa-regular')) { stars[1].classList.replace('fa-regular', 'fa-solid'); stars[1].classList.add('animate-bounce'); setTimeout(() => stars[1].classList.remove('animate-bounce'), 1000); studentEXP+=20; updateEXP(); }
-            if(step >= 11 && stars[2].classList.contains('fa-regular')) { stars[2].classList.replace('fa-regular', 'fa-solid'); stars[2].classList.add('animate-bounce'); setTimeout(() => stars[2].classList.remove('animate-bounce'), 1000); studentEXP+=20; updateEXP(); }
+        // --- SISTEM GAMIFIKASI & PENCAPAIAN ---
+        let unlockedAch = { teroka: false, lukis: false, kuiz: false };
+
+        function showAchievement(id, icon, title) {
+            if(unlockedAch[id]) return;
+            unlockedAch[id] = true;
+            
+            playSound(800, 'square', 0.1); setTimeout(()=>playSound(1200, 'square', 0.3), 150);
+            createParticles({clientX: window.innerWidth/2, clientY: 100});
+            
+            document.getElementById('ach-icon').innerText = icon;
+            document.getElementById('ach-title').innerText = title;
+            
+            const popup = document.getElementById('achievement-popup');
+            popup.classList.remove('hidden');
+            popup.classList.add('animate-achievement');
+            
+            speakText("Tahniah! Pencapaian dibuka. " + title);
+            
+            const badge = document.getElementById(`badge-${id}`);
+            if(badge) {
+                badge.classList.remove('opacity-50', 'grayscale', 'bg-slate-200');
+                if(id==='teroka') badge.classList.add('bg-yellow-300', 'text-yellow-700');
+                if(id==='lukis') badge.classList.add('bg-pink-300', 'text-pink-700');
+                if(id==='kuiz') badge.classList.add('bg-amber-400', 'text-white');
+            }
+
+            setTimeout(() => { 
+                popup.classList.add('hidden'); 
+                popup.classList.remove('animate-achievement');
+            }, 4000);
         }
 
-        function goToStep(stepNum) {
+        function updateEXP() {
+            const expVal = maxStepReached * 10;
+            document.getElementById('exp-bar').style.width = `${(maxStepReached/11)*100}%`;
+            document.getElementById('exp-text').innerText = `${expVal}/110`;
+            
+            let level = 1;
+            if(maxStepReached >= 4) level = 2;
+            if(maxStepReached >= 8) level = 3;
+            if(maxStepReached >= 11) level = 4;
+            document.getElementById('modal-level-num').innerText = level;
+        }
+
+        // FUNGSI NAVIGASI YANG DIPERBAHARUI & BERKUALITI (Sokongan URL Pintar)
+        function goToStep(stepNum, updateUrl = true) {
             playSound(400, 'triangle', 0.1);
             window.speechSynthesis.cancel();
+            
             document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
-            document.getElementById(`step-${stepNum}`).classList.add('active');
+            const targetStep = document.getElementById(`step-${stepNum}`);
+            if(targetStep) targetStep.classList.add('active');
+            
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'bg-pink-500', 'text-white'));
             const activeNav = document.getElementById(`nav-${stepNum}`);
             if(activeNav) activeNav.classList.add('active', 'bg-pink-500', 'text-white');
+            
             document.querySelector('main').scrollTo({top:0, behavior:'smooth'});
             
             if(stepNum === 7) setTimeout(resizeCanvas, 200);
             
             if(stepNum > maxStepReached) { 
                 maxStepReached = stepNum; 
-                updateStars(stepNum);
-                checkMissions();
                 updateEXP();
+                if(stepNum === 5) showAchievement('teroka', '📘', 'Pengkaji Seni');
             }
-            document.getElementById('star-count').innerText = `${maxStepReached}/11`;
+            
+            const modalLevel = document.getElementById('modal-level');
+            if (modalLevel) modalLevel.innerText = `${maxStepReached}/11`;
+
+            // Proses pertukaran URL Pintar tanpa "refresh"
+            if (updateUrl) {
+                history.pushState(null, null, '#step-' + stepNum);
+            }
         }
+
+        // Logik pendengar URL - bila Cikgu salin & beri pautan
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash.startsWith('step-')) {
+                const num = parseInt(hash.split('-')[1]);
+                if (num >= 1 && num <= 11) {
+                    goToStep(num, false);
+                    document.getElementById('landing-page').style.display = 'none';
+                }
+            }
+        });
+
+        // Logik apabila laman pertama kali dibuka
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && hash.startsWith('step-')) {
+                const num = parseInt(hash.split('-')[1]);
+                if (num >= 1 && num <= 11) {
+                    document.getElementById('landing-page').style.display = 'none';
+                    goToStep(num, false);
+                }
+            }
+        });
 
         function paparProfil() {
             document.getElementById('modal-name').innerText = document.getElementById('sidebar-student-name').value || "Seniwan Cilik";
-            const starCount = document.querySelectorAll('#star-container .fa-solid').length;
-            document.getElementById('modal-stars').innerText = `${starCount} ⭐`;
             document.getElementById('profile-modal').classList.remove('hidden');
         }
         function tutupProfil() { document.getElementById('profile-modal').classList.add('hidden'); }
@@ -825,6 +825,7 @@
             speakText("Bagus! Sila ikut lima langkah picitan di bawah.");
         }
 
+        // --- CANVAS LUKISAN ---
         const canvas = document.getElementById('drawingCanvas'); const ctx = canvas.getContext('2d'); let isDrawing = false;
         
         function resizeCanvas() { 
@@ -833,7 +834,7 @@
             const rect = container.getBoundingClientRect(); 
             if(rect.width === 0 || rect.height === 0) return;
 
-            const currentImg = canvas.toDataURL();
+            const currentImg = canvas.toDataURL(); 
             canvas.width = rect.width; canvas.height = rect.height; 
             ctx.lineCap = 'round'; ctx.lineJoin = 'round'; 
             
@@ -882,13 +883,8 @@
             playSound(800, 'square', 0.2); showToast("Karya berjaya dihantar ke galeri!");
             clearCanvas();
             
-            // Gamification Badge: Pelukis Cilik
-            if(!badgesUnlocked.b2) {
-                badgesUnlocked.b2 = true;
-                const b = document.getElementById('badge-2');
-                b.classList.remove('opacity-50', 'grayscale'); b.classList.add('bg-pink-300', 'text-pink-800');
-                setTimeout(()=>showAchievement('Pencapaian Dibuka!', 'Pelukis Cilik'), 1000);
-            }
+            // Pencapaian Pelukis Cilik
+            showAchievement('lukis', '🎨', 'Pelukis Cilik');
         }
 
         function handleImageUpload(e) {
@@ -899,111 +895,157 @@
                     const name = document.getElementById('sidebar-student-name').value || 'Seniwan Cilik';
                     document.getElementById('gallery-grid').insertAdjacentHTML('afterbegin', formatGalleryCard(evt.target.result, name));
                     playSound(600, 'triangle', 0.2); showToast("Foto berjaya dimuat naik!");
+                    showAchievement('lukis', '🎨', 'Pelukis Cilik');
                 }
                 reader.readAsDataURL(file);
             }
         }
 
-        let currentQ = 1;
-        let pbdScore = 0;
+        // --- SISTEM KUIZ PBD INTERAKTIF ---
+        const quizData = [
+            { 
+                q: "Tembikar yang dibina mempunyai isipadu. Ini dipanggil ciri apa?", 
+                opt: [
+                    {text: "Bentuk", val: "bentuk", icon: "fa-cube", cls: "bg-blue-50 border-blue-200 text-blue-500 hover:border-blue-400"}, 
+                    {text: "Warna", val: "warna", icon: "fa-palette", cls: "bg-pink-50 border-pink-200 text-pink-500 hover:border-pink-400"}
+                ], 
+                ans: "bentuk", exp: "Betul! Bentuk mempunyai isipadu dan ruang 3D." 
+            },
+            { 
+                q: "Corak kesan sentuhan pada luar tembikar dipanggil?", 
+                opt: [
+                    {text: "Imbangan", val: "imbangan", icon: "fa-scale-balanced", cls: "bg-purple-50 border-purple-200 text-purple-500 hover:border-purple-400"}, 
+                    {text: "Jalinan", val: "jalinan", icon: "fa-fingerprint", cls: "bg-emerald-50 border-emerald-200 text-emerald-500 hover:border-emerald-400"}
+                ], 
+                ans: "jalinan", exp: "Tepat! Jalinan ialah kesan sentuhan (kasar/licin) pada permukaan objek." 
+            },
+            { 
+                q: "Apakah alat paling utama digunakan untuk teknik picitan?", 
+                opt: [
+                    {text: "Jari & Tangan", val: "jari", icon: "fa-hand", cls: "bg-orange-50 border-orange-200 text-orange-500 hover:border-orange-400"}, 
+                    {text: "Pisau", val: "kaki", icon: "fa-scissors", cls: "bg-red-50 border-red-200 text-red-500 hover:border-red-400"}
+                ], 
+                ans: "jari", exp: "Pandai! Teknik picitan menggunakan tekanan ibu jari dan jari-jemari." 
+            }
+        ];
         
-        function startQuizGame() {
-            document.getElementById('quiz-start-screen').classList.add('hidden');
-            document.getElementById('quiz-game-screen').classList.remove('hidden');
-            showQuestion(1);
+        let currentQ = 0; 
+        let quizScore = 0;
+
+        function mulaKuiz() {
+            playSound(400, 'triangle', 0.1);
+            currentQ = 0; quizScore = 0;
+            document.getElementById('live-score').innerText = '0';
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+            paparSoalan();
         }
 
-        function showQuestion(qNum) {
-            document.querySelectorAll('.quiz-question-card').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`game-q${qNum}`).classList.remove('hidden');
-            document.getElementById('game-feedback').classList.add('hidden');
-            document.getElementById('q-progress-bar').style.width = `${(qNum-1)*33.3}%`;
-            document.getElementById('quiz-progress-text').innerText = `Soalan ${qNum} daripada 3`;
+        function paparSoalan() {
+            const q = quizData[currentQ];
+            document.getElementById('quiz-progress').style.width = ((currentQ + 1) / quizData.length * 100) + '%';
+            document.getElementById('quiz-progress-text').innerText = `Soalan ${currentQ + 1} / ${quizData.length}`;
             
-            if(qNum === 1) speakText("Soalan 1. Tembikar yang dibina mempunyai isipadu. Ini dipanggil ciri apa?");
-            if(qNum === 2) speakText("Soalan 2. Corak kesan sentuhan pada luar tembikar dipanggil apa?");
-            if(qNum === 3) speakText("Soalan 3. Apakah alat paling utama digunakan untuk teknik picitan?");
+            let html = `
+                <div class="animate-float mb-8">
+                    <button onclick="speakText('${q.q}')" class="bg-sky-400 text-white w-16 h-16 rounded-full text-3xl shadow-[0_6px_0_#0284c7] border-4 border-white mb-6 hover:scale-110 transition-transform"><i class="fa-solid fa-volume-up"></i></button>
+                    <h3 class="text-2xl md:text-3xl font-black text-slate-700 comic-font leading-tight px-4">${q.q}</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+            `;
+            
+            q.opt.forEach(o => {
+                html += `<button id="btn-opt-${o.val}" onclick="pilihJawapan('${o.val}')" class="p-6 md:p-8 rounded-[2rem] border-4 ${o.cls} shadow-lg hover:scale-105 transition-all pop-hover flex flex-col items-center justify-center gap-4 group">
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-4xl shadow-inner group-hover:scale-110 transition-transform"><i class="fa-solid ${o.icon}"></i></div>
+                    <span class="text-xl md:text-2xl font-black text-slate-700">${o.text}</span>
+                </button>`;
+            });
+            html += `</div><div id="quiz-feedback" class="mt-8 hidden flex flex-col items-center w-full"></div>`;
+            
+            document.getElementById('question-area').innerHTML = html;
+            
+            if(currentQ === 0) speakText("Jom mula! " + q.q);
+            else speakText(q.q);
         }
 
-        function selectGameAnswer(qNum, answerVal, btnEl) {
-            // Disable all buttons in this question
-            const allBtns = document.getElementById(`game-q${qNum}`).querySelectorAll('.ans-btn');
-            allBtns.forEach(b => { b.disabled = true; b.classList.remove('pop-hover', 'hover:bg-blue-50', 'hover:bg-red-50', 'hover:bg-emerald-50', 'hover:bg-fuchsia-50', 'hover:bg-amber-50'); });
+        function pilihJawapan(val) {
+            window.speechSynthesis.cancel();
+            const q = quizData[currentQ];
+            const isCorrect = (val === q.ans);
             
-            let isCorrect = false; let correctText = "";
-            if(qNum === 1) { isCorrect = (answerVal === 'bentuk'); correctText = "Bentuk mempunyai isipadu dan ruang 3D."; }
-            if(qNum === 2) { isCorrect = (answerVal === 'jalinan'); correctText = "Jalinan ialah kesan sentuhan pada permukaan objek."; }
-            if(qNum === 3) { isCorrect = (answerVal === 'jari'); correctText = "Teknik picitan menggunakan tekanan ibu jari dan tangan."; }
+            q.opt.forEach(o => {
+                const btn = document.getElementById(`btn-opt-${o.val}`);
+                btn.onclick = null;
+                btn.classList.remove('hover:scale-105', 'pop-hover');
+                
+                if(o.val === q.ans) {
+                    btn.classList.replace(o.cls.split(' ')[0], 'bg-green-100'); 
+                    btn.style.borderColor = '#4ade80'; 
+                } else if (val === o.val && !isCorrect) {
+                    btn.classList.replace(o.cls.split(' ')[0], 'bg-red-100');
+                    btn.style.borderColor = '#f87171'; 
+                } else {
+                    btn.classList.add('opacity-40', 'grayscale');
+                }
+            });
 
-            const fbPanel = document.getElementById('game-feedback');
-            const fbIcon = document.getElementById('fb-icon');
-            const fbTitle = document.getElementById('fb-title');
-            const fbDesc = document.getElementById('fb-desc');
-
+            const fb = document.getElementById('quiz-feedback');
+            fb.classList.remove('hidden');
+            
             if(isCorrect) {
-                pbdScore++;
-                btnEl.classList.add('bg-green-100', 'border-green-500', 'text-green-700');
-                fbPanel.classList.replace('border-red-400', 'border-green-400');
-                fbPanel.classList.replace('bg-red-50', 'bg-green-50');
-                if(!fbPanel.classList.contains('border-green-400')) { fbPanel.classList.add('border-green-400', 'bg-green-50'); }
-                fbIcon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500 animate-bounce"></i>';
-                fbTitle.innerText = "Tepat Sekali!"; fbTitle.className = "text-2xl font-black mb-2 comic-font text-green-700";
-                playSound(600, 'sine', 0.1); setTimeout(()=>playSound(800, 'sine', 0.2), 100);
-                createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2});
-                speakText("Tepat sekali! " + correctText);
+                quizScore++;
+                document.getElementById('live-score').innerText = quizScore;
+                playSound(800, 'square', 0.1); setTimeout(() => playSound(1200, 'square', 0.2), 100);
+                createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2}); 
+                fb.innerHTML = `<div class="bg-green-100 border-4 border-green-400 text-green-800 p-4 rounded-2xl w-full max-w-md text-center mb-6 shadow-md animate-bounce">
+                    <i class="fa-solid fa-circle-check text-4xl mb-2 text-green-600"></i><br>
+                    <span class="font-black text-xl">Tepat Sekali!</span><br>
+                    <span class="font-bold text-sm">${q.exp}</span>
+                </div>`;
+                speakText("Tepat Sekali! " + q.exp);
             } else {
-                btnEl.classList.add('bg-red-100', 'border-red-500', 'text-red-700');
-                fbPanel.classList.replace('border-green-400', 'border-red-400');
-                fbPanel.classList.replace('bg-green-50', 'bg-red-50');
-                if(!fbPanel.classList.contains('border-red-400')) { fbPanel.classList.add('border-red-400', 'bg-red-50'); }
-                fbIcon.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-500"></i>';
-                fbTitle.innerText = "Kurang Tepat"; fbTitle.className = "text-2xl font-black mb-2 comic-font text-red-700";
                 playSound(200, 'sawtooth', 0.3);
-                speakText("Kurang tepat. Jawapannya ialah " + correctText);
+                fb.innerHTML = `<div class="bg-red-100 border-4 border-red-400 text-red-800 p-4 rounded-2xl w-full max-w-md text-center mb-6 shadow-md wiggle-hover">
+                    <i class="fa-solid fa-circle-xmark text-4xl mb-2 text-red-600"></i><br>
+                    <span class="font-black text-xl">Alamak, Kurang Tepat.</span><br>
+                    <span class="font-bold text-sm">Jawapan: ${q.exp}</span>
+                </div>`;
+                speakText("Alamak, kurang tepat. " + q.exp);
             }
             
-            fbDesc.innerText = correctText;
-            fbPanel.classList.remove('hidden');
-            setTimeout(() => { fbPanel.classList.replace('scale-90', 'scale-100'); }, 50);
-            
-            if(qNum === 3) document.getElementById('btn-next-q').innerHTML = 'Lihat Keputusan PBD <i class="fa-solid fa-certificate ml-2"></i>';
-        }
-
-        function nextQuestion() {
-            document.getElementById('game-feedback').classList.add('hidden');
-            document.getElementById('game-feedback').classList.replace('scale-100', 'scale-90');
-            
-            if(currentQ < 3) {
-                currentQ++;
-                showQuestion(currentQ);
+            if(currentQ < quizData.length - 1) {
+                fb.innerHTML += `<button onclick="nextSoalan()" class="bg-amber-500 text-white font-black text-xl py-3 px-8 rounded-full shadow-[0_6px_0_#d97706] border-4 border-white hover:translate-y-1 hover:shadow-[0_3px_0_#d97706] transition-all pop-hover">Soalan Seterusnya <i class="fa-solid fa-arrow-right ml-2"></i></button>`;
             } else {
-                finishQuiz();
+                fb.innerHTML += `<button onclick="tamatKuiz()" class="bg-blue-500 text-white font-black text-xl py-4 px-10 rounded-full shadow-[0_6px_0_#2563eb] border-4 border-white hover:translate-y-1 hover:shadow-[0_3px_0_#2563eb] transition-all pop-hover animate-pulse">Lihat Keputusan PBD <i class="fa-solid fa-award ml-2"></i></button>`;
             }
         }
 
-        function finishQuiz() {
-            document.getElementById('quiz-game-screen').classList.add('hidden');
-            document.getElementById('q-progress-bar').style.width = `100%`;
+        function nextSoalan() {
+            window.speechSynthesis.cancel();
+            playSound(500, 'triangle', 0.1);
+            currentQ++;
+            paparSoalan();
+        }
+
+        function tamatKuiz() {
+            window.speechSynthesis.cancel();
+            document.getElementById('quiz-game-container').classList.add('hidden');
             
-            let tp = pbdScore === 0 ? 1 : pbdScore === 1 ? 2 : pbdScore === 2 ? 3 : 4;
+            let tp = quizScore === 0 ? 1 : quizScore === 1 ? 2 : quizScore === 2 ? 3 : 4;
+            window.pbdScore = quizScore; window.pbdTP = tp;
             
             document.getElementById('report-name').innerText = document.getElementById('sidebar-student-name').value || "Seniwan Cilik";
-            document.getElementById('report-score').innerText = `${pbdScore}/3`;
+            document.getElementById('report-score').innerText = `${quizScore}/3`;
             document.getElementById('tp-score').innerText = `TP ${tp}`;
-            document.getElementById('modal-score').innerText = `${pbdScore}/3`;
+            document.getElementById('modal-score').innerText = `${quizScore}/3`;
             document.getElementById('modal-tp').innerText = `TP ${tp}`;
             
             document.getElementById('pbd-result').classList.remove('hidden');
             playSound(500, 'square', 0.1); setTimeout(() => playSound(800, 'square', 0.3), 100);
-            speakText(`Tahniah! Anda mendapat Tahap Penguasaan ${tp}.`);
+            createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2});
 
-            // Gamification Badge: Bijak Seni
-            if(pbdScore === 3 && !badgesUnlocked.b3) {
-                badgesUnlocked.b3 = true;
-                const b = document.getElementById('badge-3');
-                b.classList.remove('opacity-50', 'grayscale'); b.classList.add('bg-amber-400', 'text-white');
-                setTimeout(()=>showAchievement('Pencapaian Dibuka!', 'Bijak Seni'), 2000);
-            }
+            // Pencapaian Bijak Seni
+            if(quizScore === 3) showAchievement('kuiz', '🧠', 'Bijak Seni');
 
             const statusEl = document.getElementById('auto-save-status');
             statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Menghantar rekod ke Cikgu...';
@@ -1014,7 +1056,7 @@
             formData.append('tarikh', new Date().toLocaleString('ms-MY'));
             formData.append('nama', document.getElementById('sidebar-student-name').value || 'Murid Tanpa Nama');
             formData.append('topik', "Uli-Uli Tembikar");
-            formData.append('markah', pbdScore + "/3");
+            formData.append('markah', quizScore + "/3");
             formData.append('tp', "TP " + tp);
 
             fetch(scriptURL, { method: 'POST', body: formData })
@@ -1057,10 +1099,30 @@
             }
         }
 
-        /* FUNGSI KELUAR MASUK PORTAL */
-        function enterPortal(e) { if(e) e.stopPropagation(); playSound(600, 'sine', 0.1); createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2}); const lp = document.getElementById('landing-page'); lp.style.transform = 'translateY(-100vh) scale(0.8)'; lp.style.opacity = '0'; setTimeout(() => lp.style.display = 'none', 1000); updateEXP(); }
+        function enterPortal(e) { 
+            if(e) e.stopPropagation(); 
+            playSound(600, 'sine', 0.1); 
+            createParticles({clientX: window.innerWidth/2, clientY: window.innerHeight/2}); 
+            const lp = document.getElementById('landing-page'); 
+            lp.style.transform = 'translateY(-100vh) scale(0.8)'; 
+            lp.style.opacity = '0'; 
+            setTimeout(() => lp.style.display = 'none', 1000); 
+            updateEXP(); 
+            
+            if(!window.location.hash) {
+                history.replaceState(null, null, '#step-1');
+            }
+        }
         
-        function exitPortal(e) { if(e) e.stopPropagation(); playSound(400, 'triangle', 0.1); const lp = document.getElementById('landing-page'); lp.style.display = 'flex'; setTimeout(() => { lp.style.transform = 'translateY(0) scale(1)'; lp.style.opacity = '1'; }, 10); }
+        function exitPortal(e) { 
+            if(e) e.stopPropagation(); 
+            playSound(400, 'triangle', 0.1); 
+            const lp = document.getElementById('landing-page'); 
+            lp.style.display = 'flex'; 
+            setTimeout(() => { lp.style.transform = 'translateY(0) scale(1)'; lp.style.opacity = '1'; }, 10); 
+            
+            history.replaceState(null, null, ' ');
+        }
         
         function createParticles(e) {
             if(e.target && (e.target.closest('canvas') || e.target.closest('button') || e.target.closest('input') || e.target.closest('textarea') || e.target.closest('.flip-card'))) return;
